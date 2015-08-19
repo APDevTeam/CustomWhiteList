@@ -1,0 +1,12 @@
+name: CustomWhitelist
+version: 0.0.1
+#version: ${env.BUILD_NUMBER}
+main: Main.main
+database: false
+commands:
+  WA:
+    description: Adds a player to your whitelist.
+    usage: /WA name
+  WR:
+    description: Removes a player from your whitelist.
+    usage: /WR name
