@@ -45,44 +45,11 @@ public class main extends JavaPlugin implements CommandExecutor, Listener {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		sender.sendMessage(ChatColor.BLUE + "Success");
-		if (cmd.getName().equalsIgnoreCase("WA")) {
-			sender.sendMessage(ChatColor.BLUE + "Success");
-			if (!(args[0] == null)) {
-				sender.sendMessage(ChatColor.BLUE + "Success");
-				OfflinePlayer player = Bukkit.getOfflinePlayer(args[1]);
-				sender.sendMessage(ChatColor.BLUE + "Success");
-				while (1 == 1) {
-					sender.sendMessage(ChatColor.BLUE + "Success");
-					if (!Bukkit.getWhitelistedPlayers().contains(player)) {
-						Bukkit.getWhitelistedPlayers().add(player);
-						sender.sendMessage(ChatColor.BLUE + "Success");
-					} else {
-						sender.sendMessage(ChatColor.BLUE + "Success");
-						break;
-					}
-				}
-			} else {
-				if (cmd.getName() == "WR") {
-					if (!(args[0] == null)) {
-						OfflinePlayer player = Bukkit.getOfflinePlayer(args[1]);
-						while (1 == 1) {
-							if (Bukkit.getWhitelistedPlayers().contains(player)) {
-								Bukkit.getWhitelistedPlayers().remove(player);
-						} else {
-							sender.sendMessage(ChatColor.BLUE + "Success");
-							break;
-						}
-						return true;
-					}
-				} else {
-					return false;
-				}
-				return false;
-			}
+		if (cmd.getName() == "CustomWhitelist" && args.length == 2) {
+			
+		} else {
+			
 		}
-		return false;
+		return true;
 	}
-		return false;
-}
 }
