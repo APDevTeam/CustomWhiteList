@@ -14,6 +14,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -44,7 +45,17 @@ public class main extends JavaPlugin implements CommandExecutor, Listener {
 		instance.getConfig().options().copyDefaults(true);
 		instance.saveConfig();
 	}
-
+	private void whitelist() {
+		Runnable run = new BukkitRunnable() {
+			
+			@Override
+			public void run() {
+				
+				
+			}
+		};
+		
+	}
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (cmd.getName() == "CustomWhitelist" && args.length == 2) {
