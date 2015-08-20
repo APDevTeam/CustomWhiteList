@@ -1,8 +1,10 @@
 package Main;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -25,9 +27,12 @@ import net.md_5.bungee.api.chat.TextComponent;
 public class main extends JavaPlugin implements CommandExecutor, Listener {
 	private static main instance;
 	private ArrayList<String>whitelistPending = new ArrayList<String>();
+	private ArrayList<UUID>whitelist = new ArrayList<UUID>();
+	ArrayList<String> PTBA = new ArrayList<String>();
 
 	@Override
 	public void onEnable() {
+		whitelist();
 		instance = this;
 		loadConfiguration();
 	}
@@ -35,6 +40,8 @@ public class main extends JavaPlugin implements CommandExecutor, Listener {
 	@Override
 	public void onDisable() {
 		instance.saveConfig();
+		this.getConfig().set("PlayersToBeAddedToWhitelist", PTBA);
+		this.getConfig().set("WhitelistedPlayers", whitelist);
 	}
 
 	public static main getInstance() {
@@ -46,15 +53,31 @@ public class main extends JavaPlugin implements CommandExecutor, Listener {
 		instance.saveConfig();
 	}
 	private void whitelist() {
-		Runnable run = new BukkitRunnable() {
-			
-			@Override
-			public void run() {
-				
+				while (1 == 1) {
+					if (whitelistPending.size() > 24) {
+						UUIDFetcher fetcher = new UUIDFetcher(whitelistPending);
+						Map<String, UUID> response = null;
+						try {
+							response = fetcher.call();
+						} catch (Exception e) {
+							getLogger().warning("Exception while running UUIDFetcher");
+							e.printStackTrace();
+						}
+						for (UUID id : response.values()) {
+							whitelist.add(id);
+							}
+					}else {
+						break;
+					}
+				}
 				
 			}
-		};
-		
+	public void WhitelistKick(PlayerJoinEvent event) {
+		TextComponent message = new TextComponent( "You are not whitelisted!" );
+		message.setColor( ChatColor.RED );
+		message.setBold( true );
+		message.setUnderlined(true);
+		event.getPlayer().spigot().sendMessage(message);
 	}
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
