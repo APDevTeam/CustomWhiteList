@@ -23,6 +23,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 
 public class main extends JavaPlugin implements CommandExecutor, Listener {
 	private static main instance;
+	private ArrayList<String>whitelistPending = new ArrayList<String>();
 
 	@Override
 	public void onEnable() {
@@ -50,9 +51,7 @@ public class main extends JavaPlugin implements CommandExecutor, Listener {
 			if (args[0].equalsIgnoreCase("remove")) {
 				if (Bukkit.getPlayerExact(args[1]) instanceof Player) {
 					OfflinePlayer player = Bukkit.getOfflinePlayer(args[1]);
-					while (Bukkit.getWhitelistedPlayers().contains(player.getName()) == false) {
-						//idk what to do here if we add to the whitelist its not gonna do the lookup till the server restarts then it will fail :/
-					}
+					whitelistPending.add(player.getName());
 				} else {
 					TextComponent message = new TextComponent( "This is not a valid player!" );
 					message.setColor( ChatColor.RED );
@@ -63,9 +62,7 @@ public class main extends JavaPlugin implements CommandExecutor, Listener {
 				if (args[0].equalsIgnoreCase("add")) {
 					if (Bukkit.getPlayerExact(args[1]) instanceof Player) {
 						OfflinePlayer player = Bukkit.getOfflinePlayer(args[1]);
-						while (Bukkit.getWhitelistedPlayers().contains(player.getName()) == false) {
-							
-						}
+						whitelistPending.add(player.getName());
 					} else {
 						TextComponent message = new TextComponent( "This is not a valid player!" );
 						message.setColor( ChatColor.RED );
