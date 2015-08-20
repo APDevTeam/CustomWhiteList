@@ -19,6 +19,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitScheduler;
 
 import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.TextComponent;
 
 public class main extends JavaPlugin implements CommandExecutor, Listener {
 	private static main instance;
@@ -46,7 +47,33 @@ public class main extends JavaPlugin implements CommandExecutor, Listener {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (cmd.getName() == "CustomWhitelist" && args.length == 2) {
-			
+			if (args[0].equalsIgnoreCase("remove")) {
+				if (Bukkit.getPlayerExact(args[1]) instanceof Player) {
+					OfflinePlayer player = Bukkit.getOfflinePlayer(args[1]);
+					while (Bukkit.getWhitelistedPlayers().contains(player.getName()) == false) {
+						//idk what to do here if we add to the whitelist its not gonna do the lookup till the server restarts then it will fail :/
+					}
+				} else {
+					TextComponent message = new TextComponent( "This is not a valid player!" );
+					message.setColor( ChatColor.RED );
+					message.setBold( true );
+					Bukkit.getPlayer(sender.getName()).spigot().sendMessage(message);
+				}
+			} else {
+				if (args[0].equalsIgnoreCase("add")) {
+					if (Bukkit.getPlayerExact(args[1]) instanceof Player) {
+						OfflinePlayer player = Bukkit.getOfflinePlayer(args[1]);
+						while (Bukkit.getWhitelistedPlayers().contains(player.getName()) == false) {
+							//idk what to do here if we add to the whitelist its not gonna do the lookup till the server restarts then it will fail :/
+						}
+					} else {
+						TextComponent message = new TextComponent( "This is not a valid player!" );
+						message.setColor( ChatColor.RED );
+						message.setBold( true );
+						Bukkit.getPlayer(sender.getName()).spigot().sendMessage(message);
+					}
+				}
+			}
 		} else {
 			
 		}
