@@ -1,4 +1,4 @@
-package Main;
+package org.minecraftairshippirates.customwhitelist;
 
 import java.util.ArrayList;
 import java.util.Arrays;

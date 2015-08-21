@@ -1,4 +1,4 @@
-package Main;
+package org.minecraftairshippirates.customwhitelist;
 
 import com.google.common.collect.ImmutableList;
 import org.json.simple.JSONArray;
