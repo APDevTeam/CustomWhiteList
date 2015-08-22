@@ -29,7 +29,6 @@ public class Utils{
 		conn.setRequestProperty("Connection", "Keep-Alive");
 	
 		conn.setRequestMethod("GET");
-		System.out.println("Status: " + conn.getResponseCode());
 		
 		StringBuilder sb = new StringBuilder();
 		
