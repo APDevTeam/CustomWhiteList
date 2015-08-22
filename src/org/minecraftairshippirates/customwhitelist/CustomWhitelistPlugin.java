@@ -1,6 +1,9 @@
 package org.minecraftairshippirates.customwhitelist;
 
+import java.util.UUID;
+
 import org.bukkit.Color;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -30,9 +33,14 @@ public final class CustomWhitelistPlugin extends JavaPlugin{
 						return true;
 					}
 					if(args.length == 2){ // If there was a player
-						
-						// TODO whitelist the player
-						sender.sendMessage("Working on it!");
+						try{
+							UUID uuid = UUID.fromString(UUIDFetcher.getUUID(args[1]));
+							OfflinePlayer ofp = getServer().getOfflinePlayer(uuid);
+							ofp.setWhitelisted(true);
+						}
+						catch(UUIDNotFoundException e){
+							sender.sendMessage(Color.RED + "Exception: The player could not be found!");
+						}
 						
 						return true;
 					}
