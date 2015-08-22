@@ -17,7 +17,7 @@ public class UUIDFetcher{
 	 * @param	String username		The username of the player
 	 * @return	String UUID			The UUID of the player
 	 */
-	public String getUUID(String username) throws UUIDNotFoundException{
+	public static String getUUID(String username) throws UUIDNotFoundException{
 		String UUID = null;
 		
 		// The idea here is to try the next method if one runs into an error.
@@ -39,7 +39,7 @@ public class UUIDFetcher{
 	 * @param	String username		The Username of the player
 	 * @return	String uuid			The UUID of the player
 	 */
-	private String fetchFromMCUUIDnet(String username) throws UUIDNotFoundException{
+	private static String fetchFromMCUUIDnet(String username) throws UUIDNotFoundException{
 		
 		// Download the page
 		URL pageurl;
