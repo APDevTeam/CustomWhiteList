@@ -7,7 +7,7 @@ database: false
 commands:
     customwhitelist:
         description: Displays Custom Whitelist help
-        usage: customwhitelist <add>
+        usage: customwhitelist <add/remove>
         aliases: cw
         
 permissions:
@@ -15,6 +15,10 @@ permissions:
         description: Gives access to all CustomWhitelist commands
         children:
             customwhitelist.add: true
+            customwhitelist.remove: true
     customwhitelist.add:
-        description: Allows you to add a player to the whitelist
+        description: Allows a player to be added to the whitelist
+        default: op
+    customwhitelist.remove:
+        description: Allows a player to be removed from the whitelist
         default: op
