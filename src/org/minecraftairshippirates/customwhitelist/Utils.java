@@ -30,6 +30,10 @@ public class Utils{
 	
 		conn.setRequestMethod("GET");
 		
+		if(!conn.getResponseMessage().contains("OK")){ // If it wasn't okay
+			throw new IOException(); // Then we give up
+		}
+		
 		StringBuilder sb = new StringBuilder();
 		
 		InputStream is = conn.getInputStream();
