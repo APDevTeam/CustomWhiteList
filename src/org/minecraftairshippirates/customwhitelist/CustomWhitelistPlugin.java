@@ -30,7 +30,7 @@ public final class CustomWhitelistPlugin extends JavaPlugin{
 						sender.sendMessage(Color.RED + insufficientPermissions);
 						return true;
 					}
-					if(args.length == 2){ // If there was a player
+					else if(args.length == 2){ // If there was a player
 						try{
 							UUID uuid = UUID.fromString(UUIDFetcher.getUUID(args[1]));
 							OfflinePlayer ofp = getServer().getOfflinePlayer(uuid);
