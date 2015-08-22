@@ -13,16 +13,6 @@ public final class CustomWhitelistPlugin extends JavaPlugin{
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
-		/**if(cmd.getName().equalsIgnoreCase("customwhitelist") && args.length == 0){ // If nothing was provided with "customwhitelist"
-			sender.sendMessage("Usage: customwhitelist add <player>");
-			return true;
-		}
-		else if(cmd.getName().equalsIgnoreCase("cw") && args.length == 0){ // If nothing was provided with "cw"
-			sender.sendMessage("Usage: cw add <player>");
-		}
-		else return false;**/
-		
-		
 		if(cmd.getName().equalsIgnoreCase("customwhitelist") || cmd.getName().equalsIgnoreCase("cw")){ // If "customwhitelist" or "cw"
 			if(args.length >= 1){ // If there was at least one argument
 				if(args[0].equalsIgnoreCase("add")){ // If the first argument was "add"
