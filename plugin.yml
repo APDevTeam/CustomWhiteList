@@ -1,12 +1,20 @@
 name: CustomWhitelist
 version: 0.0.1
-#version: ${env.BUILD_NUMBER}
-main: Main.main
+description: Allows modification to the whitelist even when Mojang UUID queries are rejected
+author: Airship Pirates Programmers
+main: org.minecraftairshippirates.customwhitelist.CustomWhitelistPlugin
 database: false
 commands:
-  WA:
-    description: Adds a player to your whitelist.
-    usage: /WA name
-  WR:
-    description: Removes a player from your whitelist.
-    usage: /WR name
+    customwhitelist:
+        description: Displays Custom Whitelist help
+        usage: customwhitelist <add>
+        aliases: cw
+        
+permissions:
+    customwhitelist.*:
+        description: Gives access to all CustomWhitelist commands
+        children:
+            customwhitelist.add: true
+    customwhitelist.add:
+        description: Allows you to add a player to the whitelist
+        default: op
