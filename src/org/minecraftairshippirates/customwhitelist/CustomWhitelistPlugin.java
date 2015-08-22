@@ -2,7 +2,7 @@ package org.minecraftairshippirates.customwhitelist;
 
 import java.util.UUID;
 
-import org.bukkit.Color;
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -19,7 +19,7 @@ public final class CustomWhitelistPlugin extends JavaPlugin{
 			if(args.length >= 1){ // If there was at least one argument
 				if(args[0].equalsIgnoreCase("add")){ // If the first argument was "add"
 					if(!sender.hasPermission("customwhitelist.add")){ // If the sender doesn't have the permission for this command
-						sender.sendMessage(Color.RED + MSG_INSUFFICIENT_PERMS);
+						sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
 						return true;
 					}
 					else if(args.length == 2){ // If there was a player
@@ -35,18 +35,18 @@ public final class CustomWhitelistPlugin extends JavaPlugin{
 							sender.sendMessage("Added \"" + args[1] + "\" to the whitelist.");
 						}
 						catch(UUIDNotFoundException e){
-							sender.sendMessage(Color.RED.toString() + '\"' + args[1] + "\" was not found and could not be added to the whitelist.");
+							sender.sendMessage(ChatColor.RED.toString() + '\"' + args[1] + "\" was not found and could not be added to the whitelist.");
 						}
 						
 						return true;
 					}
 					else if(args.length >= 3){ // Too many arguments
-						sender.sendMessage(Color.RED + MSG_TOO_MANY_ARGS);
-						sender.sendMessage(Color.RED + MSG_ADD_USAGE);
+						sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
+						sender.sendMessage(ChatColor.RED + MSG_ADD_USAGE);
 						return true;
 					}
 					else{ // No player was typed
-						sender.sendMessage(Color.RED + MSG_ADD_USAGE);
+						sender.sendMessage(ChatColor.RED + MSG_ADD_USAGE);
 						return true;
 					}
 				}
