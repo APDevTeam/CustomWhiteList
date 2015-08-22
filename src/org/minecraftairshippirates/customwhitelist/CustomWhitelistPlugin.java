@@ -26,7 +26,7 @@ public final class CustomWhitelistPlugin extends JavaPlugin{
 		if(cmd.getName().equalsIgnoreCase("customwhitelist") || cmd.getName().equalsIgnoreCase("cw")){ // If "customwhitelist" or "cw"
 			if(args.length >= 1){ // If there was at least one argument
 				if(args[0].equalsIgnoreCase("add")){ // If the first argument was "add"
-					if(!sender.hasPermission("customwhitelist.add")){
+					if(!sender.hasPermission("customwhitelist.add")){ // If the sender doesn't have the permission for this command
 						sender.sendMessage(Color.RED + insufficientPermissions);
 						return true;
 					}
@@ -48,15 +48,17 @@ public final class CustomWhitelistPlugin extends JavaPlugin{
 						
 						return true;
 					}
-					else if(args.length >= 3){
+					else if(args.length >= 3){ // Too many arguments
 						sender.sendMessage(Color.RED + tooManyArgs);
 						return false;
 					}
 					else return false;
 				}
-				else return false;
+				else{ // Subcommand not recognized
+					return false;
+				}
 			}
-			else{ // No arguments to process
+			else{ // No subcommands
 				return false;
 			}
 		}
