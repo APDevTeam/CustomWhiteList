@@ -14,16 +14,16 @@ public class UUIDFetcher{
 	 * The following method is to get a UUID from any accessible source.
 	 * Note that due to the nature of downloading data, this method may take
 	 * unpredictable times to return.
-	 * @param	String Username		The Username of the player
+	 * @param	String username		The username of the player
 	 * @return	String UUID			The UUID of the player
 	 */
-	public String getUUID(String Username) throws UUIDNotFoundException{
+	public String getUUID(String username) throws UUIDNotFoundException{
 		String UUID = null;
 		
 		// The idea here is to try the next method if one runs into an error.
 		
 		// Try searching mcuuid.net
-		UUID = fetchFromMCUUIDnet(Username);
+		UUID = fetchFromMCUUIDnet(username);
 		
 		if(UUID == null){ // If nothing was found
 			 throw new UUIDNotFoundException();
