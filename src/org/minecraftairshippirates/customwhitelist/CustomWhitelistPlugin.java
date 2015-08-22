@@ -52,7 +52,10 @@ public final class CustomWhitelistPlugin extends JavaPlugin{
 						sender.sendMessage(Color.RED + tooManyArgs);
 						return false;
 					}
-					else return false;
+					else{ // No player was typed
+						sender.sendMessage(Color.RED + "Usage: /customwhitelist add <player>");
+						return true;
+					}
 				}
 				else{ // Subcommand not recognized
 					return false;
