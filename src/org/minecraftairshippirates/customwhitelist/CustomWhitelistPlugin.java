@@ -50,7 +50,8 @@ public final class CustomWhitelistPlugin extends JavaPlugin{
 					}
 					else if(args.length >= 3){ // Too many arguments
 						sender.sendMessage(Color.RED + tooManyArgs);
-						return false;
+						sender.sendMessage(Color.RED + "Usage: /customwhitelist add <player>");
+						return true;
 					}
 					else{ // No player was typed
 						sender.sendMessage(Color.RED + "Usage: /customwhitelist add <player>");
