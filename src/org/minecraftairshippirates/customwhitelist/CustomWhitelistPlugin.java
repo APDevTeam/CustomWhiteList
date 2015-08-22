@@ -35,15 +35,15 @@ public final class CustomWhitelistPlugin extends JavaPlugin{
 							UUID uuid = UUID.fromString(UUIDFetcher.getUUID(args[1]));
 							OfflinePlayer ofp = getServer().getOfflinePlayer(uuid);
 							if(ofp.isWhitelisted() == true){ // If the player is already whitelisted
-								sender.sendMessage("The player " + args[1] + " is already on the whitelist");
+								sender.sendMessage('\"' + args[1] + "\" is already on the whitelist.");
 							}
 							else{ // They're not on the whitelist
 								ofp.setWhitelisted(true); // Add them
 							}
-							sender.sendMessage("Added " + args[1] + " to the whitelist");
+							sender.sendMessage("Added \"" + args[1] + "\" to the whitelist.");
 						}
 						catch(UUIDNotFoundException e){
-							sender.sendMessage(Color.RED + "Exception: The player could not be found!");
+							sender.sendMessage(Color.RED.toString() + '\"' + args[1] + "\" was not found and could not be added to the whitelist.");
 						}
 						
 						return true;
