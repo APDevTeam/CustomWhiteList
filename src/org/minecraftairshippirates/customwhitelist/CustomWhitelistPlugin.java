@@ -32,8 +32,8 @@ public final class CustomWhitelistPlugin extends JavaPlugin{
 							}
 							else{ // They're not on the whitelist
 								ofp.setWhitelisted(true); // Add them
+								sender.sendMessage("Added \"" + args[1] + "\" to the whitelist.");
 							}
-							sender.sendMessage("Added \"" + args[1] + "\" to the whitelist.");
 						}
 						catch(UUIDNotFoundException e){
 							sender.sendMessage(ChatColor.RED.toString() + '\"' + args[1] + "\" was not found and could not be added to the whitelist.");
@@ -65,8 +65,8 @@ public final class CustomWhitelistPlugin extends JavaPlugin{
 							}
 							else{ // They're on the whitelist
 								ofp.setWhitelisted(false); // Remove them
+								sender.sendMessage("Removed \"" + args[1] + "\" from the whitelist.");
 							}
-							sender.sendMessage("Removed \"" + args[1] + "\" from the whitelist.");
 						}
 						catch(UUIDNotFoundException e){
 							sender.sendMessage(ChatColor.RED.toString() + '\"' + args[1] + "\" was not found and could not be removed from the whitelist.");
