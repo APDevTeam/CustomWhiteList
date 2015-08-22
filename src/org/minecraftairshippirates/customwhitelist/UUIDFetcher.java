@@ -17,10 +17,17 @@ public class UUIDFetcher{
 	 * @param	String Username		The Username of the player
 	 * @return	String UUID			The UUID of the player
 	 */
-	public String getUUID(String Username){
-		String UUID =	null;
+	public String getUUID(String Username) throws UUIDNotFoundException{
+		String UUID = null;
 		
 		// The idea here is to try the next method if one runs into an error.
+		
+		// Try searching mcuuid.net
+		UUID = fetchFromMCUUIDnet(Username);
+		
+		if(UUID == null){ // If nothing was found
+			 throw new UUIDNotFoundException();
+		}
 		
 		return UUID;
 	}
