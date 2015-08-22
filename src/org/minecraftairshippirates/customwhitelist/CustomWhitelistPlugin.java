@@ -9,7 +9,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class CustomWhitelistPlugin extends JavaPlugin{
-	private final String tooManyArgs = "Too many arguments!", insufficientPermissions = "You don't have permission to do that!";
+	private final String tooManyArgsMsg = "Too many arguments!",
+		insufficientPermissionsMsg = "You don't have permission to do that!",
+		addUsageMessage = "Usage: /customwhitelist add <player>";
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
@@ -17,7 +19,7 @@ public final class CustomWhitelistPlugin extends JavaPlugin{
 			if(args.length >= 1){ // If there was at least one argument
 				if(args[0].equalsIgnoreCase("add")){ // If the first argument was "add"
 					if(!sender.hasPermission("customwhitelist.add")){ // If the sender doesn't have the permission for this command
-						sender.sendMessage(Color.RED + insufficientPermissions);
+						sender.sendMessage(Color.RED + insufficientPermissionsMsg);
 						return true;
 					}
 					else if(args.length == 2){ // If there was a player
@@ -39,12 +41,12 @@ public final class CustomWhitelistPlugin extends JavaPlugin{
 						return true;
 					}
 					else if(args.length >= 3){ // Too many arguments
-						sender.sendMessage(Color.RED + tooManyArgs);
-						sender.sendMessage(Color.RED + "Usage: /customwhitelist add <player>");
+						sender.sendMessage(Color.RED + tooManyArgsMsg);
+						sender.sendMessage(Color.RED + addUsageMessage);
 						return true;
 					}
 					else{ // No player was typed
-						sender.sendMessage(Color.RED + "Usage: /customwhitelist add <player>");
+						sender.sendMessage(Color.RED + addUsageMessage);
 						return true;
 					}
 				}
