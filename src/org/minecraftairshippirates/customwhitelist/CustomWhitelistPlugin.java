@@ -56,8 +56,12 @@ public final class CustomWhitelistPlugin extends JavaPlugin{
 				}
 				else return false;
 			}
-			else return false;
+			else{ // No arguments to process
+				return false;
+			}
 		}
-		else return false;
+		else{ // Command not recognized
+			return false;
+		}
 	}
 }
