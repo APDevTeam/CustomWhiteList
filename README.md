@@ -24,6 +24,14 @@ Permission: `customwhitelist.check`
 Lists all players on the whitelist  
 Permission: `customwhitelist.list`
 
+**/customwhitelist on**  
+Turns on the whitelist  
+Permission: `customwhitelist.on`
+
+**/customwhitelist off**  
+Turns off the whitelist  
+Permission: `customwhitelist.off`
+
 ### Binaries
 All binaries require Spigot 1.8.7+ [Direct download](https://dl.dropboxusercontent.com/u/49422983/AirshipPirates/Plugins/libs/spigot-1.8.7.jar)  
 Version v0.1-RELEASE [Direct download](https://dl.dropboxusercontent.com/u/49422983/AirshipPirates/Plugins/CustomWhitelist_v0.1-RELEASE.jar)  

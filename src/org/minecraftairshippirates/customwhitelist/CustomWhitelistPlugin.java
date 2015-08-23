@@ -139,6 +139,48 @@ public final class CustomWhitelistPlugin extends JavaPlugin{
 						return false;
 					}
 				}
+				else if(args[0].equalsIgnoreCase("on")){ // If the subcommand was "on"
+					if(!sender.hasPermission("customwhitelist.on")){ // If the sender doesn't have the permission for this command
+						sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
+						return true;
+					}
+					else if(args.length == 1){ // Turn on the whitelist
+						if(!getServer().hasWhitelist()){ // If the server does not have a whitelist
+							getServer().setWhitelist(true);
+							sender.sendMessage("Whitelisting was turned on.");
+						}
+						else{ // It's already on
+							sender.sendMessage("Whitelisting is already on.");
+						}
+						
+						return true;
+					}
+					else{ // Else there was an argument
+						sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
+						return false;
+					}
+				}
+				else if(args[0].equalsIgnoreCase("off")){ // If the subcommand was "off"
+					if(!sender.hasPermission("customwhitelist.off")){ // If the sender doesn't have the permission for this command
+						sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
+						return true;
+					}
+					else if(args.length == 1){ // Turn off the whitelist
+						if(getServer().hasWhitelist()){ // If the server has a whitelist
+							getServer().setWhitelist(false);
+							sender.sendMessage("Whitelisting was turned off.");
+						}
+						else{ // It's already off
+							sender.sendMessage("Whitelisting is already off.");
+						}
+						
+						return true;
+					}
+					else{ // Else there was an argument
+						sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
+						return false;
+					}
+				}
 				else{ // Subcommand not recognized
 					return false;
 				}

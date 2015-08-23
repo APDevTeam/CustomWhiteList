@@ -7,7 +7,7 @@ database: false
 commands:
     customwhitelist:
         description: Displays Custom Whitelist help
-        usage: Usage: /customwhitelist <add/remove/check/list>
+        usage: Usage: /customwhitelist <add/remove/check/list/on/off>
         aliases: cw
         
 permissions:
@@ -18,6 +18,8 @@ permissions:
             customwhitelist.remove: true
             customwhitelist.check: true
             customwhitelist.list: true
+            customwhitelist.on: true
+            customwhitelist.off: true
     customwhitelist.add:
         description: Allows a player to be added to the whitelist
         default: op
@@ -29,4 +31,10 @@ permissions:
         default: op
     customwhitelist.list:
         description: Allows you to list all players on the whitelist
+        default: op
+    customwhitelist.on:
+        description: Allows you to turn on the whitelist
+        default: op
+    customwhitelist.off:
+        description: Allows you to turn off the whitelist
         default: op
