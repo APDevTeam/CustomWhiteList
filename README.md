@@ -28,5 +28,5 @@ Permission: `customwhitelist.list`
 All binaries require Spigot 1.8.7+ [Direct download](https://dl.dropboxusercontent.com/u/49422983/AirshipPirates/Plugins/libs/spigot-1.8.7.jar)  
 Version v0.1-RELEASE [Direct download](https://dl.dropboxusercontent.com/u/49422983/AirshipPirates/Plugins/CustomWhitelist_v0.1-RELEASE.jar)  
 Version v0.2-RELEASE [Direct download](https://dl.dropboxusercontent.com/u/49422983/AirshipPirates/Plugins/CustomWhitelist_v0.2-RELEASE.jar)  
-Version v0.3-RELEASE [Direct download](https://dl.dropboxusercontent.com/u/49422983/AirshipPirates/Plugins/CustomWhitelist_v0.3-RELEASE.jar)
+Version v0.3-RELEASE [Direct download](https://dl.dropboxusercontent.com/u/49422983/AirshipPirates/Plugins/CustomWhitelist_v0.3-RELEASE.jar)  
 **Version v0.4-RELEASE** [Direct download](https://dl.dropboxusercontent.com/u/49422983/AirshipPirates/Plugins/CustomWhitelist_v0.4-RELEASE.jar)
