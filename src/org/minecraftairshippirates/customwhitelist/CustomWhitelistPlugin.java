@@ -86,7 +86,7 @@ public final class CustomWhitelistPlugin extends JavaPlugin{
 					}
 				}
 				else if(args[0].equalsIgnoreCase("check")){ // If the subcommand was "check"
-					if(!sender.hasPermission("customWhitelist.check")){ // If the sender doesn't have the permission for this command
+					if(!sender.hasPermission("customwhitelist.check")){ // If the sender doesn't have the permission for this command
 						sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
 						return true;
 					}
@@ -115,6 +115,28 @@ public final class CustomWhitelistPlugin extends JavaPlugin{
 					else{ // No player was typed
 						sender.sendMessage(ChatColor.RED + MSG_CHECK_USAGE);
 						return true;
+					}
+				}
+				else if(args[0].equalsIgnoreCase("list")){ // If the subcommand was "list"
+					if(!sender.hasPermission("customwhitelist.list")){ // If the sender doesn't have the permission for this command
+						sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
+						return true;
+					}
+					else if(args.length == 1){ // List the players
+						OfflinePlayer[] wlofps = getServer().getWhitelistedPlayers().toArray(new OfflinePlayer[getServer().getWhitelistedPlayers().size()]);
+						StringBuilder sb = new StringBuilder();
+						sb.append("There are " + wlofps.length + " whitelisted players:");
+						for(OfflinePlayer ofp : wlofps){ // For every element in the array
+							UUID uuid = ofp.getUniqueId();
+							sb.append('\n' + uuid.toString());
+						}
+						sender.sendMessage(sb.toString());
+						
+						return true;
+					}
+					else{ // Else there was an argument
+						sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
+						return false;
 					}
 				}
 				else{ // Subcommand not recognized
