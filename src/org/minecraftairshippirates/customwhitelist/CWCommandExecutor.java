@@ -37,102 +37,13 @@ public class CWCommandExecutor implements CommandExecutor{
 		if(cmd.getName().equalsIgnoreCase("customwhitelist") || cmd.getName().equalsIgnoreCase("cw")){ // If "customwhitelist" or "cw"
 			if(args.length >= 1){ // If there was at least one argument
 				if(args[0].equalsIgnoreCase("add")){ // If the subcommand was "add"
-					if(!sender.hasPermission("customwhitelist.add")){ // If the sender doesn't have the permission for this command
-						sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
-						return true;
-					}
-					else if(args.length == 2){ // If there is a player
-						try{
-							UUID uuid = UUID.fromString(UUIDFetcher.getUUID(args[1]));
-							OfflinePlayer ofp = cwp.getServer().getOfflinePlayer(uuid);
-							if(ofp.isWhitelisted() == true){ // If the player is already whitelisted
-								sender.sendMessage('\"' + args[1] + "\" is already on the whitelist.");
-							}
-							else{ // They're not on the whitelist
-								ofp.setWhitelisted(true); // Add them
-								sender.sendMessage("Added \"" + args[1] + "\" to the whitelist.");
-							}
-						}
-						catch(UUIDNotFoundException e){
-							sender.sendMessage(ChatColor.RED.toString() + '\"' + args[1] + "\" was not found and could not be added to the whitelist.");
-						}
-						
-						return true;
-					}
-					else if(args.length >= 3){ // Too many arguments
-						sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
-						sender.sendMessage(ChatColor.RED + MSG_ADD_USAGE);
-						return true;
-					}
-					else{ // No player was typed
-						sender.sendMessage(ChatColor.RED + MSG_ADD_USAGE);
-						return true;
-					}
+					return add(sender, cmd, label, args);
 				}
 				else if(args[0].equalsIgnoreCase("remove")){ // If the subcommand was "remove"
-					if(!sender.hasPermission("customwhitelist.remove")){ // If the sender doesn't have the permission for this command
-						sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
-						return true;
-					}
-					else if(args.length == 2){ // If there is a player
-						try{
-							UUID uuid = UUID.fromString(UUIDFetcher.getUUID(args[1]));
-							OfflinePlayer ofp = cwp.getServer().getOfflinePlayer(uuid);
-							if(ofp.isWhitelisted() == false){ // If the player is not whitelisted
-								sender.sendMessage('\"' + args[1] + "\" is not on the whitelist.");
-							}
-							else{ // They're on the whitelist
-								ofp.setWhitelisted(false); // Remove them
-								sender.sendMessage("Removed \"" + args[1] + "\" from the whitelist.");
-							}
-						}
-						catch(UUIDNotFoundException e){
-							sender.sendMessage(ChatColor.RED.toString() + '\"' + args[1] + "\" was not found and could not be removed from the whitelist.");
-						}
-						
-						return true;
-					}
-					else if(args.length >= 3){ // Too many arguments
-						sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
-						sender.sendMessage(ChatColor.RED + MSG_REMOVE_USAGE);
-						return true;
-					}
-					else{ // No player was typed
-						sender.sendMessage(ChatColor.RED + MSG_REMOVE_USAGE);
-						return true;
-					}
+					return remove(sender, cmd, label, args);
 				}
 				else if(args[0].equalsIgnoreCase("check")){ // If the subcommand was "check"
-					if(!sender.hasPermission("customwhitelist.check")){ // If the sender doesn't have the permission for this command
-						sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
-						return true;
-					}
-					else if(args.length == 2){ // If there is a player
-						try{
-							UUID uuid = UUID.fromString(UUIDFetcher.getUUID(args[1]));
-							OfflinePlayer ofp = cwp.getServer().getOfflinePlayer(uuid);
-							if(ofp.isWhitelisted()){ // If the player is whitelisted
-								sender.sendMessage('\"' + args[1] + "\" is on the whitelist.");
-							}
-							else{ // Else the player is not whitelisted
-								sender.sendMessage('\"' + args[1] + "\" is not on the whitelist.");
-							}
-						}
-						catch(UUIDNotFoundException e){
-							sender.sendMessage(ChatColor.RED.toString() + '\"' + args[1] + "\" was not found and could not be checked.");
-						}
-						
-						return true;
-					}
-					else if(args.length >= 3){ // Too many arguments
-						sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
-						sender.sendMessage(ChatColor.RED + MSG_CHECK_USAGE);
-						return true;
-					}
-					else{ // No player was typed
-						sender.sendMessage(ChatColor.RED + MSG_CHECK_USAGE);
-						return true;
-					}
+					return check(sender, cmd, label, args);
 				}
 				else if(args[0].equalsIgnoreCase("list")){ // If the subcommand was "list"
 					if(!sender.hasPermission("customwhitelist.list")){ // If the sender doesn't have the permission for this command
@@ -208,6 +119,119 @@ public class CWCommandExecutor implements CommandExecutor{
 		}
 		else{ // Command not recognized
 			return false;
+		}
+	}
+	
+	/**
+	 * This method is to handle the add command
+	 * @return boolean usedProperly		Returns true if the command was used properly
+	 */
+	private boolean add(CommandSender sender, Command cmd, String label, String[] args){
+		if(!sender.hasPermission("customwhitelist.add")){ // If the sender doesn't have the permission for this command
+			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
+			return true;
+		}
+		else if(args.length == 2){ // If there is a player
+			try{
+				UUID uuid = UUID.fromString(UUIDFetcher.getUUID(args[1]));
+				OfflinePlayer ofp = cwp.getServer().getOfflinePlayer(uuid);
+				if(ofp.isWhitelisted() == true){ // If the player is already whitelisted
+					sender.sendMessage('\"' + args[1] + "\" is already on the whitelist.");
+				}
+				else{ // They're not on the whitelist
+					ofp.setWhitelisted(true); // Add them
+					sender.sendMessage("Added \"" + args[1] + "\" to the whitelist.");
+				}
+			}
+			catch(UUIDNotFoundException e){
+				sender.sendMessage(ChatColor.RED.toString() + '\"' + args[1] + "\" was not found and could not be added to the whitelist.");
+			}
+			
+			return true;
+		}
+		else if(args.length >= 3){ // Too many arguments
+			sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
+			sender.sendMessage(ChatColor.RED + MSG_ADD_USAGE);
+			return true;
+		}
+		else{ // No player was typed
+			sender.sendMessage(ChatColor.RED + MSG_ADD_USAGE);
+			return true;
+		}
+	}
+	
+	/**
+	 * This method is to handle the remove command
+	 * @return boolean usedProperly		Returns true if the command was used properly
+	 */
+	private boolean remove(CommandSender sender, Command cmd, String label, String[] args){
+		if(!sender.hasPermission("customwhitelist.remove")){ // If the sender doesn't have the permission for this command
+			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
+			return true;
+		}
+		else if(args.length == 2){ // If there is a player
+			try{
+				UUID uuid = UUID.fromString(UUIDFetcher.getUUID(args[1]));
+				OfflinePlayer ofp = cwp.getServer().getOfflinePlayer(uuid);
+				if(ofp.isWhitelisted() == false){ // If the player is not whitelisted
+					sender.sendMessage('\"' + args[1] + "\" is not on the whitelist.");
+				}
+				else{ // They're on the whitelist
+					ofp.setWhitelisted(false); // Remove them
+					sender.sendMessage("Removed \"" + args[1] + "\" from the whitelist.");
+				}
+			}
+			catch(UUIDNotFoundException e){
+				sender.sendMessage(ChatColor.RED.toString() + '\"' + args[1] + "\" was not found and could not be removed from the whitelist.");
+			}
+			
+			return true;
+		}
+		else if(args.length >= 3){ // Too many arguments
+			sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
+			sender.sendMessage(ChatColor.RED + MSG_REMOVE_USAGE);
+			return true;
+		}
+		else{ // No player was typed
+			sender.sendMessage(ChatColor.RED + MSG_REMOVE_USAGE);
+			return true;
+		}
+	}
+	
+	/**
+	 * This method is to handle the check command
+	 * @return boolean usedProperly		Returns true if the command was used properly
+	 */
+	private boolean check(CommandSender sender, Command cmd, String label, String[] args){
+		if(!sender.hasPermission("customwhitelist.check")){ // If the sender doesn't have the permission for this command
+			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
+			return true;
+		}
+		else if(args.length == 2){ // If there is a player
+			try{
+				UUID uuid = UUID.fromString(UUIDFetcher.getUUID(args[1]));
+				OfflinePlayer ofp = cwp.getServer().getOfflinePlayer(uuid);
+				if(ofp.isWhitelisted()){ // If the player is whitelisted
+					sender.sendMessage('\"' + args[1] + "\" is on the whitelist.");
+				}
+				else{ // Else the player is not whitelisted
+					sender.sendMessage('\"' + args[1] + "\" is not on the whitelist.");
+				}
+			}
+			catch(UUIDNotFoundException e){
+				sender.sendMessage(ChatColor.RED.toString() + '\"' + args[1] + "\" was not found and could not be checked.");
+			}
+			
+			return true;
+		}
+		else if(args.length >= 3){ // Too many arguments
+			sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
+			sender.sendMessage(ChatColor.RED + MSG_CHECK_USAGE);
+			return true;
+		}
+		else{ // No player was typed
+			sender.sendMessage(ChatColor.RED + MSG_CHECK_USAGE);
+			return true;
 		}
 	}
 }
