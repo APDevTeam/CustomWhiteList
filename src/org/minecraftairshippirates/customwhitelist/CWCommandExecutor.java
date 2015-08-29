@@ -34,7 +34,7 @@ public class CWCommandExecutor implements CommandExecutor{
 	 */
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
-		if(cmd.getName().equalsIgnoreCase("customwhitelist") || cmd.getName().equalsIgnoreCase("cw")){ // If "customwhitelist" or "cw"
+		if(cmd.getName().equalsIgnoreCase("customwhitelist") || cmd.getName().equalsIgnoreCase("cw")){ // If the command was "customwhitelist" or "cw"
 			if(args.length >= 1){ // If there was at least one argument
 				if(args[0].equalsIgnoreCase("add")){ // If the subcommand was "add"
 					return add(sender, cmd, label, args);
@@ -49,7 +49,7 @@ public class CWCommandExecutor implements CommandExecutor{
 					return list(sender, cmd, label, args);
 				}
 				else if(args[0].equalsIgnoreCase("on")){ // If the subcommand was "on"
-					if(!sender.hasPermission("customwhitelist.on")){ // If the sender doesn't have the permission for this command
+					if(!sender.hasPermission("customwhitelist.on")){ // If the sender doesn't have the permission for the "on" subcommand
 						sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
 						return true;
 					}
@@ -70,7 +70,7 @@ public class CWCommandExecutor implements CommandExecutor{
 					}
 				}
 				else if(args[0].equalsIgnoreCase("off")){ // If the subcommand was "off"
-					if(!sender.hasPermission("customwhitelist.off")){ // If the sender doesn't have the permission for this command
+					if(!sender.hasPermission("customwhitelist.off")){ // If the sender doesn't have the permission for the "off" subcommand
 						sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
 						return true;
 					}
@@ -91,7 +91,7 @@ public class CWCommandExecutor implements CommandExecutor{
 					}
 				}
 				else if(args[0].equalsIgnoreCase("reload")){ // If the subcommand was "reload"
-					if(!sender.hasPermission("customwhitelist.reload")){ // If the sender doesn't have the permission for this command
+					if(!sender.hasPermission("customwhitelist.reload")){ // If the sender doesn't have the permission for the "reload" subcommand
 						sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
 						return true;
 					}
@@ -123,7 +123,7 @@ public class CWCommandExecutor implements CommandExecutor{
 	 * @return boolean usedProperly		Returns true if the command was used properly
 	 */
 	private boolean add(CommandSender sender, Command cmd, String label, String[] args){
-		if(!sender.hasPermission("customwhitelist.add")){ // If the sender doesn't have the permission for this command
+		if(!sender.hasPermission("customwhitelist.add")){ // If the sender doesn't have the permission for the "add" subcommand
 			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
 			return true;
 		}
@@ -161,7 +161,7 @@ public class CWCommandExecutor implements CommandExecutor{
 	 * @return boolean usedProperly		Returns true if the command was used properly
 	 */
 	private boolean remove(CommandSender sender, Command cmd, String label, String[] args){
-		if(!sender.hasPermission("customwhitelist.remove")){ // If the sender doesn't have the permission for this command
+		if(!sender.hasPermission("customwhitelist.remove")){ // If the sender doesn't have the permission for the "remove" subcommand
 			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
 			return true;
 		}
@@ -199,7 +199,7 @@ public class CWCommandExecutor implements CommandExecutor{
 	 * @return boolean usedProperly		Returns true if the command was used properly
 	 */
 	private boolean check(CommandSender sender, Command cmd, String label, String[] args){
-		if(!sender.hasPermission("customwhitelist.check")){ // If the sender doesn't have the permission for this command
+		if(!sender.hasPermission("customwhitelist.check")){ // If the sender doesn't have the permission for the "check" subcommand
 			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
 			return true;
 		}
@@ -236,7 +236,7 @@ public class CWCommandExecutor implements CommandExecutor{
 	 * @return boolean usedProperly		Returns true if the command was used properly
 	 */
 	private boolean list(CommandSender sender, Command cmd, String label, String[] args){
-		if(!sender.hasPermission("customwhitelist.list")){ // If the sender doesn't have the permission for this command
+		if(!sender.hasPermission("customwhitelist.list")){ // If the sender doesn't have the permission for the "list" subcommand
 			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
 			return true;
 		}
