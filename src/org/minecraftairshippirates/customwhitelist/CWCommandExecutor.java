@@ -117,61 +117,13 @@ public class CWCommandExecutor implements CommandExecutor{
 				return list(sender, cmd, label, args);
 			}
 			else if(args[0].equalsIgnoreCase("on")){ // If the subcommand was "on"
-				if(!sender.hasPermission("customwhitelist.on")){ // If the sender doesn't have the permission for the "on" subcommand
-					sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
-					return true;
-				}
-				else if(args.length == 1){ // Turn on the whitelist
-					if(!cwp.getServer().hasWhitelist()){ // If the server does not have a whitelist
-						cwp.getServer().setWhitelist(true);
-						sender.sendMessage("Whitelisting was turned on.");
-					}
-					else{ // It's already on
-						sender.sendMessage("Whitelisting is already on.");
-					}
-					
-					return true;
-				}
-				else{ // Else there was an argument
-					sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
-					return false;
-				}
+				on(sender, cmd, label, args);
 			}
 			else if(args[0].equalsIgnoreCase("off")){ // If the subcommand was "off"
-				if(!sender.hasPermission("customwhitelist.off")){ // If the sender doesn't have the permission for the "off" subcommand
-					sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
-					return true;
-				}
-				else if(args.length == 1){ // Turn off the whitelist
-					if(cwp.getServer().hasWhitelist()){ // If the server has a whitelist
-						cwp.getServer().setWhitelist(false);
-						sender.sendMessage("Whitelisting was turned off.");
-					}
-					else{ // It's already off
-						sender.sendMessage("Whitelisting is already off.");
-					}
-					
-					return true;
-				}
-				else{ // Else there was an argument
-					sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
-					return false;
-				}
+				off(sender, cmd, label, args);
 			}
 			else if(args[0].equalsIgnoreCase("reload")){ // If the subcommand was "reload"
-				if(!sender.hasPermission("customwhitelist.reload")){ // If the sender doesn't have the permission for the "reload" subcommand
-					sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
-					return true;
-				}
-				else if(args.length == 1){ // Reload the whitelist
-					cwp.getServer().reloadWhitelist();
-					sender.sendMessage("The whitelist has been reloaded");
-					return true;
-				}
-				else{ // Else there was an argument
-					sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
-					return false;
-				}
+				reload(sender, cmd, label, args);
 			}
 			else{ // Subcommand not recognized
 				return false;
@@ -314,6 +266,78 @@ public class CWCommandExecutor implements CommandExecutor{
 			}
 			sender.sendMessage(sb.toString());
 			
+			return true;
+		}
+		else{ // Else there was an argument
+			sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
+			return false;
+		}
+	}
+	
+	/**
+	 * This method is to handle the on subcommand
+	 * @return boolean usedProperly		Returns true if the command was used properly
+	 */
+	private boolean on(CommandSender sender, Command cmd, String label, String[] args){
+		if(!sender.hasPermission("customwhitelist.on")){ // If the sender doesn't have the permission for the "on" subcommand
+			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
+			return true;
+		}
+		else if(args.length == 1){ // Turn on the whitelist
+			if(!cwp.getServer().hasWhitelist()){ // If the server does not have a whitelist
+				cwp.getServer().setWhitelist(true);
+				sender.sendMessage("Whitelisting was turned on.");
+			}
+			else{ // It's already on
+				sender.sendMessage("Whitelisting is already on.");
+			}
+			
+			return true;
+		}
+		else{ // Else there was an argument
+			sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
+			return false;
+		}
+	}
+	
+	/**
+	 * This method is to handle the off subcommand
+	 * @return boolean usedProperly		Returns true if the command was used properly
+	 */
+	private boolean off(CommandSender sender, Command cmd, String label, String[] args){
+		if(!sender.hasPermission("customwhitelist.off")){ // If the sender doesn't have the permission for the "off" subcommand
+			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
+			return true;
+		}
+		else if(args.length == 1){ // Turn off the whitelist
+			if(cwp.getServer().hasWhitelist()){ // If the server has a whitelist
+				cwp.getServer().setWhitelist(false);
+				sender.sendMessage("Whitelisting was turned off.");
+			}
+			else{ // It's already off
+				sender.sendMessage("Whitelisting is already off.");
+			}
+			
+			return true;
+		}
+		else{ // Else there was an argument
+			sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
+			return false;
+		}
+	}
+	
+	/**
+	 * This method is to handle the reload subcommand
+	 * @return boolean usedProperly		Returns true if the command was used properly
+	 */
+	private boolean reload(CommandSender sender, Command cmd, String label, String[] args){
+		if(!sender.hasPermission("customwhitelist.reload")){ // If the sender doesn't have the permission for the "reload" subcommand
+			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
+			return true;
+		}
+		else if(args.length == 1){ // Reload the whitelist
+			cwp.getServer().reloadWhitelist();
+			sender.sendMessage("The whitelist has been reloaded");
 			return true;
 		}
 		else{ // Else there was an argument
