@@ -46,5 +46,6 @@ Version v0.5-RELEASE [Direct download](https://github.com/AP-Programmers/CustomW
 **Version v0.6-RELEASE** [Direct download](https://github.com/AP-Programmers/CustomWhitelist/releases/download/v0.6-release-beta/CustomWhitelist_v0.6-RELEASE.jar)
 
 ### Things left to do before v1.0
-* Make commands async  
+* Make commands async
 * Add capability to process multiple users at a time
+* Add more sources
