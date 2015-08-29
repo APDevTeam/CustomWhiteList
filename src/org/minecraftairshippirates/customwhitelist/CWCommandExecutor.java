@@ -46,26 +46,7 @@ public class CWCommandExecutor implements CommandExecutor{
 					return check(sender, cmd, label, args);
 				}
 				else if(args[0].equalsIgnoreCase("list")){ // If the subcommand was "list"
-					if(!sender.hasPermission("customwhitelist.list")){ // If the sender doesn't have the permission for this command
-						sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
-						return true;
-					}
-					else if(args.length == 1){ // List the players
-						OfflinePlayer[] wlofps = cwp.getServer().getWhitelistedPlayers().toArray(new OfflinePlayer[cwp.getServer().getWhitelistedPlayers().size()]);
-						StringBuilder sb = new StringBuilder();
-						sb.append("There are " + wlofps.length + " whitelisted players:");
-						for(OfflinePlayer ofp : wlofps){ // For every element in the array
-							UUID uuid = ofp.getUniqueId();
-							sb.append('\n' + uuid.toString());
-						}
-						sender.sendMessage(sb.toString());
-						
-						return true;
-					}
-					else{ // Else there was an argument
-						sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
-						return false;
-					}
+					return list(sender, cmd, label, args);
 				}
 				else if(args[0].equalsIgnoreCase("on")){ // If the subcommand was "on"
 					if(!sender.hasPermission("customwhitelist.on")){ // If the sender doesn't have the permission for this command
@@ -247,6 +228,33 @@ public class CWCommandExecutor implements CommandExecutor{
 		else{ // No player was typed
 			sender.sendMessage(ChatColor.RED + MSG_CHECK_USAGE);
 			return true;
+		}
+	}
+	
+	/**
+	 * This method is to handle the check command
+	 * @return boolean usedProperly		Returns true if the command was used properly
+	 */
+	private boolean list(CommandSender sender, Command cmd, String label, String[] args){
+		if(!sender.hasPermission("customwhitelist.list")){ // If the sender doesn't have the permission for this command
+			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
+			return true;
+		}
+		else if(args.length == 1){ // List the players
+			OfflinePlayer[] wlofps = cwp.getServer().getWhitelistedPlayers().toArray(new OfflinePlayer[cwp.getServer().getWhitelistedPlayers().size()]);
+			StringBuilder sb = new StringBuilder();
+			sb.append("There are " + wlofps.length + " whitelisted players:");
+			for(OfflinePlayer ofp : wlofps){ // For every element in the array
+				UUID uuid = ofp.getUniqueId();
+				sb.append('\n' + uuid.toString());
+			}
+			sender.sendMessage(sb.toString());
+			
+			return true;
+		}
+		else{ // Else there was an argument
+			sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
+			return false;
 		}
 	}
 }
