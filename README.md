@@ -1,5 +1,5 @@
 ## CustomWhitelist
-CustomWhitelist allows modification to the whitelist even when Mojang UUID queries are rejected
+CustomWhitelist allows modification to the whitelist even when Mojang UUID queries are rejected.
 
 ### Commands
 **/customwhitelist** `<add/remove>`  
@@ -32,6 +32,11 @@ Permission: `customwhitelist.on`
 Turns off the whitelist  
 Permission: `customwhitelist.off`
 
+**/customwhitelist reload**  
+Reloads the whitelist  
+Permission: `customwhitelist.reload`  
+Note: Remember that you should never have to reload the whitelist unless the file was changed outside this plugin
+
 ### Binaries
 All binaries require Spigot 1.8.7+ [Direct download](https://dl.dropboxusercontent.com/u/49422983/AirshipPirates/Plugins/libs/spigot-1.8.7.jar)  
 Dev binaries aren't available.  
@@ -43,7 +48,6 @@ Version v0.4-RELEASE [Direct download](https://dl.dropboxusercontent.com/u/49422
 
 ### Things left to do before v1.0
 * Make commands async  
-* Add reload command  
 * Add options to commands for advanced functions  
 * Add capability to process multiple users at a time  
 * Make code more resilient to unexpected exceptions

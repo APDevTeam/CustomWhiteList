@@ -109,6 +109,21 @@ public class CWCommandExecutor implements CommandExecutor{
 						return false;
 					}
 				}
+				else if(args[0].equalsIgnoreCase("reload")){ // If the subcommand was "reload"
+					if(!sender.hasPermission("customwhitelist.reload")){ // If the sender doesn't have the permission for this command
+						sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
+						return true;
+					}
+					else if(args.length == 1){ // Reload the whitelist
+						cwp.getServer().reloadWhitelist();
+						sender.sendMessage("The whitelist has been reloaded");
+						return true;
+					}
+					else{ // Else there was an argument
+						sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
+						return false;
+					}
+				}
 				else{ // Subcommand not recognized
 					return false;
 				}
