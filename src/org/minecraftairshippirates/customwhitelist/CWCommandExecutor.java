@@ -14,6 +14,7 @@ import org.bukkit.command.CommandSender;
  */
 public class CWCommandExecutor implements CommandExecutor{
 	private final String MSG_TOO_MANY_ARGS = "Too many arguments!",
+					MSG_INVALID_OPTION = "That option is not valid for this command!",
 					MSG_INSUFFICIENT_PERMS = "You don't have permission to do that!",
 					MSG_ADD_USAGE = "Usage: /customwhitelist add <player>",
 					MSG_REMOVE_USAGE = "Usage: /customwhitelist remove <player>",
@@ -143,6 +144,11 @@ public class CWCommandExecutor implements CommandExecutor{
 			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
 			return true;
 		}
+		else if(subCmdOptions.length != 0){ // If there is an option
+			sender.sendMessage(ChatColor.RED + MSG_INVALID_OPTION);
+			sender.sendMessage(ChatColor.RED + MSG_ADD_USAGE);
+			return true;
+		}
 		else if(subCmdArgs.length == 1){ // If there is a player
 			try{
 				UUID uuid = UUID.fromString(UUIDFetcher.getUUID(subCmdArgs[0]));
@@ -179,6 +185,11 @@ public class CWCommandExecutor implements CommandExecutor{
 	private boolean remove(CommandSender sender, String[] subCmdArgs, String[] subCmdOptions){
 		if(!sender.hasPermission("customwhitelist.remove")){ // If the sender doesn't have the permission for the "remove" subcommand
 			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
+			return true;
+		}
+		else if(subCmdOptions.length != 0){ // If there is an option
+			sender.sendMessage(ChatColor.RED + MSG_INVALID_OPTION);
+			sender.sendMessage(ChatColor.RED + MSG_REMOVE_USAGE);
 			return true;
 		}
 		else if(subCmdArgs.length == 1){ // If there is a player
@@ -219,6 +230,11 @@ public class CWCommandExecutor implements CommandExecutor{
 			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
 			return true;
 		}
+		else if(subCmdOptions.length != 0){ // If there is an option
+			sender.sendMessage(ChatColor.RED + MSG_INVALID_OPTION);
+			sender.sendMessage(ChatColor.RED + MSG_CHECK_USAGE);
+			return true;
+		}
 		else if(subCmdArgs.length == 1){ // If there is a player
 			try{
 				UUID uuid = UUID.fromString(UUIDFetcher.getUUID(subCmdArgs[0]));
@@ -248,13 +264,17 @@ public class CWCommandExecutor implements CommandExecutor{
 	}
 	
 	/**
-	 * This method is to handle the check command
+	 * This method is to handle the list command
 	 * @return boolean usedProperly		Returns true if the command was used properly
 	 */
 	private boolean list(CommandSender sender, String[] subCmdArgs, String[] subCmdOptions){
 		if(!sender.hasPermission("customwhitelist.list")){ // If the sender doesn't have the permission for the "list" subcommand
 			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
 			return true;
+		}
+		else if(subCmdOptions.length != 0){ // If there is an option
+			sender.sendMessage(ChatColor.RED + MSG_INVALID_OPTION);
+			return false;
 		}
 		else if(subCmdArgs.length == 0){ // There wasn't an argument, list the players
 			OfflinePlayer[] wlofps = cwp.getServer().getWhitelistedPlayers().toArray(new OfflinePlayer[cwp.getServer().getWhitelistedPlayers().size()]);
@@ -283,6 +303,10 @@ public class CWCommandExecutor implements CommandExecutor{
 			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
 			return true;
 		}
+		else if(subCmdOptions.length != 0){ // If there is an option
+			sender.sendMessage(ChatColor.RED + MSG_INVALID_OPTION);
+			return false;
+		}
 		else if(subCmdArgs.length == 0){ // There wasn't an argumet, turn on the whitelist
 			if(!cwp.getServer().hasWhitelist()){ // If the server does not have a whitelist
 				cwp.getServer().setWhitelist(true);
@@ -309,6 +333,10 @@ public class CWCommandExecutor implements CommandExecutor{
 			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
 			return true;
 		}
+		else if(subCmdOptions.length != 0){ // If there is an option
+			sender.sendMessage(ChatColor.RED + MSG_INVALID_OPTION);
+			return false;
+		}
 		else if(subCmdArgs.length == 0){ // There wasn't an argument, turn off the whitelist
 			if(cwp.getServer().hasWhitelist()){ // If the server has a whitelist
 				cwp.getServer().setWhitelist(false);
@@ -334,6 +362,10 @@ public class CWCommandExecutor implements CommandExecutor{
 		if(!sender.hasPermission("customwhitelist.reload")){ // If the sender doesn't have the permission for the "reload" subcommand
 			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
 			return true;
+		}
+		else if(subCmdOptions.length != 0){ // If there is an option
+			sender.sendMessage(ChatColor.RED + MSG_INVALID_OPTION);
+			return false;
 		}
 		else if(subCmdArgs.length == 0){ // There wasn't an argument, reload the whitelist
 			cwp.getServer().reloadWhitelist();
