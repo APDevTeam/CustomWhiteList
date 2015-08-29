@@ -75,7 +75,7 @@ public class CWCommandExecutor implements CommandExecutor{
 					}
 				}
 				catch(Exception ex){
-					cwp.getLogger().warning("There was an error processing a CW command: ");
+					cwp.getLogger().warning("There was an error executing a CW command: ");
 					ex.printStackTrace();
 					return true;
 				}
