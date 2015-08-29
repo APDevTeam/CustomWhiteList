@@ -97,13 +97,13 @@ public class CWCommandExecutor implements CommandExecutor{
 	 * @return String subCmd	The subcommand if there is one, else null
 	 */
 	private String getSubCmd(String[] args){
-		String subCmd = null;
 		for(String cur : args){
 			if(!cur.startsWith(String.valueOf('-'))){ // If the element does not start with '-'
-				subCmd = cur;
+				return cur;
 			}
 		}
-		return subCmd;
+		
+		return null;
 	}
 	
 	/**
