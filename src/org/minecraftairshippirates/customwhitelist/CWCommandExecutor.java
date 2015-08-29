@@ -71,7 +71,7 @@ public class CWCommandExecutor implements CommandExecutor{
 				if(argsCpy[fc] == null){ // If the current element is nullified (probably cause it's been deleted)
 					// Do nothing
 				}
-				else if(argsCpy[fc].startsWith(String.valueOf('-'))){ // If the current element is not prefixed with '-'
+				else if(!argsCpy[fc].startsWith(String.valueOf('-'))){ // If the current element is not prefixed with '-'
 					subCmdArgs[subCmdArgsNext++] = argsCpy[fc]; // Copy it to the subcommand args array and increment subCmdArgsNext
 					argsCpy[fc] = null; // Nullify subcommand arg from argsCpy (This pretty much removes it)
 				}
