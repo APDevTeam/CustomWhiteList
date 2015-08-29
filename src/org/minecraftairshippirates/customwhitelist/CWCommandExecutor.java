@@ -43,18 +43,19 @@ public class CWCommandExecutor implements CommandExecutor{
 				argsCpy[fa] = args[fa];
 			}
 			String subCmd = null;
-			String[] subCmdArgs = null;
-			String[] subCmdOptions = null;
+			String[] subCmdArgs;
+			String[] subCmdOptions;
 			// Find the subcommand and store it
-			for(int fb = 0; fb < argsCpy.length && (subCmd == null); fb++){ // For every element in argsCpy while subcommand is null
+			for(int fb = 0; fb < argsCpy.length; fb++){ // For every element in argsCpy while subcommand is null
 				if(!argsCpy[fb].startsWith(String.valueOf('-'))){ // If the current string wasn't prefixed with '-'
 					subCmd = argsCpy[fb]; // Store subcommand from argsCpy
 					argsCpy[fb] = null; // Nullify subcommand from argsCpy (This pretty much removes it)
+					fb = argsCpy.length; // Stop the array from running
 				}
 			}
 			// Find the subcommand args and count them
+			int subCmdArgsCount = 0;
 			for(int fc = 0; fc < argsCpy.length; fc++){ // For every element in argsCpy
-				int subCmdArgsCount = 0;
 				if(argsCpy[fc] == null){ // If the current element is nullified (probably cause it's been removed)
 					// Do nothing
 				}
@@ -62,9 +63,9 @@ public class CWCommandExecutor implements CommandExecutor{
 					subCmdArgsCount++; // Count it
 				}
 				if(!(fc < argsCpy.length)){ // If this is the last iteration
-					subCmdArgs = new String[subCmdArgsCount]; // Create an array large enough for all subcommand args
 				}
 			}
+			subCmdArgs = new String[subCmdArgsCount]; // Create an array large enough for all subcommand args
 			// Find the subcommand args and store them
 			for(int fc = 0; fc < argsCpy.length; fc++){ // For every element in argsCpy
 				int subCmdArgsNext = 0;
