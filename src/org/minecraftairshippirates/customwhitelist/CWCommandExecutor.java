@@ -76,7 +76,19 @@ public class CWCommandExecutor implements CommandExecutor{
 				}
 			}
 			// The rest of the non-nullified elements must be prefixed with '-' and thus they are subcommand options
-			subCmdOptions = new String[argsCpy.length - (1 + subCmdArgs.length)]; // Instantiate subcommand options array large enough for the options
+			// Count the rest of the elements
+			int subCmdOptionsCount = 0;
+			for(String arg : argsCpy){
+				if(arg == null){  // If the current element is nullified (probably cause it's been deleted)
+					// Do nothing
+				}
+				else{ // Else it must be a subcommand option
+					subCmdOptionsCount++; // Count it
+				}
+			}
+			
+			// Copy the rest of the elements and store them
+			subCmdOptions = new String[subCmdOptionsCount]; // Instantiate subcommand options array large enough for the options
 			int subCmdOptionsNext = 0;
 			for(String arg : argsCpy){
 				if(arg == null){  // If the current element is nullified (probably cause it's been deleted)
