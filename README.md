@@ -42,8 +42,9 @@ Java 7 [Get Java](https://www.java.com/en/)
 
 Dev binaries aren't available.  
 Older binaries may not be available  
-Version v0.5-RELEASE [Direct download](https://github.com/AP-Programmers/CustomWhitelist/releases/download/v0.5-release-beta/CustomWhitelist_v0.5-RELEASE.jar)  
-**Version v0.6-RELEASE** [Direct download](https://github.com/AP-Programmers/CustomWhitelist/releases/download/v0.6-release-beta/CustomWhitelist_v0.6-RELEASE.jar)
+v0.5-release-beta [Direct download](https://github.com/AP-Programmers/CustomWhitelist/releases/download/v0.5-release-beta/CustomWhitelist_v0.5-RELEASE.jar)  
+v0.6-release-beta [Direct download](https://github.com/AP-Programmers/CustomWhitelist/releases/download/v0.6-release-beta/CustomWhitelist_v0.6-RELEASE.jar)  
+v0.7-release-beta [Direct download](https://dl.dropboxusercontent.com/u/49422983/AirshipPirates/Plugins/CustomWhitelist_v0.7-release-beta.jar)
 
 ### Things left to do before v1.0
 * Make commands async
