@@ -47,6 +47,5 @@ Version v0.5-RELEASE [Direct download](https://github.com/AP-Programmers/CustomW
 
 ### Things left to do before v1.0
 * Make commands async  
-* Add options to commands for advanced functions  
 * Add capability to process multiple users at a time  
 * Make code more resilient to unexpected exceptions

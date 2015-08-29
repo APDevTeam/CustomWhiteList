@@ -104,26 +104,26 @@ public class CWCommandExecutor implements CommandExecutor{
 				return false;
 			}
 			
-			if(args[0].equalsIgnoreCase("add")){ // If the subcommand was "add"
-				return add(sender, cmd, label, args);
+			if(subCmd.equalsIgnoreCase("add")){ // If the subcommand was "add"
+				return add(sender, subCmdArgs, subCmdOptions);
 			}
-			else if(args[0].equalsIgnoreCase("remove")){ // If the subcommand was "remove"
-				return remove(sender, cmd, label, args);
+			else if(subCmd.equalsIgnoreCase("remove")){ // If the subcommand was "remove"
+				return remove(sender, subCmdArgs, subCmdOptions);
 			}
-			else if(args[0].equalsIgnoreCase("check")){ // If the subcommand was "check"
-				return check(sender, cmd, label, args);
+			else if(subCmd.equalsIgnoreCase("check")){ // If the subcommand was "check"
+				return check(sender, subCmdArgs, subCmdOptions);
 			}
-			else if(args[0].equalsIgnoreCase("list")){ // If the subcommand was "list"
-				return list(sender, cmd, label, args);
+			else if(subCmd.equalsIgnoreCase("list")){ // If the subcommand was "list"
+				return list(sender, subCmdArgs, subCmdOptions);
 			}
-			else if(args[0].equalsIgnoreCase("on")){ // If the subcommand was "on"
-				return on(sender, cmd, label, args);
+			else if(subCmd.equalsIgnoreCase("on")){ // If the subcommand was "on"
+				return on(sender, subCmdArgs, subCmdOptions);
 			}
-			else if(args[0].equalsIgnoreCase("off")){ // If the subcommand was "off"
-				return off(sender, cmd, label, args);
+			else if(subCmd.equalsIgnoreCase("off")){ // If the subcommand was "off"
+				return off(sender, subCmdArgs, subCmdOptions);
 			}
-			else if(args[0].equalsIgnoreCase("reload")){ // If the subcommand was "reload"
-				return reload(sender, cmd, label, args);
+			else if(subCmd.equalsIgnoreCase("reload")){ // If the subcommand was "reload"
+				return reload(sender, subCmdArgs, subCmdOptions);
 			}
 			else{ // Subcommand not recognized
 				return false;
@@ -135,33 +135,33 @@ public class CWCommandExecutor implements CommandExecutor{
 	}
 	
 	/**
-	 * This method is to handle the add command
+	 * This method is to handle the add subcommand
 	 * @return boolean usedProperly		Returns true if the command was used properly
 	 */
-	private boolean add(CommandSender sender, Command cmd, String label, String[] args){
+	private boolean add(CommandSender sender, String[] subCmdArgs, String[] subCmdOptions){
 		if(!sender.hasPermission("customwhitelist.add")){ // If the sender doesn't have the permission for the "add" subcommand
 			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
 			return true;
 		}
-		else if(args.length == 2){ // If there is a player
+		else if(subCmdArgs.length == 1){ // If there is a player
 			try{
-				UUID uuid = UUID.fromString(UUIDFetcher.getUUID(args[1]));
+				UUID uuid = UUID.fromString(UUIDFetcher.getUUID(subCmdArgs[0]));
 				OfflinePlayer ofp = cwp.getServer().getOfflinePlayer(uuid);
 				if(ofp.isWhitelisted() == true){ // If the player is already whitelisted
-					sender.sendMessage('\"' + args[1] + "\" is already on the whitelist.");
+					sender.sendMessage('\"' + subCmdArgs[0] + "\" is already on the whitelist.");
 				}
 				else{ // They're not on the whitelist
 					ofp.setWhitelisted(true); // Add them
-					sender.sendMessage("Added \"" + args[1] + "\" to the whitelist.");
+					sender.sendMessage("Added \"" + subCmdArgs[0] + "\" to the whitelist.");
 				}
 			}
 			catch(UUIDNotFoundException e){
-				sender.sendMessage(ChatColor.RED.toString() + '\"' + args[1] + "\" was not found and could not be added to the whitelist.");
+				sender.sendMessage(ChatColor.RED.toString() + '\"' + subCmdArgs[0] + "\" was not found and could not be added to the whitelist.");
 			}
 			
 			return true;
 		}
-		else if(args.length >= 3){ // Too many arguments
+		else if(subCmdArgs.length > 1){ // Too many arguments
 			sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
 			sender.sendMessage(ChatColor.RED + MSG_ADD_USAGE);
 			return true;
@@ -173,33 +173,33 @@ public class CWCommandExecutor implements CommandExecutor{
 	}
 	
 	/**
-	 * This method is to handle the remove command
+	 * This method is to handle the remove subcommand
 	 * @return boolean usedProperly		Returns true if the command was used properly
 	 */
-	private boolean remove(CommandSender sender, Command cmd, String label, String[] args){
+	private boolean remove(CommandSender sender, String[] subCmdArgs, String[] subCmdOptions){
 		if(!sender.hasPermission("customwhitelist.remove")){ // If the sender doesn't have the permission for the "remove" subcommand
 			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
 			return true;
 		}
-		else if(args.length == 2){ // If there is a player
+		else if(subCmdArgs.length == 1){ // If there is a player
 			try{
-				UUID uuid = UUID.fromString(UUIDFetcher.getUUID(args[1]));
+				UUID uuid = UUID.fromString(UUIDFetcher.getUUID(subCmdArgs[0]));
 				OfflinePlayer ofp = cwp.getServer().getOfflinePlayer(uuid);
 				if(ofp.isWhitelisted() == false){ // If the player is not whitelisted
-					sender.sendMessage('\"' + args[1] + "\" is not on the whitelist.");
+					sender.sendMessage('\"' + subCmdArgs[0] + "\" is not on the whitelist.");
 				}
 				else{ // They're on the whitelist
 					ofp.setWhitelisted(false); // Remove them
-					sender.sendMessage("Removed \"" + args[1] + "\" from the whitelist.");
+					sender.sendMessage("Removed \"" + subCmdArgs[0] + "\" from the whitelist.");
 				}
 			}
 			catch(UUIDNotFoundException e){
-				sender.sendMessage(ChatColor.RED.toString() + '\"' + args[1] + "\" was not found and could not be removed from the whitelist.");
+				sender.sendMessage(ChatColor.RED.toString() + '\"' + subCmdArgs[0] + "\" was not found and could not be removed from the whitelist.");
 			}
 			
 			return true;
 		}
-		else if(args.length >= 3){ // Too many arguments
+		else if(subCmdArgs.length > 1){ // Too many arguments
 			sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
 			sender.sendMessage(ChatColor.RED + MSG_REMOVE_USAGE);
 			return true;
@@ -211,32 +211,32 @@ public class CWCommandExecutor implements CommandExecutor{
 	}
 	
 	/**
-	 * This method is to handle the check command
+	 * This method is to handle the check subcommand
 	 * @return boolean usedProperly		Returns true if the command was used properly
 	 */
-	private boolean check(CommandSender sender, Command cmd, String label, String[] args){
+	private boolean check(CommandSender sender, String[] subCmdArgs, String[] subCmdOptions){
 		if(!sender.hasPermission("customwhitelist.check")){ // If the sender doesn't have the permission for the "check" subcommand
 			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
 			return true;
 		}
-		else if(args.length == 2){ // If there is a player
+		else if(subCmdArgs.length == 1){ // If there is a player
 			try{
-				UUID uuid = UUID.fromString(UUIDFetcher.getUUID(args[1]));
+				UUID uuid = UUID.fromString(UUIDFetcher.getUUID(subCmdArgs[0]));
 				OfflinePlayer ofp = cwp.getServer().getOfflinePlayer(uuid);
 				if(ofp.isWhitelisted()){ // If the player is whitelisted
-					sender.sendMessage('\"' + args[1] + "\" is on the whitelist.");
+					sender.sendMessage('\"' + subCmdArgs[0] + "\" is on the whitelist.");
 				}
 				else{ // Else the player is not whitelisted
-					sender.sendMessage('\"' + args[1] + "\" is not on the whitelist.");
+					sender.sendMessage('\"' + subCmdArgs[0] + "\" is not on the whitelist.");
 				}
 			}
 			catch(UUIDNotFoundException e){
-				sender.sendMessage(ChatColor.RED.toString() + '\"' + args[1] + "\" was not found and could not be checked.");
+				sender.sendMessage(ChatColor.RED.toString() + '\"' + subCmdArgs[0] + "\" was not found and could not be checked.");
 			}
 			
 			return true;
 		}
-		else if(args.length >= 3){ // Too many arguments
+		else if(subCmdArgs.length > 1){ // Too many arguments
 			sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
 			sender.sendMessage(ChatColor.RED + MSG_CHECK_USAGE);
 			return true;
@@ -251,12 +251,12 @@ public class CWCommandExecutor implements CommandExecutor{
 	 * This method is to handle the check command
 	 * @return boolean usedProperly		Returns true if the command was used properly
 	 */
-	private boolean list(CommandSender sender, Command cmd, String label, String[] args){
+	private boolean list(CommandSender sender, String[] subCmdArgs, String[] subCmdOptions){
 		if(!sender.hasPermission("customwhitelist.list")){ // If the sender doesn't have the permission for the "list" subcommand
 			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
 			return true;
 		}
-		else if(args.length == 1){ // List the players
+		else if(subCmdArgs.length == 0){ // There wasn't an argument, list the players
 			OfflinePlayer[] wlofps = cwp.getServer().getWhitelistedPlayers().toArray(new OfflinePlayer[cwp.getServer().getWhitelistedPlayers().size()]);
 			StringBuilder sb = new StringBuilder();
 			sb.append("There are " + wlofps.length + " whitelisted players:");
@@ -278,12 +278,12 @@ public class CWCommandExecutor implements CommandExecutor{
 	 * This method is to handle the on subcommand
 	 * @return boolean usedProperly		Returns true if the command was used properly
 	 */
-	private boolean on(CommandSender sender, Command cmd, String label, String[] args){
+	private boolean on(CommandSender sender, String[] subCmdArgs, String[] subCmdOptions){
 		if(!sender.hasPermission("customwhitelist.on")){ // If the sender doesn't have the permission for the "on" subcommand
 			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
 			return true;
 		}
-		else if(args.length == 1){ // Turn on the whitelist
+		else if(subCmdArgs.length == 0){ // There wasn't an argumet, turn on the whitelist
 			if(!cwp.getServer().hasWhitelist()){ // If the server does not have a whitelist
 				cwp.getServer().setWhitelist(true);
 				sender.sendMessage("Whitelisting was turned on.");
@@ -304,12 +304,12 @@ public class CWCommandExecutor implements CommandExecutor{
 	 * This method is to handle the off subcommand
 	 * @return boolean usedProperly		Returns true if the command was used properly
 	 */
-	private boolean off(CommandSender sender, Command cmd, String label, String[] args){
+	private boolean off(CommandSender sender, String[] subCmdArgs, String[] subCmdOptions){
 		if(!sender.hasPermission("customwhitelist.off")){ // If the sender doesn't have the permission for the "off" subcommand
 			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
 			return true;
 		}
-		else if(args.length == 1){ // Turn off the whitelist
+		else if(subCmdArgs.length == 0){ // There wasn't an argument, turn off the whitelist
 			if(cwp.getServer().hasWhitelist()){ // If the server has a whitelist
 				cwp.getServer().setWhitelist(false);
 				sender.sendMessage("Whitelisting was turned off.");
@@ -330,12 +330,12 @@ public class CWCommandExecutor implements CommandExecutor{
 	 * This method is to handle the reload subcommand
 	 * @return boolean usedProperly		Returns true if the command was used properly
 	 */
-	private boolean reload(CommandSender sender, Command cmd, String label, String[] args){
+	private boolean reload(CommandSender sender, String[] subCmdArgs, String[] subCmdOptions){
 		if(!sender.hasPermission("customwhitelist.reload")){ // If the sender doesn't have the permission for the "reload" subcommand
 			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
 			return true;
 		}
-		else if(args.length == 1){ // Reload the whitelist
+		else if(subCmdArgs.length == 0){ // There wasn't an argument, reload the whitelist
 			cwp.getServer().reloadWhitelist();
 			sender.sendMessage("The whitelist has been reloaded");
 			return true;
