@@ -38,37 +38,52 @@ public class CWCommandExecutor implements CommandExecutor{
 		if(cmd.getName().equalsIgnoreCase("customwhitelist") || cmd.getName().equalsIgnoreCase("cw")){ // If the command was "customwhitelist" or "cw"
 			
 			// Process information
-			String subCmd = getSubCmd(args);
-			String[] subCmdArgs = getSubCmdArgs(args);
-			String[] subCmdOptions = getSubCmdOptions(args);
-			if(subCmd == null){ // A subcommand was not found
-				return false;
+			try{ // Try preprocessing the command
+				String subCmd = getSubCmd(args);
+				String[] subCmdArgs = getSubCmdArgs(args);
+				String[] subCmdOptions = getSubCmdOptions(args);
+				
+				try{ // Try processing the command
+					if(subCmd == null){ // A subcommand was not found
+						return false;
+					}
+					
+					// Run a subcommand if there is one
+					if(subCmd.equalsIgnoreCase("add")){ // If the subcommand was "add"
+						return add(sender, subCmdArgs, subCmdOptions);
+					}
+					else if(subCmd.equalsIgnoreCase("remove")){ // If the subcommand was "remove"
+						return remove(sender, subCmdArgs, subCmdOptions);
+					}
+					else if(subCmd.equalsIgnoreCase("check")){ // If the subcommand was "check"
+						return check(sender, subCmdArgs, subCmdOptions);
+					}
+					else if(subCmd.equalsIgnoreCase("list")){ // If the subcommand was "list"
+						return list(sender, subCmdArgs, subCmdOptions);
+					}
+					else if(subCmd.equalsIgnoreCase("on")){ // If the subcommand was "on"
+						return on(sender, subCmdArgs, subCmdOptions);
+					}
+					else if(subCmd.equalsIgnoreCase("off")){ // If the subcommand was "off"
+						return off(sender, subCmdArgs, subCmdOptions);
+					}
+					else if(subCmd.equalsIgnoreCase("reload")){ // If the subcommand was "reload"
+						return reload(sender, subCmdArgs, subCmdOptions);
+					}
+					else{ // Subcommand not recognized
+						return false;
+					}
+				}
+				catch(Exception ex){
+					cwp.getLogger().warning("There was an error processing a CW command: ");
+					ex.printStackTrace();
+					return true;
+				}
 			}
-			
-			// Run a subcommand if there is one
-			if(subCmd.equalsIgnoreCase("add")){ // If the subcommand was "add"
-				return add(sender, subCmdArgs, subCmdOptions);
-			}
-			else if(subCmd.equalsIgnoreCase("remove")){ // If the subcommand was "remove"
-				return remove(sender, subCmdArgs, subCmdOptions);
-			}
-			else if(subCmd.equalsIgnoreCase("check")){ // If the subcommand was "check"
-				return check(sender, subCmdArgs, subCmdOptions);
-			}
-			else if(subCmd.equalsIgnoreCase("list")){ // If the subcommand was "list"
-				return list(sender, subCmdArgs, subCmdOptions);
-			}
-			else if(subCmd.equalsIgnoreCase("on")){ // If the subcommand was "on"
-				return on(sender, subCmdArgs, subCmdOptions);
-			}
-			else if(subCmd.equalsIgnoreCase("off")){ // If the subcommand was "off"
-				return off(sender, subCmdArgs, subCmdOptions);
-			}
-			else if(subCmd.equalsIgnoreCase("reload")){ // If the subcommand was "reload"
-				return reload(sender, subCmdArgs, subCmdOptions);
-			}
-			else{ // Subcommand not recognized
-				return false;
+			catch(Exception ex){
+				cwp.getLogger().warning("There was an error preprocessing a CW command: ");
+				ex.printStackTrace();
+				return true;
 			}
 		}
 		else{ // Command not recognized by this plugin
@@ -100,7 +115,7 @@ public class CWCommandExecutor implements CommandExecutor{
 		String[] subCmdArgs;
 		
 		// The number of subcommand arguments must be known to create an array of the proper length, so they will be counted.
-		int subCmdArgsCount = -1; // This is set to -1 because the technique used counts the subcommand, which we must discount.
+		int subCmdArgsCount = -1; // This is set to -1 because the technique used also counts the subcommand, which we must discount.
 		for(String arg : args){
 			if(!arg.startsWith(String.valueOf('-'))){ // If the element does not start with '-'
 				subCmdArgsCount++;
@@ -112,16 +127,19 @@ public class CWCommandExecutor implements CommandExecutor{
 		}
 		else{ // Else there are things that will be copied over
 			subCmdArgs = new String[subCmdArgsCount];
-			int subCmdArgsNext = 0;
+			int subCmdArgsNext = -1; // This is set to -1 because the technique used also counts the subcommand, which we must discount.
 			for(String arg : args){
 				if(!arg.startsWith(String.valueOf('-'))){ // If the element does not start with '-'
-					subCmdArgs[subCmdArgsNext++] = arg; // Copy it to the next space in subCmdArgs, and increment subCmdArgsNext.
+					if(subCmdArgsNext == -1){ // If this is the first one to be copied
+						subCmdArgsNext++;
+						// Skip it, because it's the subcommand which is not a subcommand argument
+					}
+					else{ // It's not the first one, and actually is a subcommand argument
+						subCmdArgs[subCmdArgsNext++] = arg; // Copy it to the next space in subCmdArgs, and increment subCmdArgsNext.
+					}
 				}
 			}
 		}
-		
-		// TODO REMOVE DEBUG
-		System.out.println("subCmdArgs.length == " + subCmdArgs.length);
 		
 		return subCmdArgs;
 	}
@@ -154,9 +172,6 @@ public class CWCommandExecutor implements CommandExecutor{
 				}
 			}
 		}
-		
-		// TODO REMOVE DEBUG
-		System.out.println("subCmdOptions.length == " + subCmdOptions.length);
 		
 		return subCmdOptions;
 	}
