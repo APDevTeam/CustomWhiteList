@@ -117,13 +117,13 @@ public class CWCommandExecutor implements CommandExecutor{
 				return list(sender, cmd, label, args);
 			}
 			else if(args[0].equalsIgnoreCase("on")){ // If the subcommand was "on"
-				on(sender, cmd, label, args);
+				return on(sender, cmd, label, args);
 			}
 			else if(args[0].equalsIgnoreCase("off")){ // If the subcommand was "off"
-				off(sender, cmd, label, args);
+				return off(sender, cmd, label, args);
 			}
 			else if(args[0].equalsIgnoreCase("reload")){ // If the subcommand was "reload"
-				reload(sender, cmd, label, args);
+				return reload(sender, cmd, label, args);
 			}
 			else{ // Subcommand not recognized
 				return false;
