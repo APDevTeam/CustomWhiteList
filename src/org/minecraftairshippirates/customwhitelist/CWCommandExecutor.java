@@ -38,74 +38,14 @@ public class CWCommandExecutor implements CommandExecutor{
 		if(cmd.getName().equalsIgnoreCase("customwhitelist") || cmd.getName().equalsIgnoreCase("cw")){ // If the command was "customwhitelist" or "cw"
 			
 			// Process information
-			String[] argsCpy = new String[args.length]; // Make new array with the same size as args
-			for(int fa = 0; fa < args.length; fa++){ // Copy args and store it in argsCpy
-				argsCpy[fa] = args[fa];
-			}
-			String subCmd = null;
-			String[] subCmdArgs;
-			String[] subCmdOptions;
-			// Find the subcommand and store it
-			for(int fb = 0; fb < argsCpy.length; fb++){ // For every element in argsCpy while subcommand is null
-				if(!argsCpy[fb].startsWith(String.valueOf('-'))){ // If the current string wasn't prefixed with '-'
-					subCmd = argsCpy[fb]; // Store subcommand from argsCpy
-					argsCpy[fb] = null; // Nullify subcommand from argsCpy (This pretty much removes it)
-					fb = argsCpy.length; // Stop the array from running
-				}
-			}
-			// Find the subcommand args and count them
-			int subCmdArgsCount = 0;
-			for(int fc = 0; fc < argsCpy.length; fc++){ // For every element in argsCpy
-				if(argsCpy[fc] == null){ // If the current element is nullified (probably cause it's been removed)
-					// Do nothing
-				}
-				else if(argsCpy[fc].startsWith(String.valueOf('-'))){ // If the current element is not prefixed with '-'
-					subCmdArgsCount++; // Count it
-				}
-				if(!(fc < argsCpy.length)){ // If this is the last iteration
-				}
-			}
-			subCmdArgs = new String[subCmdArgsCount]; // Create an array large enough for all subcommand args
-			// Find the subcommand args and store them
-			for(int fc = 0; fc < argsCpy.length; fc++){ // For every element in argsCpy
-				int subCmdArgsNext = 0;
-				if(argsCpy[fc] == null){ // If the current element is nullified (probably cause it's been deleted)
-					// Do nothing
-				}
-				else if(!argsCpy[fc].startsWith(String.valueOf('-'))){ // If the current element is not prefixed with '-'
-					subCmdArgs[subCmdArgsNext++] = argsCpy[fc]; // Copy it to the subcommand args array and increment subCmdArgsNext
-					argsCpy[fc] = null; // Nullify subcommand arg from argsCpy (This pretty much removes it)
-				}
-			}
-			// The rest of the non-nullified elements must be prefixed with '-' and thus they are subcommand options
-			// Count the rest of the elements
-			int subCmdOptionsCount = 0;
-			for(String arg : argsCpy){
-				if(arg == null){  // If the current element is nullified (probably cause it's been deleted)
-					// Do nothing
-				}
-				else{ // Else it must be a subcommand option
-					subCmdOptionsCount++; // Count it
-				}
-			}
-			
-			// Copy the rest of the elements and store them
-			subCmdOptions = new String[subCmdOptionsCount]; // Instantiate subcommand options array large enough for the options
-			int subCmdOptionsNext = 0;
-			for(String arg : argsCpy){
-				if(arg == null){  // If the current element is nullified (probably cause it's been deleted)
-					// Do nothing
-				}
-				else{ // Else it must be a subcommand option
-					subCmdOptions[subCmdOptionsNext++] = arg;  // Copy it to the subcommand options array and increment subCmdArgsNext
-				}
-			}
-			argsCpy = null; // Every element should have been processed, so we don't need the copy anymore.
-			
+			String subCmd = getSubCmd(args);
+			String[] subCmdArgs = getSubCmdArgs(args);
+			String[] subCmdOptions = getSubCmdOptions(args);
 			if(subCmd == null){ // A subcommand was not found
 				return false;
 			}
 			
+			// Run a subcommand if there is one
 			if(subCmd.equalsIgnoreCase("add")){ // If the subcommand was "add"
 				return add(sender, subCmdArgs, subCmdOptions);
 			}
@@ -134,6 +74,91 @@ public class CWCommandExecutor implements CommandExecutor{
 		else{ // Command not recognized by this plugin
 			return false;
 		}
+	}
+	
+	/**
+	 * This method is to get the subcommand sent to the CWCE
+	 * @param args				The args sent to the CWCE
+	 * @return String subCmd	The subcommand if there is one, else null
+	 */
+	private String getSubCmd(String[] args){
+		String subCmd = null;
+		for(String cur : args){
+			if(!cur.startsWith(String.valueOf('-'))){ // If the element does not start with '-'
+				subCmd = cur;
+			}
+		}
+		return subCmd;
+	}
+	
+	/**
+	 * This method is to get the subcommand arguments sent to the CWCE
+	 * @param args					The args sent to the CWCE
+	 * @return String[] subCmdArgs	The subcommand arguments 
+	 */
+	private String[] getSubCmdArgs(String[] args){
+		String[] subCmdArgs;
+		
+		// The number of subcommand arguments must be known to create an array of the proper length, so they will be counted.
+		int subCmdArgsCount = -1; // This is set to -1 because the technique used counts the subcommand, which we must discount.
+		for(String arg : args){
+			if(!arg.startsWith(String.valueOf('-'))){ // If the element does not start with '-'
+				subCmdArgsCount++;
+			}
+		}
+		
+		if(subCmdArgsCount < 1){ // If there is less than one subcommand argument, there's nothing to copy over.
+			subCmdArgs = new String[0];
+		}
+		else{ // Else there are things that will be copied over
+			subCmdArgs = new String[subCmdArgsCount];
+			int subCmdArgsNext = 0;
+			for(String arg : args){
+				if(!arg.startsWith(String.valueOf('-'))){ // If the element does not start with '-'
+					subCmdArgs[subCmdArgsNext++] = arg; // Copy it to the next space in subCmdArgs, and increment subCmdArgsNext.
+				}
+			}
+		}
+		
+		// TODO REMOVE DEBUG
+		System.out.println("subCmdArgs.length == " + subCmdArgs.length);
+		
+		return subCmdArgs;
+	}
+	
+	/**
+	 * This method is to get the subcommand options sent to the CWCE
+	 * @param args						The args sent to the CWCE
+	 * @return String[] subCmdOptions	The subcommand options
+	 */
+	private String[] getSubCmdOptions(String[] args){
+		String[] subCmdOptions;
+		
+		// The number of subcommand options must be known to create an array of the proper length, so they will be counted.
+		int subCmdOptionsCount = 0;
+		for(String arg : args){
+			if(arg.startsWith(String.valueOf('-'))){ // If the element starts with '-'
+				subCmdOptionsCount++;
+			}
+		}
+		
+		if(subCmdOptionsCount == 0){ // If there are no subcommand options, there's nothing to copy over.
+			subCmdOptions = new String[0];
+		}
+		else{ // Else there are things that will be copied over
+			subCmdOptions = new String[subCmdOptionsCount];
+			int subCmdOptionsNext = 0;
+			for(String arg : args){
+				if(arg.startsWith(String.valueOf('-'))){ // If the element starts with '-'
+					subCmdOptions[subCmdOptionsNext++] = arg; // Copy it to the next space in subCmdOptions, and increment subCmdOptionsNext
+				}
+			}
+		}
+		
+		// TODO REMOVE DEBUG
+		System.out.println("subCmdOptions.length == " + subCmdOptions.length);
+		
+		return subCmdOptions;
 	}
 	
 	/**
