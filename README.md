@@ -38,7 +38,10 @@ Permission: `customwhitelist.reload`
 Note: Remember that you should never have to reload the whitelist unless the file was changed outside this plugin
 
 ### Binaries
-All binaries require Spigot 1.8.7+ [Direct download](https://dl.dropboxusercontent.com/u/49422983/AirshipPirates/Plugins/libs/spigot-1.8.7.jar)  
+Requirements:  
+Spigot 1.8.7+ [Direct download](https://dl.dropboxusercontent.com/u/49422983/AirshipPirates/Plugins/libs/spigot-1.8.7.jar)  
+Java 7 [Get Java](https://www.java.com/en/)
+
 Dev binaries aren't available.  
 Older binaries may not be available  
 Version v0.5-RELEASE [Direct download](https://github.com/AP-Programmers/CustomWhitelist/releases/download/v0.5-release-beta/CustomWhitelist_v0.5-RELEASE.jar)  
