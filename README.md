@@ -3,10 +3,8 @@ CustomWhitelist allows modification to the whitelist even when Mojang UUID queri
 
 ### Commands
 **/customwhitelist** `<add/remove>`  
-Displays Custom Whitelist help
-
-**/cw** `<add/remove>`  
-Same as /customwhitelist
+Displays Custom Whitelist help  
+Aliases: cw
 
 **/customwhitelist add** `<player>`  
 Adds `<player>` to the whitelist  
