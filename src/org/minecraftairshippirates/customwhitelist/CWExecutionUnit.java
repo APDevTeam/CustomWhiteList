@@ -35,7 +35,7 @@ public class CWExecutionUnit{
 		subCmdOpts = newSubCmdOpts;
 	}
 	
-	public void process() throws InvalidCWEUException{
-		throw new InvalidCWEUException();
+	public void process(){
+		// TODO Add processing blocks for all types
 	}
 }
