@@ -18,7 +18,7 @@ public class CWExecutionUnit{
 	private final CommandSender sender;
 	private final String[] subCmdArgs, subCmdOpts;
 	
-	CWExecutionUnit(int newType, CommandSender newSender, String[] newSubCmdArgs, String[] newSubCmdOpts) throws InvalidCWCUTypeException{
+	CWExecutionUnit(int newType, CommandSender newSender, String[] newSubCmdArgs, String[] newSubCmdOpts) throws InvalidCWEUTypeException{
 		boolean typeIsValid = false;
 		for(int i : VALID_TYPES){ // For every element in VALID_TYPES
 			if(i == newType){ // If the current element matches newType
@@ -27,7 +27,7 @@ public class CWExecutionUnit{
 			}
 		}
 		if(!typeIsValid){ // If the type is not valid
-			throw new InvalidCWCUTypeException();
+			throw new InvalidCWEUTypeException();
 		}
 		type = newType;
 		sender = newSender;
