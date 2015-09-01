@@ -322,37 +322,6 @@ public class CWCommandExecutor implements CommandExecutor{
 			
 			return true;
 		}
-		
-		/*
-		else if(subCmdArgs.length == 1){ // If there is a player
-			try{
-				UUID uuid = UUID.fromString(UUIDFetcher.getUUID(subCmdArgs[0]));
-				OfflinePlayer ofp = cwp.getServer().getOfflinePlayer(uuid);
-				if(ofp.isWhitelisted() == false){ // If the player is not whitelisted
-					sender.sendMessage('\"' + subCmdArgs[0] + "\" is not on the whitelist.");
-				}
-				else{ // They're on the whitelist
-					ofp.setWhitelisted(false); // Remove them
-					sender.sendMessage("Removed \"" + subCmdArgs[0] + "\" from the whitelist.");
-				}
-			}
-			catch(UUIDNotFoundException e){
-				sender.sendMessage(ChatColor.RED.toString() + '\"' + subCmdArgs[0] + "\" was not found and could not be removed from the whitelist.");
-			}
-			
-			return true;
-		}
-		else if(subCmdArgs.length > 1){ // Too many arguments
-			sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
-			sender.sendMessage(ChatColor.RED + MSG_REMOVE_USAGE);
-			return true;
-		}
-		else{ // No player was typed
-			sender.sendMessage(ChatColor.RED + MSG_REMOVE_USAGE);
-			return true;
-		}
-		*/
-		
 	}
 	
 	/**
