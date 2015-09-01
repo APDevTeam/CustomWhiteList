@@ -22,9 +22,10 @@ public class CWExecutionUnit{
 		
 		TYPE_CHECK_USER_BY_NAME = 4,
 		TYPE_CHECK_USER_BY_UUID = 5,
+		TYPE_CHECK_USER_BY_UUID_WITH_RESOLVE = 6,
 		
-		TYPE_LIST_WITHOUT_RESOLVE = 6,
-		TYPE_LIST_WITH_RESOLVE = 7;
+		TYPE_LIST_WITHOUT_RESOLVE = 7,
+		TYPE_LIST_WITH_RESOLVE = 8;
 	
 	private static final int[] VALID_TYPES = {0, 1, 2, 3, 4, 5, 6, 7};
 	
@@ -211,6 +212,35 @@ public class CWExecutionUnit{
 				}
 				else{ // Else the player is not whitelisted
 					sender.sendMessage('\"' + subCmdArgs[0] + "\" is not on the whitelist.");
+				}
+			}
+			catch(IllegalArgumentException iaex){
+				sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to check a user by name, see the log for details.");
+				cwp.getLogger().warning("There was an exception preprocessing trying to check a user by name: " + subCmdArgs[0]);
+				iaex.printStackTrace();
+			}
+		}
+		else if(type == TYPE_CHECK_USER_BY_UUID_WITH_RESOLVE){
+			// TODO Check if resolve was used, throw
+			try{
+				UUID uuid = UUID.fromString(subCmdArgs[0]);
+				OfflinePlayer ofp = cwp.getServer().getOfflinePlayer(uuid);
+				try{ // Try to resolve the username
+					String username = UsernameFetcher.getUsername(uuid);
+					if(ofp.isWhitelisted()){ // If the player is whitelisted
+						sender.sendMessage('\"' + username + "\" is on the whitelist.");
+					}
+					else{ // Else the player is not whitelisted
+						sender.sendMessage('\"' + username + "\" is not on the whitelist.");
+					}
+				}
+				catch(UsernameNotFoundException unnfex){
+					if(ofp.isWhitelisted()){ // If the player is whitelisted
+						sender.sendMessage('\"' + subCmdArgs[0] + "\" is on the whitelist.");
+					}
+					else{ // Else the player is not whitelisted
+						sender.sendMessage('\"' + subCmdArgs[0] + "\" is not on the whitelist.");
+					}
 				}
 			}
 			catch(IllegalArgumentException iaex){

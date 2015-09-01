@@ -17,7 +17,7 @@ public class CWCommandExecutor implements CommandExecutor{
 					MSG_INSUFFICIENT_PERMS = "You don't have permission to do that!",
 					MSG_ADD_USAGE = "Usage: /customwhitelist add <player>",
 					MSG_REMOVE_USAGE = "Usage: /customwhitelist remove <player>",
-					MSG_CHECK_USAGE = "Usage: /customwhitelist check <player>";
+					MSG_CHECK_USAGE = "Usage: /customwhitelist check <player> [-r]";
 	
 	private final CustomWhitelistPlugin cwp;
 	

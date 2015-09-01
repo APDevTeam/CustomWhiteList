@@ -7,15 +7,15 @@ Displays Custom Whitelist help
 Aliases: cw
 
 **/customwhitelist add** `<username/uuid ...>`  
-Adds `<username/uuid ...>` to the whitelist, you may specify multiple usernames or UUIDs, or a mix  
+Adds `<username/uuid ...>` to the whitelist, you may specify multiple usernames or UUIDs or a mix  
 Permission: `customwhitelist.add`
 
 **/customwhitelist remove** `<username/uuid ...>`  
-Removes `<username/uuid ...>` from the whitelist, you may specify multiple usernames or UUIDs, or a mix  
+Removes `<username/uuid ...>` from the whitelist, you may specify multiple usernames or UUIDs or a mix  
 Permission: `customwhitelist.remove`
 
-**/customwhitelist check** `<player>`  
-Checks if `<player>` is on the whitelist  
+**/customwhitelist check** `<username/uuid ...>` [-r]  
+Checks if `<username/uuid ...>` is on the whitelist, you may specify multiple usernames or UUIDs or a mix, you may choose option -r to resolve UUIDs to usernames   
 Permission: `customwhitelist.check`
 
 **/customwhitelist list** [-r]  
