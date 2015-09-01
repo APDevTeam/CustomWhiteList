@@ -48,8 +48,8 @@ v0.7-release-beta [Direct download](https://dl.dropboxusercontent.com/u/49422983
 
 ### Things left to do before v1.0
 * Add capability to process multiple users at a time for check
-* Add UUID resolving option for add/remove/check/list
 * Add more sources for fetching UUIDs
 * Add sources for fetching usernames
+* Add UUID resolving option for list
 * Make commands async
 * Maybe add queue managing commands
