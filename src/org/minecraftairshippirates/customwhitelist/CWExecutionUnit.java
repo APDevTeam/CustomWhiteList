@@ -65,7 +65,13 @@ public class CWExecutionUnit{
 			processCheck();
 		}
 		else if((type == TYPE_LIST_WITHOUT_RESOLVE) || (type == TYPE_LIST_WITH_RESOLVE)){ // If list type
-			processList();
+			try{
+				processList();
+			}
+			catch(Exception ex){
+				System.err.println("There was an exception when trying to list with resolve:");
+				ex.printStackTrace();
+			}
 		}
 		else{ // Else we don't know what is going on
 			// Flail and be confused
@@ -218,8 +224,9 @@ public class CWExecutionUnit{
 	
 	/**
 	 * This method is to handle processing list type CWEUs
+	 * @throws Exception When resolve was requested by the plugin but not the sender
 	 */
-	private void processList(){
+	private void processList() throws Exception{
 		OfflinePlayer[] wlofps = cwp.getServer().getWhitelistedPlayers().toArray(new OfflinePlayer[cwp.getServer().getWhitelistedPlayers().size()]);
 		StringBuilder sb = new StringBuilder();
 		sb.append("There are " + wlofps.length + " whitelisted players:");
@@ -231,9 +238,26 @@ public class CWExecutionUnit{
 			sender.sendMessage(sb.toString());
 		}
 		else if(type == TYPE_LIST_WITH_RESOLVE){
-			// TODO Finish this
+			boolean resolve = false;
+			for(String opt : subCmdOpts){ // For every option
+				if(opt.equalsIgnoreCase("-r")){
+					resolve = true;
+				}
+			}
+			if(!resolve){ // If resolve is off
+				throw new Exception();
+			}
+			for(OfflinePlayer ofp : wlofps){ // For every element in the array
+				UUID uuid = ofp.getUniqueId();
+				try{ // Try to resolve the username
+					String username = UsernameFetcher.getUsername(uuid);
+					sb.append('\n' + username);
+				}
+				catch(UsernameNotFoundException unnfex){ // The username of the UUID could not be resolved
+					sb.append('\n' + uuid.toString());
+				}
+			}
 			sender.sendMessage(sb.toString());
-			sender.sendMessage("This functionality is not finished.");
 		}
 		else; // Else it wasn't supposed to be here
 	}
