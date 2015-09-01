@@ -27,6 +27,9 @@ public class UUIDFetcher{
 		catch(IOException e){
 			// There was probably a connection issue, just skip this source
 		}
+		catch(UUIDNotFoundException unfex){
+			throw unfex;
+		}
 		catch(Exception ex){
 			// There was some other issue
 			System.err.println("There was an error trying to get a UUID from mcuuid.net:");

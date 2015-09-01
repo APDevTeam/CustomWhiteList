@@ -28,6 +28,9 @@ public class UsernameFetcher{
 		catch(IOException ioex){
 			// There was probably a connection issue, just skip this source
 		}
+		catch(UsernameNotFoundException unnfex){
+			throw unnfex;
+		}
 		catch(Exception ex){
 			// There was some other issue
 			System.err.println("There was an error trying to get a username from mcuuid.net:");
