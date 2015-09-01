@@ -1,17 +1,19 @@
 package org.minecraftairshippirates.customwhitelist;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 
 /**
  * This class is to handle the commands sent to the plugin.
  *
  */
-public class CWCommandExecutor implements CommandExecutor{
+public class CWCommandExecutor implements TabExecutor{
 	private final String MSG_TOO_MANY_ARGS = "Too many arguments!",
 					MSG_INVALID_OPTION = "That option is not valid for this command!",
 					MSG_INSUFFICIENT_PERMS = "You don't have permission to do that!",
@@ -88,6 +90,23 @@ public class CWCommandExecutor implements CommandExecutor{
 		else{ // Command not recognized by this plugin
 			return false;
 		}
+	}
+	
+	/**
+	 * This method is to get the list of possible commands
+	 * @return List<String>	A list of possible commands
+	 */
+	public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args){
+		List<String> pos = new ArrayList<String>();
+		pos.add("add");
+		pos.add("remove");
+		pos.add("check");
+		pos.add("list");
+		pos.add("on");;
+		pos.add("off");;
+		pos.add("reload");
+		
+		return pos;
 	}
 	
 	/**
