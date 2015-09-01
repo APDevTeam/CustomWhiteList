@@ -18,8 +18,8 @@ Permission: `customwhitelist.remove`
 Checks if `<player>` is on the whitelist  
 Permission: `customwhitelist.check`
 
-**/customwhitelist list**  
-Lists all players on the whitelist  
+**/customwhitelist list** [-r]  
+Lists all players on the whitelist, you may choose option -r to resolve UUIDs  
 Permission: `customwhitelist.list`
 
 **/customwhitelist on**  
@@ -49,7 +49,7 @@ v0.7-release-beta [Direct download](https://dl.dropboxusercontent.com/u/49422983
 ### Things left to do before v1.0
 * Add more sources for fetching UUIDs
 * Add sources for fetching usernames
-* Add UUID resolving option for list
+* Finish UUID resolving option for list
 * Maybe add UUID resolving option for check
 * Make commands async
 * Maybe add queue managing commands
