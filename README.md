@@ -6,8 +6,8 @@ CustomWhitelist allows modification to the whitelist even when Mojang UUID queri
 Displays Custom Whitelist help  
 Aliases: cw
 
-**/customwhitelist add** `<player>`  
-Adds `<player>` to the whitelist  
+**/customwhitelist add** `<username/uuid ...>`  
+Adds `<username/uuid ...>` to the whitelist, you may specify multiple usernames or UUIDs  
 Permission: `customwhitelist.add`
 
 **/customwhitelist remove** `<player>`  
