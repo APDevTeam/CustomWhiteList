@@ -190,14 +190,14 @@ public class CWCommandExecutor implements CommandExecutor{
 			sender.sendMessage(ChatColor.RED + MSG_ADD_USAGE);
 			return true;
 		}
-		else if(subCmdArgs.length == 0){ // Else if there is no users listed
+		else if(subCmdArgs.length == 0){ // Else if there are no users listed
 			sender.sendMessage(ChatColor.RED + MSG_ADD_USAGE);
 			return true;
 		}
 		else{ // Else there was one or more players to be added
 			for(String user : subCmdArgs){
-				if(!(user.length() > 20)){ // If user is longer than 16 characters, it's too long to be a username, using 20 just to be safe
-					if(user.length() > 16){ // If the username is invalid
+				if(!(user.length() > 24)){ // If user is not longer than 24 characters, we assume the sender means a username
+					if(user.length() > 16){ // If the username is longer than 16 characters, it is invalid
 						sender.sendMessage(ChatColor.RED.toString() + '\"' + user + "\" is not a valid username.");
 					}
 					else{ // Else the username is valid
@@ -212,16 +212,16 @@ public class CWCommandExecutor implements CommandExecutor{
 						}
 					}
 				}
-				else{ // Else we assume it's a UUID
-					// Remove any dashes
+				else{ // Else we assume the sender means a UUID
+					// Remove any hyphens
 					String stuuid = user.replace(String.valueOf('-'), "");
 					
 					// Verify length
 					if(stuuid.length() != 32){ // If stuuid is not the proper length
-						sender.sendMessage(ChatColor.RED.toString() + '\"' + user + "\" is not a valid UUID ");
+						sender.sendMessage(ChatColor.RED.toString() + '\"' + user + "\" is not a valid UUID.");
 					}
-					else{ // We assume it's a valid UUID
-						// Add dashes in their proper locations
+					else{ // Else we assume it's a valid UUID
+						// Add hyphens in their proper locations
 						stuuid = stuuid.substring(0, 8) + '-' + // Eight
 							stuuid.substring(8, 12) + '-' + // Four
 							stuuid.substring(12, 16) + '-' + // Four
@@ -264,6 +264,66 @@ public class CWCommandExecutor implements CommandExecutor{
 			sender.sendMessage(ChatColor.RED + MSG_REMOVE_USAGE);
 			return true;
 		}
+		else if(subCmdArgs.length == 0){ // Else if there are no users listed
+			sender.sendMessage(ChatColor.RED + MSG_REMOVE_USAGE);
+			return true;
+		}
+		else{ // Else there was one or more players to be added
+			for(String user : subCmdArgs){
+				if(!(user.length() > 24)){ // If user is not longer than 24 characters, we assume the sender means a username
+					if(user.length() > 16){ // If the username is longer than 16 characters, it is invalid
+						sender.sendMessage(ChatColor.RED.toString() + '\"' + user + "\" is not a valid username.");
+					}
+					else{ // Else the username is valid
+						try{
+							CWExecutionUnit cweu = new CWExecutionUnit(cwp, CWExecutionUnit.TYPE_REMOVE_USER_BY_NAME, sender, new String[]{user}, new String[0]);
+							cweu.process(); // TODO Make queue this
+						}
+						catch(InvalidCWEUTypeException icweutex){
+							sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to remove a user by name, see the log for details.");
+							cwp.getLogger().warning("There was an exception preprocessing trying to remove a user by name: " + user);
+							icweutex.printStackTrace();
+						}
+					}
+				}
+				else{ // Else we assume the sender means a UUID
+					// Remove any hyphens
+					String stuuid = user.replace(String.valueOf('-'), "");
+					
+					// Verify length
+					if(stuuid.length() != 32){ // If stuuid is not the proper length
+						sender.sendMessage(ChatColor.RED.toString() + '\"' + user + "\" is not a valid UUID.");
+					}
+					else{ // Else we assume it's a valid UUID
+						// Add hyphens in their proper locations
+						stuuid = stuuid.substring(0, 8) + '-' + // Eight
+							stuuid.substring(8, 12) + '-' + // Four
+							stuuid.substring(12, 16) + '-' + // Four
+							stuuid.substring(16, 20) + '-' + // Four
+							stuuid.substring(20, 32); // Twelve
+						try{
+							UUID uuid = UUID.fromString(stuuid);
+							try{
+								CWExecutionUnit cweu = new CWExecutionUnit(cwp, CWExecutionUnit.TYPE_REMOVE_USER_BY_UUID, sender, new String[]{uuid.toString()}, new String[0]);
+								cweu.process();
+							}
+							catch(InvalidCWEUTypeException icweutex){
+								sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to remove a user by uuid, see the log for details.");
+								cwp.getLogger().warning("There was an exception preprocessing trying to remove a user by uuid: " + uuid);
+								icweutex.printStackTrace();
+							}
+						}
+						catch(IllegalArgumentException iaex){
+							sender.sendMessage(ChatColor.RED.toString() + '\"' + user + "\" is not a valid UUID ");
+						}
+					}
+				}
+			}
+			
+			return true;
+		}
+		
+		/*
 		else if(subCmdArgs.length == 1){ // If there is a player
 			try{
 				UUID uuid = UUID.fromString(UUIDFetcher.getUUID(subCmdArgs[0]));
@@ -291,6 +351,8 @@ public class CWCommandExecutor implements CommandExecutor{
 			sender.sendMessage(ChatColor.RED + MSG_REMOVE_USAGE);
 			return true;
 		}
+		*/
+		
 	}
 	
 	/**
