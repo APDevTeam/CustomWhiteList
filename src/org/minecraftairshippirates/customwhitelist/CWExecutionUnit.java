@@ -221,6 +221,21 @@ public class CWExecutionUnit{
 	 * This method is to handle processing list type CWEUs
 	 */
 	private void processList(){
-		// TODO
+		OfflinePlayer[] wlofps = cwp.getServer().getWhitelistedPlayers().toArray(new OfflinePlayer[cwp.getServer().getWhitelistedPlayers().size()]);
+		StringBuilder sb = new StringBuilder();
+		sb.append("There are " + wlofps.length + " whitelisted players:");
+		if(type == TYPE_LIST_WITHOUT_RESOLVE){
+			for(OfflinePlayer ofp : wlofps){ // For every element in the array
+				UUID uuid = ofp.getUniqueId();
+				sb.append('\n' + uuid.toString());
+			}
+			sender.sendMessage(sb.toString());
+		}
+		else if(type == TYPE_LIST_WITH_RESOLVE){
+			// TODO Finish this
+			sender.sendMessage(sb.toString());
+			sender.sendMessage("This functionality is not finished.");
+		}
+		else; // Else it wasn't supposed to be here
 	}
 }
