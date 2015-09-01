@@ -47,9 +47,9 @@ v0.6-release-beta [Direct download](https://github.com/AP-Programmers/CustomWhit
 v0.7-release-beta [Direct download](https://dl.dropboxusercontent.com/u/49422983/AirshipPirates/Plugins/CustomWhitelist_v0.7-release-beta.jar)
 
 ### Things left to do before v1.0
-* Add capability to process multiple users at a time for check
 * Add more sources for fetching UUIDs
 * Add sources for fetching usernames
 * Add UUID resolving option for list
+* Maybe add UUID resolving option for check
 * Make commands async
 * Maybe add queue managing commands

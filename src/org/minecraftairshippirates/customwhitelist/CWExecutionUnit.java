@@ -18,7 +18,7 @@ public class CWExecutionUnit{
 		TYPE_LIST_WITHOUT_RESOLVE = 4,
 		TYPE_LIST_WITH_RESOLVE = 5,
 		TYPE_CHECK_USER_BY_NAME = 6,
-		TYPE_CEHCK_USER_BY_UUID = 7;
+		TYPE_CHECK_USER_BY_UUID = 7;
 	private static final int[] VALID_TYPES = {0, 1, 2, 3, 4, 5, 6, 7};
 	
 	private final CustomWhitelistPlugin cwp;
