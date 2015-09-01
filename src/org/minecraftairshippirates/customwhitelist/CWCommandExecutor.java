@@ -396,40 +396,12 @@ public class CWCommandExecutor implements CommandExecutor{
 			
 			return true;
 		}
-		
-		/*
-		else if(subCmdArgs.length == 1){ // If there is a player
-			try{
-				UUID uuid = UUID.fromString(UUIDFetcher.getUUID(subCmdArgs[0]));
-				OfflinePlayer ofp = cwp.getServer().getOfflinePlayer(uuid);
-				if(ofp.isWhitelisted()){ // If the player is whitelisted
-					sender.sendMessage('\"' + subCmdArgs[0] + "\" is on the whitelist.");
-				}
-				else{ // Else the player is not whitelisted
-					sender.sendMessage('\"' + subCmdArgs[0] + "\" is not on the whitelist.");
-				}
-			}
-			catch(UUIDNotFoundException e){
-				sender.sendMessage(ChatColor.RED.toString() + '\"' + subCmdArgs[0] + "\" was not found and could not be checked.");
-			}
-			
-			return true;
-		}
-		else if(subCmdArgs.length > 1){ // Too many arguments
-			sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
-			sender.sendMessage(ChatColor.RED + MSG_CHECK_USAGE);
-			return true;
-		}
-		else{ // No player was typed
-			sender.sendMessage(ChatColor.RED + MSG_CHECK_USAGE);
-			return true;
-		}
-		*/
 	}
 	
 	/**
 	 * This method is to handle the list command
 	 * @return boolean usedProperly		Returns true if the command was used properly
+	 * TODO Make use CWEUs
 	 */
 	private boolean list(CommandSender sender, String[] subCmdArgs, String[] subCmdOptions){
 		if(!sender.hasPermission("customwhitelist.list")){ // If the sender doesn't have the permission for the "list" subcommand
