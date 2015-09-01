@@ -4,7 +4,7 @@ package org.minecraftairshippirates.customwhitelist;
 public class UUIDNotFoundException extends Exception{
 
 	public UUIDNotFoundException(){
-		// Do Nothing
+		// Do nothing
 	}
 
 	public UUIDNotFoundException(String message){
