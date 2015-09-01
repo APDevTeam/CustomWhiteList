@@ -7,7 +7,7 @@ database: false
 commands:
     customwhitelist:
         description: Displays Custom Whitelist help
-        usage: "Usage: /customwhitelist <add/remove/check/list/on/off/reload>"
+        usage: "Usage: /customwhitelist <add/remove/check/list/on/off/reload> [-r]"
         aliases: cw
         
 permissions:
