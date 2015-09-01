@@ -328,66 +328,82 @@ public class CWCommandExecutor implements CommandExecutor{
 	 * @return boolean usedProperly		Returns true if the command was used properly
 	 */
 	private boolean check(CommandSender sender, String[] subCmdArgs, String[] subCmdOptions){
+		boolean resolve = false;
 		if(!sender.hasPermission("customwhitelist.check")){ // If the sender doesn't have the permission for the "check" subcommand
 			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
 			return true;
 		}
-		else if(subCmdOptions.length != 0){ // If there is an option
-			sender.sendMessage(ChatColor.RED + MSG_INVALID_OPTION);
-			sender.sendMessage(ChatColor.RED + MSG_CHECK_USAGE);
-			return true;
-		}
-		else if(subCmdArgs.length == 0){ // Else if there are no users listed
-			sender.sendMessage(ChatColor.RED + MSG_CHECK_USAGE);
-			return true;
-		}
-		else{ // Else there is one or more players to be checked
-			for(String user : subCmdArgs){
-				if(!(user.length() > 24)){ // If user is not longer than 24 characters, we assume the sender means a username
-					if(user.length() > 16){ // If the username is longer than 16 characters, it is invalid
-						sender.sendMessage(ChatColor.RED.toString() + '\"' + user + "\" is not a valid username.");
+		else{
+			if(subCmdOptions.length > 0){ // If there is at least one option
+				for(String opt : subCmdOptions){
+					if(opt.equalsIgnoreCase("-r")){ // If the option was -r (resolve)
+						resolve = true;
 					}
-					else{ // Else the username is valid
-						try{
-							CWExecutionUnit cweu = new CWExecutionUnit(cwp, CWExecutionUnit.TYPE_CHECK_USER_BY_NAME, sender, new String[]{user}, new String[0]);
-							cweu.process(); // TODO Make queue this
-						}
-						catch(InvalidCWEUTypeException icweutex){
-							sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to check a user by name, see the log for details.");
-							cwp.getLogger().warning("There was an exception preprocessing trying to check a user by name: " + user);
-							icweutex.printStackTrace();
-						}
+					else{ // Else it was not a valid option
+						sender.sendMessage(ChatColor.RED + MSG_INVALID_OPTION);
+						return false;
 					}
 				}
-				else{ // Else we assume the sender means a UUID
-					// Remove any hyphens
-					String stuuid = user.replace(String.valueOf('-'), "");
-					
-					// Verify length
-					if(stuuid.length() != 32){ // If stuuid is not the proper length
-						sender.sendMessage(ChatColor.RED.toString() + '\"' + user + "\" is not a valid UUID.");
-					}
-					else{ // Else we assume it's a valid UUID
-						// Add hyphens in their proper locations
-						stuuid = stuuid.substring(0, 8) + '-' + // Eight
-							stuuid.substring(8, 12) + '-' + // Four
-							stuuid.substring(12, 16) + '-' + // Four
-							stuuid.substring(16, 20) + '-' + // Four
-							stuuid.substring(20, 32); // Twelve
-						try{
-							UUID uuid = UUID.fromString(stuuid);
+			}
+			if(subCmdArgs.length == 0){ // Else if there are no users listed
+				sender.sendMessage(ChatColor.RED + MSG_CHECK_USAGE);
+				return true;
+			}
+			else{ // Else there is one or more players to be checked
+				for(String user : subCmdArgs){
+					if(!(user.length() > 24)){ // If user is not longer than 24 characters, we assume the sender means a username
+						if(user.length() > 16){ // If the username is longer than 16 characters, it is invalid
+							sender.sendMessage(ChatColor.RED.toString() + '\"' + user + "\" is not a valid username.");
+						}
+						else{ // Else the username is valid
 							try{
-								CWExecutionUnit cweu = new CWExecutionUnit(cwp, CWExecutionUnit.TYPE_CHECK_USER_BY_UUID, sender, new String[]{uuid.toString()}, new String[0]);
-								cweu.process();
+								CWExecutionUnit cweu = new CWExecutionUnit(cwp, CWExecutionUnit.TYPE_CHECK_USER_BY_NAME, sender, new String[]{user}, new String[0]);
+								cweu.process(); // TODO Make queue this
 							}
 							catch(InvalidCWEUTypeException icweutex){
-								sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to check a user by uuid, see the log for details.");
-								cwp.getLogger().warning("There was an exception preprocessing trying to check a user by uuid: " + uuid);
+								sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to check a user by name, see the log for details.");
+								cwp.getLogger().warning("There was an exception preprocessing trying to check a user by name: " + user);
 								icweutex.printStackTrace();
 							}
 						}
-						catch(IllegalArgumentException iaex){
-							sender.sendMessage(ChatColor.RED.toString() + '\"' + user + "\" is not a valid UUID ");
+					}
+					else{ // Else we assume the sender means a UUID
+						// Remove any hyphens
+						String stuuid = user.replace(String.valueOf('-'), "");
+						
+						// Verify length
+						if(stuuid.length() != 32){ // If stuuid is not the proper length
+							sender.sendMessage(ChatColor.RED.toString() + '\"' + user + "\" is not a valid UUID.");
+						}
+						else{ // Else we assume it's a valid UUID
+							// Add hyphens in their proper locations
+							stuuid = stuuid.substring(0, 8) + '-' + // Eight
+								stuuid.substring(8, 12) + '-' + // Four
+								stuuid.substring(12, 16) + '-' + // Four
+								stuuid.substring(16, 20) + '-' + // Four
+								stuuid.substring(20, 32); // Twelve
+							try{
+								UUID uuid = UUID.fromString(stuuid);
+								try{
+									CWExecutionUnit cweu;
+									if(!resolve){ // If resolve is off
+										cweu = new CWExecutionUnit(cwp, CWExecutionUnit.TYPE_CHECK_USER_BY_UUID, sender, new String[]{uuid.toString()}, new String[0]);
+										cweu.process();
+									}
+									else{
+										cweu = new CWExecutionUnit(cwp, CWExecutionUnit.TYPE_CHECK_USER_BY_UUID_WITH_RESOLVE, sender, new String[]{uuid.toString()}, new String[]{"-r"});
+										cweu.process(); // TODO Make queue this
+									}
+								}
+								catch(InvalidCWEUTypeException icweutex){
+									sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to check a user by uuid, see the log for details.");
+									cwp.getLogger().warning("There was an exception preprocessing trying to check a user by uuid: " + uuid);
+									icweutex.printStackTrace();
+								}
+							}
+							catch(IllegalArgumentException iaex){
+								sender.sendMessage(ChatColor.RED.toString() + '\"' + user + "\" is not a valid UUID ");
+							}
 						}
 					}
 				}
