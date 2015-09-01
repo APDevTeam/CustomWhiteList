@@ -37,7 +37,7 @@ Note: Remember that you should never have to reload the whitelist unless the fil
 
 ### Binaries
 Requirements:  
-Spigot 1.8.7+ [Direct download](https://dl.dropboxusercontent.com/u/49422983/AirshipPirates/Plugins/libs/spigot-1.8.7.jar)  
+Spigot 1.8.7+ [Get Spigot](https://www.spigotmc.org/wiki/spigot/) [Direct download](https://dl.dropboxusercontent.com/u/49422983/AirshipPirates/Plugins/libs/spigot-1.8.7.jar)  
 Java 7 [Get Java](https://www.java.com/en/)
 
 Dev binaries aren't available.  
