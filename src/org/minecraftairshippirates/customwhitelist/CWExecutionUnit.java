@@ -114,18 +114,60 @@ public class CWExecutionUnit{
 				}
 			}
 			catch(IllegalArgumentException iaex){
-				sender.sendMessage(ChatColor.RED + "There was an exception addding a user by uuid, see the log for details.");
-				cwp.getLogger().warning("There was an exception addding a user by uuid: " + subCmdArgs[0]);
+				sender.sendMessage(ChatColor.RED + "There was an exception addding a user by UUID, see the log for details.");
+				cwp.getLogger().warning("There was an exception addding a user by UUID: " + subCmdArgs[0]);
 				iaex.printStackTrace();
 			}
 		}
+		else; // Else it wasn't supposed to be here
 	}
 	
 	/**
 	 * This method is to handle processing remove type CWEUs
 	 */
 	private void processRemove(){
-		// TODO
+		if(type == TYPE_REMOVE_USER_BY_NAME){
+			try{ // Try to get the UUID
+				String stuuid = UUIDFetcher.getUUID(subCmdArgs[0]);
+				try{
+					UUID uuid = UUID.fromString(stuuid);
+					OfflinePlayer ofp = cwp.getServer().getOfflinePlayer(uuid);
+					if(!ofp.isWhitelisted()){ // If the player is not on the whitelist
+						sender.sendMessage('\"' + subCmdArgs[0] + "\" is not on the whitelist.");
+					}
+					else{ // They're to be removed
+						ofp.setWhitelisted(false);
+						sender.sendMessage('\"' + subCmdArgs[0] + "\" was removed from the whitelist.");
+					}
+				}
+				catch(IllegalArgumentException iaex){
+					sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to remove a user by name, see the log for details.");
+					cwp.getLogger().warning("There was an exception preprocessing trying to remove a user by name: " + subCmdArgs[0]);
+					iaex.printStackTrace();
+				}
+			}
+			catch(UUIDNotFoundException unfe){
+				sender.sendMessage(ChatColor.RED.toString() + '\"' + subCmdArgs[0] + "\" was not found and could not be removed from the whitelist.");
+			}
+		}
+		else if(type == TYPE_REMOVE_USER_BY_UUID){
+			try{
+				UUID uuid = UUID.fromString(subCmdArgs[0]);
+				OfflinePlayer ofp = cwp.getServer().getOfflinePlayer(uuid);
+				if(!ofp.isWhitelisted()){ // If the player is not on the whitelist
+					sender.sendMessage('\"' + subCmdArgs[0] + "\" is not on the whitelist.");
+				}
+				else{ // They're to be removed
+					ofp.setWhitelisted(false);
+					sender.sendMessage('\"' + subCmdArgs[0] + "\" was removed from the whitelist.");
+				}
+			}
+			catch(IllegalArgumentException iaex){
+					sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to remove a user by UUID, see the log for details.");
+					cwp.getLogger().warning("There was an exception preprocessing trying to remove a user by UUID: " + subCmdArgs[0]);
+					iaex.printStackTrace();
+			}
+		}
 	}
 	
 	/**
@@ -133,6 +175,35 @@ public class CWExecutionUnit{
 	 */
 	private void processCheck(){
 		// TODO
+		
+		/*
+		else if(subCmdArgs.length == 1){ // If there is a player
+			try{
+				UUID uuid = UUID.fromString(UUIDFetcher.getUUID(subCmdArgs[0]));
+				OfflinePlayer ofp = cwp.getServer().getOfflinePlayer(uuid);
+				if(ofp.isWhitelisted()){ // If the player is whitelisted
+					sender.sendMessage('\"' + subCmdArgs[0] + "\" is on the whitelist.");
+				}
+				else{ // Else the player is not whitelisted
+					sender.sendMessage('\"' + subCmdArgs[0] + "\" is not on the whitelist.");
+				}
+			}
+			catch(UUIDNotFoundException e){
+				sender.sendMessage(ChatColor.RED.toString() + '\"' + subCmdArgs[0] + "\" was not found and could not be checked.");
+			}
+			
+			return true;
+		}
+		else if(subCmdArgs.length > 1){ // Too many arguments
+			sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
+			sender.sendMessage(ChatColor.RED + MSG_CHECK_USAGE);
+			return true;
+		}
+		else{ // No player was typed
+			sender.sendMessage(ChatColor.RED + MSG_CHECK_USAGE);
+			return true;
+		}
+		*/
 	}
 	
 	/**
