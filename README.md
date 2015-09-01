@@ -7,11 +7,11 @@ Displays Custom Whitelist help
 Aliases: cw
 
 **/customwhitelist add** `<username/uuid ...>`  
-Adds `<username/uuid ...>` to the whitelist, you may specify multiple usernames or UUIDs  
+Adds `<username/uuid ...>` to the whitelist, you may specify multiple usernames or UUIDs, or a mix  
 Permission: `customwhitelist.add`
 
-**/customwhitelist remove** `<player>`  
-Removes `<player>` from the whitelist  
+**/customwhitelist remove** `<username/uuid ...>`  
+Removes `<username/uuid ...>` from the whitelist, you may specify multiple usernames or UUIDs, or a mix  
 Permission: `customwhitelist.remove`
 
 **/customwhitelist check** `<player>`  
@@ -47,6 +47,9 @@ v0.6-release-beta [Direct download](https://github.com/AP-Programmers/CustomWhit
 v0.7-release-beta [Direct download](https://dl.dropboxusercontent.com/u/49422983/AirshipPirates/Plugins/CustomWhitelist_v0.7-release-beta.jar)
 
 ### Things left to do before v1.0
+* Add capability to process multiple users at a time for check
+* Add UUID resolving option for add/remove/check/list
+* Add more sources for fetching UUIDs
+* Add sources for fetching usernames
 * Make commands async
-* Add capability to process multiple users at a time
-* Add more sources
+* Maybe add queue managing commands
