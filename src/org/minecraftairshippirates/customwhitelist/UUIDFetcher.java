@@ -5,9 +5,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * This class is to be the home for all methods relating to fetching UUIDs
- * from mcuuid.net.
- *
+ * This class is to be the home for all methods relating to fetching UUIDs.
  */
 public class UUIDFetcher{
 	/**
