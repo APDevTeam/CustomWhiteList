@@ -19,7 +19,7 @@ Checks if `<player>` is on the whitelist
 Permission: `customwhitelist.check`
 
 **/customwhitelist list** [-r]  
-Lists all players on the whitelist, you may choose option -r to resolve UUIDs  
+Lists all players on the whitelist, you may choose option -r to resolve UUIDs to usernames  
 Permission: `customwhitelist.list`
 
 **/customwhitelist on**  
@@ -47,9 +47,7 @@ v0.6-release-beta [Direct download](https://github.com/AP-Programmers/CustomWhit
 v0.7-release-beta [Direct download](https://dl.dropboxusercontent.com/u/49422983/AirshipPirates/Plugins/CustomWhitelist_v0.7-release-beta.jar)
 
 ### Things left to do before v1.0
-* Add more sources for fetching UUIDs
-* Add sources for fetching usernames
-* Finish UUID resolving option for list
+* Add more sources for fetching UUIDs/usernames
 * Maybe add UUID resolving option for check
 * Make commands async
 * Maybe add queue managing commands
