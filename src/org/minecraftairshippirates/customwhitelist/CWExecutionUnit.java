@@ -27,7 +27,7 @@ public class CWExecutionUnit{
 		TYPE_LIST_WITHOUT_RESOLVE = 7,
 		TYPE_LIST_WITH_RESOLVE = 8;
 	
-	private static final int[] VALID_TYPES = {0, 1, 2, 3, 4, 5, 6, 7};
+	private static final int[] VALID_TYPES = {0, 1, 2, 3, 4, 5, 6, 7, 8};
 	
 	private final CustomWhitelistPlugin cwp;
 	private final int type;
@@ -62,8 +62,14 @@ public class CWExecutionUnit{
 		else if((type == TYPE_REMOVE_USER_BY_NAME) || (type == TYPE_REMOVE_USER_BY_UUID)){ // If remove type
 			processRemove();
 		}
-		else if((type == TYPE_CHECK_USER_BY_NAME) || (type == TYPE_CHECK_USER_BY_UUID)){ // If check type
-			processCheck();
+		else if((type == TYPE_CHECK_USER_BY_NAME) || (type == TYPE_CHECK_USER_BY_UUID) || (type == TYPE_CHECK_USER_BY_UUID_WITH_RESOLVE)){ // If check type
+			try{
+				processCheck();
+			}
+			catch(Exception ex){
+				System.err.println("There was an exception when trying to check with resolve:");
+				ex.printStackTrace();
+			}
 		}
 		else if((type == TYPE_LIST_WITHOUT_RESOLVE) || (type == TYPE_LIST_WITH_RESOLVE)){ // If list type
 			try{
@@ -179,7 +185,7 @@ public class CWExecutionUnit{
 	/**
 	 * This method is to handle processing check type CWEUs
 	 */
-	private void processCheck(){
+	private void processCheck() throws Exception{
 		if(type == TYPE_CHECK_USER_BY_NAME){
 			try{ // Try to get the UUID
 				String stuuid = UUIDFetcher.getUUID(subCmdArgs[0]);
@@ -221,7 +227,15 @@ public class CWExecutionUnit{
 			}
 		}
 		else if(type == TYPE_CHECK_USER_BY_UUID_WITH_RESOLVE){
-			// TODO Check if resolve was used, throw
+			boolean resolve = false;
+			for(String opt : subCmdOpts){ // For every option
+				if(opt.equalsIgnoreCase("-r")){
+					resolve = true;
+				}
+			}
+			if(!resolve){ // If resolve is off
+				throw new Exception();
+			}
 			try{
 				UUID uuid = UUID.fromString(subCmdArgs[0]);
 				OfflinePlayer ofp = cwp.getServer().getOfflinePlayer(uuid);
