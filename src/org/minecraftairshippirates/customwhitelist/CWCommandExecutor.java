@@ -408,34 +408,42 @@ public class CWCommandExecutor implements CommandExecutor{
 			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
 			return true;
 		}
-		else if(subCmdOptions.length > 0){ // If there is at lease one option
-			if(subCmdOptions[0].equalsIgnoreCase("-r"))
-			sender.sendMessage(ChatColor.RED + MSG_INVALID_OPTION);
-			return false;
-		}
-		else if(subCmdArgs.length == 0){ // There wasn't an argument, list the players
-			try{
-				CWExecutionUnit cweu;
-				if(!resolve){ // If resolve is off
-					cweu = new CWExecutionUnit(cwp, CWExecutionUnit.TYPE_LIST_WITHOUT_RESOLVE, sender, new String[0], new String[0]);
-					cweu.process();
-				}
-				else{ // Else resolve is on
-					cweu = new CWExecutionUnit(cwp, CWExecutionUnit.TYPE_LIST_WITH_RESOLVE, sender, new String[0], new String[]{"-r"});
-					cweu.process(); // TODO Make queue this
+		else{
+			if(subCmdOptions.length > 0){ // If there is at least one option
+				for(String opt : subCmdOptions){
+					if(opt.equalsIgnoreCase("-r")){ // If the option was -r (resolve)
+						resolve = true;
+					}
+					else{ // Else it was not a valid option
+						sender.sendMessage(ChatColor.RED + MSG_INVALID_OPTION);
+						return false;
+					}
 				}
 			}
-			catch(InvalidCWEUTypeException icweutex){
-				sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to list users, see the log for details.");
-				cwp.getLogger().warning("There was an exception preprocessing trying to list users:");
-				icweutex.printStackTrace();
+			if(subCmdArgs.length == 0){ // There wasn't an argument, list the players
+				try{
+					CWExecutionUnit cweu;
+					if(!resolve){ // If resolve is off
+						cweu = new CWExecutionUnit(cwp, CWExecutionUnit.TYPE_LIST_WITHOUT_RESOLVE, sender, new String[0], new String[0]);
+						cweu.process();
+					}
+					else{ // Else resolve is on
+						cweu = new CWExecutionUnit(cwp, CWExecutionUnit.TYPE_LIST_WITH_RESOLVE, sender, new String[0], new String[]{"-r"});
+						cweu.process(); // TODO Make queue this
+					}
+				}
+				catch(InvalidCWEUTypeException icweutex){
+					sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to list users, see the log for details.");
+					cwp.getLogger().warning("There was an exception preprocessing trying to list users:");
+					icweutex.printStackTrace();
+				}
+				
+				return true;
 			}
-			
-			return true;
-		}
-		else{ // Else there was an argument
-			sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
-			return false;
+			else{ // Else there was an argument
+				sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
+				return false;
+			}
 		}
 	}
 	
