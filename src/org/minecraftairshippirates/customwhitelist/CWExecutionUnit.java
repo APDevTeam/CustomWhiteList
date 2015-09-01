@@ -6,7 +6,7 @@ import org.bukkit.command.CommandSender;
  * This class is to house all necessary components for executing a CW function
  */
 public class CWExecutionUnit{
-	private static final int TYPE_ADD_USER_BY_NAME = 0,
+	public static final int TYPE_ADD_USER_BY_NAME = 0,
 		TYPE_ADD_USER_BY_UUID = 1,
 		TYPE_REMOVE_USER_BY_NAME = 2,
 		TYPE_REMOVE_USER_BY_UUID = 3,
