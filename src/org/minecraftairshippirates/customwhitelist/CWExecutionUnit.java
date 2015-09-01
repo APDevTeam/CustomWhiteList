@@ -10,15 +10,23 @@ import org.bukkit.command.CommandSender;
 /**
  * This class is to house all necessary components for executing a CW function
  */
+/**
+ * @author white
+ *
+ */
 public class CWExecutionUnit{
 	public static final int TYPE_ADD_USER_BY_NAME = 0,
 		TYPE_ADD_USER_BY_UUID = 1,
+		
 		TYPE_REMOVE_USER_BY_NAME = 2,
 		TYPE_REMOVE_USER_BY_UUID = 3,
-		TYPE_LIST_WITHOUT_RESOLVE = 4,
-		TYPE_LIST_WITH_RESOLVE = 5,
-		TYPE_CHECK_USER_BY_NAME = 6,
-		TYPE_CHECK_USER_BY_UUID = 7;
+		
+		TYPE_CHECK_USER_BY_NAME = 4,
+		TYPE_CHECK_USER_BY_UUID = 5,
+		
+		TYPE_LIST_WITHOUT_RESOLVE = 6,
+		TYPE_LIST_WITH_RESOLVE = 7;
+	
 	private static final int[] VALID_TYPES = {0, 1, 2, 3, 4, 5, 6, 7};
 	
 	private final CustomWhitelistPlugin cwp;
@@ -44,7 +52,31 @@ public class CWExecutionUnit{
 		subCmdOpts = newSubCmdOpts;
 	}
 	
+	/**
+	 * This method is to be called to process the CWEU
+	 */
 	public void process(){
+		if((type == TYPE_ADD_USER_BY_NAME) || (type == TYPE_ADD_USER_BY_UUID)){ // If add type
+			processAdd();
+		}
+		else if((type == TYPE_REMOVE_USER_BY_NAME) || (type == TYPE_REMOVE_USER_BY_UUID)){ // If remove type
+			processRemove();
+		}
+		else if((type == TYPE_CHECK_USER_BY_NAME) || (type == TYPE_CHECK_USER_BY_UUID)){ // If check type
+			processCheck();
+		}
+		else if((type == TYPE_LIST_WITHOUT_RESOLVE) || (type == TYPE_LIST_WITH_RESOLVE)){ // If list type
+			processList();
+		}
+		else{ // Else we don't know what is going on
+			// Flail and be confused
+		}
+	}
+	
+	/**
+	 * This method is to handle processing add type CWEUs
+	 */
+	private void processAdd(){
 		if(type == TYPE_ADD_USER_BY_NAME){
 			try{ // Try to get the UUID
 				String stuuid = UUIDFetcher.getUUID(subCmdArgs[0]);
@@ -87,6 +119,26 @@ public class CWExecutionUnit{
 				iaex.printStackTrace();
 			}
 		}
-		// TODO Add processing blocks for the rest of the types
+	}
+	
+	/**
+	 * This method is to handle processing remove type CWEUs
+	 */
+	private void processRemove(){
+		// TODO
+	}
+	
+	/**
+	 * This method is to handle processing check type CWEUs
+	 */
+	private void processCheck(){
+		// TODO
+	}
+	
+	/**
+	 * This method is to handle processing list type CWEUs
+	 */
+	private void processList(){
+		// TODO
 	}
 }
