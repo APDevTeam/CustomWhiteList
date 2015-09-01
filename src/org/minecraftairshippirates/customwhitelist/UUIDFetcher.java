@@ -5,9 +5,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * This class is to be the home for all methods relating to fetching UUIDs
- * from mcuuid.net.
- *
+ * This class is to be the home for all methods relating to fetching UUIDs.
  */
 public class UUIDFetcher{
 	/**
@@ -23,7 +21,20 @@ public class UUIDFetcher{
 		// The idea here is to try the next method if one runs into an error.
 		
 		// Try searching mcuuid.net
-		UUID = fetchFromMCUUIDnet(username);
+		try{
+			UUID = fetchFromMCUUIDnet(username);
+		}
+		catch(IOException e){
+			// There was probably a connection issue, just skip this source
+		}
+		catch(UUIDNotFoundException unfex){
+			throw unfex;
+		}
+		catch(Exception ex){
+			// There was some other issue
+			System.err.println("There was an error trying to get a UUID from mcuuid.net:");
+			ex.printStackTrace();
+		}
 		
 		if(UUID == null){ // If nothing was found
 			 throw new UUIDNotFoundException();
@@ -39,7 +50,7 @@ public class UUIDFetcher{
 	 * @param	String username		The Username of the player
 	 * @return	String uuid			The UUID of the player
 	 */
-	private static String fetchFromMCUUIDnet(String username) throws UUIDNotFoundException{
+	private static String fetchFromMCUUIDnet(String username) throws Exception, IOException, UUIDNotFoundException{
 		
 		// Download the page
 		URL pageurl;
@@ -48,7 +59,7 @@ public class UUIDFetcher{
 		}
 		catch(MalformedURLException mue){
 			// This exception really should not happen!
-			throw new UUIDNotFoundException();
+			throw new Exception();
 		}
 		
 		String page = null;
@@ -57,7 +68,7 @@ public class UUIDFetcher{
 		}
 		catch(IOException e){
 			// If this happens, there probably was a connection error.
-			throw new UUIDNotFoundException();
+			throw new IOException();
 		}
 		
 		// Find the UUID if it's there

@@ -6,20 +6,20 @@ CustomWhitelist allows modification to the whitelist even when Mojang UUID queri
 Displays Custom Whitelist help  
 Aliases: cw
 
-**/customwhitelist add** `<player>`  
-Adds `<player>` to the whitelist  
+**/customwhitelist add** `<username/uuid ...>`  
+Adds `<username/uuid ...>` to the whitelist, you may specify multiple usernames or UUIDs or a mix  
 Permission: `customwhitelist.add`
 
-**/customwhitelist remove** `<player>`  
-Removes `<player>` from the whitelist  
+**/customwhitelist remove** `<username/uuid ...>`  
+Removes `<username/uuid ...>` from the whitelist, you may specify multiple usernames or UUIDs or a mix  
 Permission: `customwhitelist.remove`
 
-**/customwhitelist check** `<player>`  
-Checks if `<player>` is on the whitelist  
+**/customwhitelist check** `<username/uuid ...>` [-r]  
+Checks if `<username/uuid ...>` is on the whitelist, you may specify multiple usernames or UUIDs or a mix, you may choose option -r to resolve UUIDs to usernames   
 Permission: `customwhitelist.check`
 
-**/customwhitelist list**  
-Lists all players on the whitelist  
+**/customwhitelist list** [-r]  
+Lists all players on the whitelist, you may choose option -r to resolve UUIDs to usernames  
 Permission: `customwhitelist.list`
 
 **/customwhitelist on**  
@@ -37,16 +37,17 @@ Note: Remember that you should never have to reload the whitelist unless the fil
 
 ### Binaries
 Requirements:  
-Spigot 1.8.7+ [Direct download](https://dl.dropboxusercontent.com/u/49422983/AirshipPirates/Plugins/libs/spigot-1.8.7.jar)  
+Spigot 1.8.7+ [Get Spigot](https://www.spigotmc.org/wiki/spigot/) [Direct download](https://dl.dropboxusercontent.com/u/49422983/AirshipPirates/Plugins/libs/spigot-1.8.7.jar)  
 Java 7 [Get Java](https://www.java.com/en/)
 
 Dev binaries aren't available.  
 Older binaries may not be available  
 v0.5-release-beta [Direct download](https://github.com/AP-Programmers/CustomWhitelist/releases/download/v0.5-release-beta/CustomWhitelist_v0.5-RELEASE.jar)  
 v0.6-release-beta [Direct download](https://github.com/AP-Programmers/CustomWhitelist/releases/download/v0.6-release-beta/CustomWhitelist_v0.6-RELEASE.jar)  
-v0.7-release-beta [Direct download](https://dl.dropboxusercontent.com/u/49422983/AirshipPirates/Plugins/CustomWhitelist_v0.7-release-beta.jar)
+v0.7-release-beta [Direct download](https://github.com/AP-Programmers/CustomWhitelist/releases/download/v0.7-release-beta/CustomWhitelist_v0.7-release-beta.jar)  
+v0.8-release-beta [Direct download](https://dl.dropboxusercontent.com/u/49422983/AirshipPirates/Plugins/CustomWhitelist_v0.8-release-beta.jar)
 
 ### Things left to do before v1.0
+* Add more sources for fetching UUIDs/usernames
 * Make commands async
-* Add capability to process multiple users at a time
-* Add more sources
+* Maybe add queue managing commands

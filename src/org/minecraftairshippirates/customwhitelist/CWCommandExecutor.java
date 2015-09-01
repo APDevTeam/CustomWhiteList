@@ -3,7 +3,6 @@ package org.minecraftairshippirates.customwhitelist;
 import java.util.UUID;
 
 import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -18,7 +17,7 @@ public class CWCommandExecutor implements CommandExecutor{
 					MSG_INSUFFICIENT_PERMS = "You don't have permission to do that!",
 					MSG_ADD_USAGE = "Usage: /customwhitelist add <player>",
 					MSG_REMOVE_USAGE = "Usage: /customwhitelist remove <player>",
-					MSG_CHECK_USAGE = "Usage: /customwhitelist check <player>";
+					MSG_CHECK_USAGE = "Usage: /customwhitelist check <player> [-r]";
 	
 	private final CustomWhitelistPlugin cwp;
 	
@@ -75,13 +74,13 @@ public class CWCommandExecutor implements CommandExecutor{
 					}
 				}
 				catch(Exception ex){
-					cwp.getLogger().warning("There was an exception executing a CW command: ");
+					cwp.getLogger().warning("There was an exception executing a CW subcommand: " + subCmd);
 					ex.printStackTrace();
 					return true;
 				}
 			}
 			catch(Exception ex){
-				cwp.getLogger().warning("There was an exception preprocessing a CW command: ");
+				cwp.getLogger().warning("There was an exception preprocessing CW subcommands: ");
 				ex.printStackTrace();
 				return true;
 			}
@@ -190,31 +189,62 @@ public class CWCommandExecutor implements CommandExecutor{
 			sender.sendMessage(ChatColor.RED + MSG_ADD_USAGE);
 			return true;
 		}
-		else if(subCmdArgs.length == 1){ // If there is a player
-			try{
-				UUID uuid = UUID.fromString(UUIDFetcher.getUUID(subCmdArgs[0]));
-				OfflinePlayer ofp = cwp.getServer().getOfflinePlayer(uuid);
-				if(ofp.isWhitelisted() == true){ // If the player is already whitelisted
-					sender.sendMessage('\"' + subCmdArgs[0] + "\" is already on the whitelist.");
+		else if(subCmdArgs.length == 0){ // Else if there are no users listed
+			sender.sendMessage(ChatColor.RED + MSG_ADD_USAGE);
+			return true;
+		}
+		else{ // Else there is one or more players to be added
+			for(String user : subCmdArgs){
+				if(!(user.length() > 24)){ // If user is not longer than 24 characters, we assume the sender means a username
+					if(user.length() > 16){ // If the username is longer than 16 characters, it is invalid
+						sender.sendMessage(ChatColor.RED.toString() + '\"' + user + "\" is not a valid username.");
+					}
+					else{ // Else the username is valid
+						try{
+							CWExecutionUnit cweu = new CWExecutionUnit(cwp, CWExecutionUnit.TYPE_ADD_USER_BY_NAME, sender, new String[]{user}, new String[0]);
+							cweu.process(); // TODO Make queue this
+						}
+						catch(InvalidCWEUTypeException icweutex){
+							sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to add a user by name, see the log for details.");
+							cwp.getLogger().warning("There was an exception preprocessing trying to add a user by name: " + user);
+							icweutex.printStackTrace();
+						}
+					}
 				}
-				else{ // They're not on the whitelist
-					ofp.setWhitelisted(true); // Add them
-					sender.sendMessage("Added \"" + subCmdArgs[0] + "\" to the whitelist.");
+				else{ // Else we assume the sender means a UUID
+					// Remove any hyphens
+					String stuuid = user.replace(String.valueOf('-'), "");
+					
+					// Verify length
+					if(stuuid.length() != 32){ // If stuuid is not the proper length
+						sender.sendMessage(ChatColor.RED.toString() + '\"' + user + "\" is not a valid UUID.");
+					}
+					else{ // Else we assume it's a valid UUID
+						// Add hyphens in their proper locations
+						stuuid = stuuid.substring(0, 8) + '-' + // Eight
+							stuuid.substring(8, 12) + '-' + // Four
+							stuuid.substring(12, 16) + '-' + // Four
+							stuuid.substring(16, 20) + '-' + // Four
+							stuuid.substring(20, 32); // Twelve
+						try{
+							UUID uuid = UUID.fromString(stuuid);
+							try{
+								CWExecutionUnit cweu = new CWExecutionUnit(cwp, CWExecutionUnit.TYPE_ADD_USER_BY_UUID, sender, new String[]{uuid.toString()}, new String[0]);
+								cweu.process();
+							}
+							catch(InvalidCWEUTypeException icweutex){
+								sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to add a user by uuid, see the log for details.");
+								cwp.getLogger().warning("There was an exception preprocessing trying to add a user by uuid: " + uuid);
+								icweutex.printStackTrace();
+							}
+						}
+						catch(IllegalArgumentException iaex){
+							sender.sendMessage(ChatColor.RED.toString() + '\"' + user + "\" is not a valid UUID ");
+						}
+					}
 				}
-			}
-			catch(UUIDNotFoundException e){
-				sender.sendMessage(ChatColor.RED.toString() + '\"' + subCmdArgs[0] + "\" was not found and could not be added to the whitelist.");
 			}
 			
-			return true;
-		}
-		else if(subCmdArgs.length > 1){ // Too many arguments
-			sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
-			sender.sendMessage(ChatColor.RED + MSG_ADD_USAGE);
-			return true;
-		}
-		else{ // No player was typed
-			sender.sendMessage(ChatColor.RED + MSG_ADD_USAGE);
 			return true;
 		}
 	}
@@ -233,31 +263,62 @@ public class CWCommandExecutor implements CommandExecutor{
 			sender.sendMessage(ChatColor.RED + MSG_REMOVE_USAGE);
 			return true;
 		}
-		else if(subCmdArgs.length == 1){ // If there is a player
-			try{
-				UUID uuid = UUID.fromString(UUIDFetcher.getUUID(subCmdArgs[0]));
-				OfflinePlayer ofp = cwp.getServer().getOfflinePlayer(uuid);
-				if(ofp.isWhitelisted() == false){ // If the player is not whitelisted
-					sender.sendMessage('\"' + subCmdArgs[0] + "\" is not on the whitelist.");
+		else if(subCmdArgs.length == 0){ // Else if there are no users listed
+			sender.sendMessage(ChatColor.RED + MSG_REMOVE_USAGE);
+			return true;
+		}
+		else{ // Else there was one or more players to be added
+			for(String user : subCmdArgs){
+				if(!(user.length() > 24)){ // If user is not longer than 24 characters, we assume the sender means a username
+					if(user.length() > 16){ // If the username is longer than 16 characters, it is invalid
+						sender.sendMessage(ChatColor.RED.toString() + '\"' + user + "\" is not a valid username.");
+					}
+					else{ // Else the username is valid
+						try{
+							CWExecutionUnit cweu = new CWExecutionUnit(cwp, CWExecutionUnit.TYPE_REMOVE_USER_BY_NAME, sender, new String[]{user}, new String[0]);
+							cweu.process(); // TODO Make queue this
+						}
+						catch(InvalidCWEUTypeException icweutex){
+							sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to remove a user by name, see the log for details.");
+							cwp.getLogger().warning("There was an exception preprocessing trying to remove a user by name: " + user);
+							icweutex.printStackTrace();
+						}
+					}
 				}
-				else{ // They're on the whitelist
-					ofp.setWhitelisted(false); // Remove them
-					sender.sendMessage("Removed \"" + subCmdArgs[0] + "\" from the whitelist.");
+				else{ // Else we assume the sender means a UUID
+					// Remove any hyphens
+					String stuuid = user.replace(String.valueOf('-'), "");
+					
+					// Verify length
+					if(stuuid.length() != 32){ // If stuuid is not the proper length
+						sender.sendMessage(ChatColor.RED.toString() + '\"' + user + "\" is not a valid UUID.");
+					}
+					else{ // Else we assume it's a valid UUID
+						// Add hyphens in their proper locations
+						stuuid = stuuid.substring(0, 8) + '-' + // Eight
+							stuuid.substring(8, 12) + '-' + // Four
+							stuuid.substring(12, 16) + '-' + // Four
+							stuuid.substring(16, 20) + '-' + // Four
+							stuuid.substring(20, 32); // Twelve
+						try{
+							UUID uuid = UUID.fromString(stuuid);
+							try{
+								CWExecutionUnit cweu = new CWExecutionUnit(cwp, CWExecutionUnit.TYPE_REMOVE_USER_BY_UUID, sender, new String[]{uuid.toString()}, new String[0]);
+								cweu.process();
+							}
+							catch(InvalidCWEUTypeException icweutex){
+								sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to remove a user by uuid, see the log for details.");
+								cwp.getLogger().warning("There was an exception preprocessing trying to remove a user by uuid: " + uuid);
+								icweutex.printStackTrace();
+							}
+						}
+						catch(IllegalArgumentException iaex){
+							sender.sendMessage(ChatColor.RED.toString() + '\"' + user + "\" is not a valid UUID ");
+						}
+					}
 				}
-			}
-			catch(UUIDNotFoundException e){
-				sender.sendMessage(ChatColor.RED.toString() + '\"' + subCmdArgs[0] + "\" was not found and could not be removed from the whitelist.");
 			}
 			
-			return true;
-		}
-		else if(subCmdArgs.length > 1){ // Too many arguments
-			sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
-			sender.sendMessage(ChatColor.RED + MSG_REMOVE_USAGE);
-			return true;
-		}
-		else{ // No player was typed
-			sender.sendMessage(ChatColor.RED + MSG_REMOVE_USAGE);
 			return true;
 		}
 	}
@@ -267,39 +328,87 @@ public class CWCommandExecutor implements CommandExecutor{
 	 * @return boolean usedProperly		Returns true if the command was used properly
 	 */
 	private boolean check(CommandSender sender, String[] subCmdArgs, String[] subCmdOptions){
+		boolean resolve = false;
 		if(!sender.hasPermission("customwhitelist.check")){ // If the sender doesn't have the permission for the "check" subcommand
 			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
 			return true;
 		}
-		else if(subCmdOptions.length != 0){ // If there is an option
-			sender.sendMessage(ChatColor.RED + MSG_INVALID_OPTION);
-			sender.sendMessage(ChatColor.RED + MSG_CHECK_USAGE);
-			return true;
-		}
-		else if(subCmdArgs.length == 1){ // If there is a player
-			try{
-				UUID uuid = UUID.fromString(UUIDFetcher.getUUID(subCmdArgs[0]));
-				OfflinePlayer ofp = cwp.getServer().getOfflinePlayer(uuid);
-				if(ofp.isWhitelisted()){ // If the player is whitelisted
-					sender.sendMessage('\"' + subCmdArgs[0] + "\" is on the whitelist.");
-				}
-				else{ // Else the player is not whitelisted
-					sender.sendMessage('\"' + subCmdArgs[0] + "\" is not on the whitelist.");
+		else{
+			if(subCmdOptions.length > 0){ // If there is at least one option
+				for(String opt : subCmdOptions){
+					if(opt.equalsIgnoreCase("-r")){ // If the option was -r (resolve)
+						resolve = true;
+					}
+					else{ // Else it was not a valid option
+						sender.sendMessage(ChatColor.RED + MSG_INVALID_OPTION);
+						return false;
+					}
 				}
 			}
-			catch(UUIDNotFoundException e){
-				sender.sendMessage(ChatColor.RED.toString() + '\"' + subCmdArgs[0] + "\" was not found and could not be checked.");
+			if(subCmdArgs.length == 0){ // Else if there are no users listed
+				sender.sendMessage(ChatColor.RED + MSG_CHECK_USAGE);
+				return true;
+			}
+			else{ // Else there is one or more players to be checked
+				for(String user : subCmdArgs){
+					if(!(user.length() > 24)){ // If user is not longer than 24 characters, we assume the sender means a username
+						if(user.length() > 16){ // If the username is longer than 16 characters, it is invalid
+							sender.sendMessage(ChatColor.RED.toString() + '\"' + user + "\" is not a valid username.");
+						}
+						else{ // Else the username is valid
+							try{
+								CWExecutionUnit cweu = new CWExecutionUnit(cwp, CWExecutionUnit.TYPE_CHECK_USER_BY_NAME, sender, new String[]{user}, new String[0]);
+								cweu.process(); // TODO Make queue this
+							}
+							catch(InvalidCWEUTypeException icweutex){
+								sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to check a user by name, see the log for details.");
+								cwp.getLogger().warning("There was an exception preprocessing trying to check a user by name: " + user);
+								icweutex.printStackTrace();
+							}
+						}
+					}
+					else{ // Else we assume the sender means a UUID
+						// Remove any hyphens
+						String stuuid = user.replace(String.valueOf('-'), "");
+						
+						// Verify length
+						if(stuuid.length() != 32){ // If stuuid is not the proper length
+							sender.sendMessage(ChatColor.RED.toString() + '\"' + user + "\" is not a valid UUID.");
+						}
+						else{ // Else we assume it's a valid UUID
+							// Add hyphens in their proper locations
+							stuuid = stuuid.substring(0, 8) + '-' + // Eight
+								stuuid.substring(8, 12) + '-' + // Four
+								stuuid.substring(12, 16) + '-' + // Four
+								stuuid.substring(16, 20) + '-' + // Four
+								stuuid.substring(20, 32); // Twelve
+							try{
+								UUID uuid = UUID.fromString(stuuid);
+								try{
+									CWExecutionUnit cweu;
+									if(!resolve){ // If resolve is off
+										cweu = new CWExecutionUnit(cwp, CWExecutionUnit.TYPE_CHECK_USER_BY_UUID, sender, new String[]{uuid.toString()}, new String[0]);
+										cweu.process();
+									}
+									else{
+										cweu = new CWExecutionUnit(cwp, CWExecutionUnit.TYPE_CHECK_USER_BY_UUID_WITH_RESOLVE, sender, new String[]{uuid.toString()}, new String[]{"-r"});
+										cweu.process(); // TODO Make queue this
+									}
+								}
+								catch(InvalidCWEUTypeException icweutex){
+									sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to check a user by uuid, see the log for details.");
+									cwp.getLogger().warning("There was an exception preprocessing trying to check a user by uuid: " + uuid);
+									icweutex.printStackTrace();
+								}
+							}
+							catch(IllegalArgumentException iaex){
+								sender.sendMessage(ChatColor.RED.toString() + '\"' + user + "\" is not a valid UUID ");
+							}
+						}
+					}
+				}
 			}
 			
-			return true;
-		}
-		else if(subCmdArgs.length > 1){ // Too many arguments
-			sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
-			sender.sendMessage(ChatColor.RED + MSG_CHECK_USAGE);
-			return true;
-		}
-		else{ // No player was typed
-			sender.sendMessage(ChatColor.RED + MSG_CHECK_USAGE);
 			return true;
 		}
 	}
@@ -309,29 +418,47 @@ public class CWCommandExecutor implements CommandExecutor{
 	 * @return boolean usedProperly		Returns true if the command was used properly
 	 */
 	private boolean list(CommandSender sender, String[] subCmdArgs, String[] subCmdOptions){
+		boolean resolve = false;
 		if(!sender.hasPermission("customwhitelist.list")){ // If the sender doesn't have the permission for the "list" subcommand
 			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
 			return true;
 		}
-		else if(subCmdOptions.length != 0){ // If there is an option
-			sender.sendMessage(ChatColor.RED + MSG_INVALID_OPTION);
-			return false;
-		}
-		else if(subCmdArgs.length == 0){ // There wasn't an argument, list the players
-			OfflinePlayer[] wlofps = cwp.getServer().getWhitelistedPlayers().toArray(new OfflinePlayer[cwp.getServer().getWhitelistedPlayers().size()]);
-			StringBuilder sb = new StringBuilder();
-			sb.append("There are " + wlofps.length + " whitelisted players:");
-			for(OfflinePlayer ofp : wlofps){ // For every element in the array
-				UUID uuid = ofp.getUniqueId();
-				sb.append('\n' + uuid.toString());
+		else{
+			if(subCmdOptions.length > 0){ // If there is at least one option
+				for(String opt : subCmdOptions){
+					if(opt.equalsIgnoreCase("-r")){ // If the option was -r (resolve)
+						resolve = true;
+					}
+					else{ // Else it was not a valid option
+						sender.sendMessage(ChatColor.RED + MSG_INVALID_OPTION);
+						return false;
+					}
+				}
 			}
-			sender.sendMessage(sb.toString());
-			
-			return true;
-		}
-		else{ // Else there was an argument
-			sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
-			return false;
+			if(subCmdArgs.length == 0){ // There wasn't an argument, list the players
+				try{
+					CWExecutionUnit cweu;
+					if(!resolve){ // If resolve is off
+						cweu = new CWExecutionUnit(cwp, CWExecutionUnit.TYPE_LIST_WITHOUT_RESOLVE, sender, new String[0], new String[0]);
+						cweu.process();
+					}
+					else{ // Else resolve is on
+						cweu = new CWExecutionUnit(cwp, CWExecutionUnit.TYPE_LIST_WITH_RESOLVE, sender, new String[0], new String[]{"-r"});
+						cweu.process(); // TODO Make queue this
+					}
+				}
+				catch(InvalidCWEUTypeException icweutex){
+					sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to list users, see the log for details.");
+					cwp.getLogger().warning("There was an exception preprocessing trying to list users:");
+					icweutex.printStackTrace();
+				}
+				
+				return true;
+			}
+			else{ // Else there was an argument
+				sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
+				return false;
+			}
 		}
 	}
 	
