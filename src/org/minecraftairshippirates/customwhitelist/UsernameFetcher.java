@@ -25,13 +25,13 @@ public class UsernameFetcher{
 		try{
 			username = fetchFromMCUUIDnet(uuid);
 		}
-		catch(IOException ioe){
+		catch(IOException ioex){
 			// There was probably a connection issue, just skip this source
 		}
-		catch(Exception e){
+		catch(Exception ex){
 			// There was some other issue
 			System.err.println("There was an error trying to get a username from mcuuid.net:");
-			e.printStackTrace();
+			ex.printStackTrace();
 		}
 		
 		if(username == null){ // If nothing was found
