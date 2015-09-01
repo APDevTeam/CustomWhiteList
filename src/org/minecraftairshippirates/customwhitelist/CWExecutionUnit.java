@@ -97,7 +97,7 @@ public class CWExecutionUnit{
 					iaex.printStackTrace();
 				}
 			}
-			catch(UUIDNotFoundException unfe){
+			catch(UUIDNotFoundException unfex){
 				sender.sendMessage(ChatColor.RED.toString() + '\"' + subCmdArgs[0] + "\" was not found and could not be added to the whitelist.");
 			}
 		}
@@ -174,12 +174,32 @@ public class CWExecutionUnit{
 	 * This method is to handle processing check type CWEUs
 	 */
 	private void processCheck(){
-		// TODO
-		
-		/*
-		else if(subCmdArgs.length == 1){ // If there is a player
+		if(type == TYPE_CHECK_USER_BY_NAME){
+			try{ // Try to get the UUID
+				String stuuid = UUIDFetcher.getUUID(subCmdArgs[0]);
+				try{
+					UUID uuid = UUID.fromString(stuuid);
+					OfflinePlayer ofp = cwp.getServer().getOfflinePlayer(uuid);
+					if(ofp.isWhitelisted()){ // If the player is whitelisted
+						sender.sendMessage('\"' + subCmdArgs[0] + "\" is on the whitelist.");
+					}
+					else{ // Else the player is not whitelisted
+						sender.sendMessage('\"' + subCmdArgs[0] + "\" is not on the whitelist.");
+					}
+				}
+				catch(IllegalArgumentException iaex){
+					sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to check a user by name, see the log for details.");
+					cwp.getLogger().warning("There was an exception preprocessing trying to check a user by name: " + subCmdArgs[0]);
+					iaex.printStackTrace();
+				}
+			}
+			catch(UUIDNotFoundException unfex){
+				sender.sendMessage(ChatColor.RED.toString() + '\"' + subCmdArgs[0] + "\" was not found and could not be added to the whitelist.");
+			}
+		}
+		else if(type == TYPE_CHECK_USER_BY_UUID){
 			try{
-				UUID uuid = UUID.fromString(UUIDFetcher.getUUID(subCmdArgs[0]));
+				UUID uuid = UUID.fromString(subCmdArgs[0]);
 				OfflinePlayer ofp = cwp.getServer().getOfflinePlayer(uuid);
 				if(ofp.isWhitelisted()){ // If the player is whitelisted
 					sender.sendMessage('\"' + subCmdArgs[0] + "\" is on the whitelist.");
@@ -188,22 +208,13 @@ public class CWExecutionUnit{
 					sender.sendMessage('\"' + subCmdArgs[0] + "\" is not on the whitelist.");
 				}
 			}
-			catch(UUIDNotFoundException e){
-				sender.sendMessage(ChatColor.RED.toString() + '\"' + subCmdArgs[0] + "\" was not found and could not be checked.");
+			catch(IllegalArgumentException iaex){
+				sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to check a user by name, see the log for details.");
+				cwp.getLogger().warning("There was an exception preprocessing trying to check a user by name: " + subCmdArgs[0]);
+				iaex.printStackTrace();
 			}
-			
-			return true;
 		}
-		else if(subCmdArgs.length > 1){ // Too many arguments
-			sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
-			sender.sendMessage(ChatColor.RED + MSG_CHECK_USAGE);
-			return true;
-		}
-		else{ // No player was typed
-			sender.sendMessage(ChatColor.RED + MSG_CHECK_USAGE);
-			return true;
-		}
-		*/
+		else; // Else it wasn't supposed to be here
 	}
 	
 	/**
