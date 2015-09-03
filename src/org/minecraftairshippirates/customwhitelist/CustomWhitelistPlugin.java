@@ -4,10 +4,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class CustomWhitelistPlugin extends JavaPlugin{
 	private CWCommandExecutor cwce;
+	private CWEUExecutor cweuExecutor;
 	
 	@Override
 	public void onEnable(){
-		cwce = new CWCommandExecutor(this);
+		cweuExecutor = new CWEUExecutor();
+		cwce = new CWCommandExecutor(this, cweuExecutor);
 		try{
 			getCommand("customwhitelist").setExecutor(cwce);
 			getCommand("cw").setExecutor(cwce);
