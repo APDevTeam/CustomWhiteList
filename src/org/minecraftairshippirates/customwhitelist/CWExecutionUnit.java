@@ -86,6 +86,42 @@ public class CWExecutionUnit{
 	}
 	
 	/**
+	 * This method is to get a simple description of the CWEU's task
+	 */
+	public String getDescription(){
+		if(type == TYPE_ADD_USER_BY_NAME){
+			return "ADD_USER_BY_NAME:" + subCmdArgs[0];
+		}
+		else if(type == TYPE_ADD_USER_BY_UUID){
+			return "ADD_USER_BY_UUID:" + subCmdArgs[0];
+		}
+		else if(type == TYPE_REMOVE_USER_BY_NAME){
+			return "REMOVE_USER_BY_NAME:" + subCmdArgs[0];
+		}
+		else if(type == TYPE_REMOVE_USER_BY_UUID){
+			return "REMOVE_USER_BY_UUID:" + subCmdArgs[0];
+		}
+		else if(type == TYPE_CHECK_USER_BY_NAME){
+			return "CHECK_USER_BY_NAME:" + subCmdArgs[0];
+		}
+		else if(type == TYPE_CHECK_USER_BY_UUID){
+			return "CHECK_USER_BY_UUID:" + subCmdArgs[0];
+		}
+		else if(type == TYPE_CHECK_USER_BY_UUID_WITH_RESOLVE){
+			return "CHECK_USER_BY_UUID_WITH_RESOLVE:" + subCmdArgs[0];
+		}
+		else if(type == TYPE_LIST_WITHOUT_RESOLVE){
+			return "LIST_WITHOUT_RESOLVE:" + subCmdArgs[0];
+		}
+		else if(type == TYPE_LIST_WITH_RESOLVE){
+			return "LIST_WITH_RESOLVE:" + subCmdArgs[0];
+		}
+		else{
+			return "UNKNOWN_TYPE:" + subCmdArgs[0];
+		}
+	}
+	
+	/**
 	 * This method is to handle processing add type CWEUs
 	 */
 	private void processAdd(){
