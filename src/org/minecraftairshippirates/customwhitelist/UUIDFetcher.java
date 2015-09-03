@@ -3,6 +3,7 @@ package org.minecraftairshippirates.customwhitelist;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.UUID;
 
 /**
  * This class is to be the home for all methods relating to fetching UUIDs.
@@ -33,6 +34,22 @@ public class UUIDFetcher{
 		catch(Exception ex){
 			// There was some other issue
 			System.err.println("There was an error trying to get a UUID from mcuuid.net:");
+			ex.printStackTrace();
+		}
+		
+		// Try searching mcuuid.com
+		try{
+			UUID = fetchFromMCUUIDcom(username).toString();
+		}
+		catch(IOException e){
+			// There was probably a connection issue, just skip this source
+		}
+		catch(UUIDNotFoundException unfex){
+			throw unfex;
+		}
+		catch(Exception ex){
+			// There was some other issue
+			System.err.println("There was an error trying to get a UUID from mcuuid.com:");
 			ex.printStackTrace();
 		}
 		
@@ -100,5 +117,60 @@ public class UUIDFetcher{
 		page = page.substring(0, endOfUUID);
 		
 		return page;
+	}
+	
+	/**
+	 * The following method is to get a UUID from mcuuid.com. Note that due
+	 * to the nature of downloading data, this method may take unpredictable
+	 * times to return.
+	 * @param	String username		The Username of the player
+	 * @return	String uuid			The UUID of the player
+	 */
+	private static UUID fetchFromMCUUIDcom(String username) throws Exception, IOException, UUIDNotFoundException{
+		
+		// Download the page
+		URL pageurl;
+		try{
+			pageurl = new URL("http://mcuuid.com/api/" + username);
+		}
+		catch(MalformedURLException mue){
+			// This exception really should not happen!
+			throw new Exception();
+		}
+		
+		String page = null;
+		try{
+			page = Utils.downloadPage(pageurl);
+		}
+		catch(IOException e){
+			// If this happens, there probably was a connection error.
+			throw new IOException();
+		}
+		
+		// Find the UUID if it's there
+		int indexOfUUID = page.indexOf("\"uuid_formatted\":\"");
+		
+		if(indexOfUUID == -1){ // If the UUID cannot be found
+			throw new UUIDNotFoundException();
+		}
+		
+		// Move the marker to the beginning of the formatted UUID
+		indexOfUUID += "\"uuid_formatted\":\"".length();
+		
+		// Trim the page's end off
+		try{
+			page = page.substring(indexOfUUID, indexOfUUID + 36);
+		}
+		catch(StringIndexOutOfBoundsException sioobex){
+			throw new UUIDNotFoundException();
+		}
+		
+		try{
+			UUID uuid = UUID.fromString(page);
+			return uuid;
+		}
+		catch(IllegalArgumentException iaex){
+			throw new UUIDNotFoundException();
+		}
 	}
 }
