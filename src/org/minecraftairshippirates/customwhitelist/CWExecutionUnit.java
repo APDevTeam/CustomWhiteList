@@ -127,23 +127,20 @@ public class CWExecutionUnit{
 	private void processAdd(){
 		if(type == TYPE_ADD_USER_BY_NAME){
 			try{ // Try to get the UUID
-				String stuuid = UUIDFetcher.getUUID(subCmdArgs[0]);
-				try{
-					UUID uuid = UUID.fromString(stuuid);
-					OfflinePlayer ofp = cwp.getServer().getOfflinePlayer(uuid);
-					if(ofp.isWhitelisted()){ // If the player is already on the whitelist
-						sender.sendMessage('\"' + subCmdArgs[0] + "\" is already on the whitelist.");
-					}
-					else{ // They're to be added
-						ofp.setWhitelisted(true);
-						sender.sendMessage('\"' + subCmdArgs[0] + "\" was added to the whitelist.");
-					}
+				UUID uuid = UUIDFetcher.getUUID(subCmdArgs[0]);
+				OfflinePlayer ofp = cwp.getServer().getOfflinePlayer(uuid);
+				if(ofp.isWhitelisted()){ // If the player is already on the whitelist
+					sender.sendMessage('\"' + subCmdArgs[0] + "\" is already on the whitelist.");
 				}
-				catch(IllegalArgumentException iaex){
-					sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to add a user by name, see the log for details.");
-					cwp.getLogger().warning("There was an exception preprocessing trying to add a user by name: " + subCmdArgs[0]);
-					iaex.printStackTrace();
+				else{ // They're to be added
+					ofp.setWhitelisted(true);
+					sender.sendMessage('\"' + subCmdArgs[0] + "\" was added to the whitelist.");
 				}
+			}
+			catch(IllegalArgumentException iaex){
+				sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to add a user by name, see the log for details.");
+				cwp.getLogger().warning("There was an exception preprocessing trying to add a user by name: " + subCmdArgs[0]);
+				iaex.printStackTrace();
 			}
 			catch(UUIDNotFoundException unfex){
 				sender.sendMessage(ChatColor.RED.toString() + '\"' + subCmdArgs[0] + "\" was not found and could not be added to the whitelist.");
@@ -176,23 +173,20 @@ public class CWExecutionUnit{
 	private void processRemove(){
 		if(type == TYPE_REMOVE_USER_BY_NAME){
 			try{ // Try to get the UUID
-				String stuuid = UUIDFetcher.getUUID(subCmdArgs[0]);
-				try{
-					UUID uuid = UUID.fromString(stuuid);
-					OfflinePlayer ofp = cwp.getServer().getOfflinePlayer(uuid);
-					if(!ofp.isWhitelisted()){ // If the player is not on the whitelist
-						sender.sendMessage('\"' + subCmdArgs[0] + "\" is not on the whitelist.");
-					}
-					else{ // They're to be removed
-						ofp.setWhitelisted(false);
-						sender.sendMessage('\"' + subCmdArgs[0] + "\" was removed from the whitelist.");
-					}
+				UUID uuid = UUIDFetcher.getUUID(subCmdArgs[0]);
+				OfflinePlayer ofp = cwp.getServer().getOfflinePlayer(uuid);
+				if(!ofp.isWhitelisted()){ // If the player is not on the whitelist
+					sender.sendMessage('\"' + subCmdArgs[0] + "\" is not on the whitelist.");
 				}
-				catch(IllegalArgumentException iaex){
-					sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to remove a user by name, see the log for details.");
-					cwp.getLogger().warning("There was an exception preprocessing trying to remove a user by name: " + subCmdArgs[0]);
-					iaex.printStackTrace();
+				else{ // They're to be removed
+					ofp.setWhitelisted(false);
+					sender.sendMessage('\"' + subCmdArgs[0] + "\" was removed from the whitelist.");
 				}
+			}
+			catch(IllegalArgumentException iaex){
+				sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to remove a user by name, see the log for details.");
+				cwp.getLogger().warning("There was an exception preprocessing trying to remove a user by name: " + subCmdArgs[0]);
+				iaex.printStackTrace();
 			}
 			catch(UUIDNotFoundException unfe){
 				sender.sendMessage(ChatColor.RED.toString() + '\"' + subCmdArgs[0] + "\" was not found and could not be removed from the whitelist.");
@@ -224,22 +218,19 @@ public class CWExecutionUnit{
 	private void processCheck() throws Exception{
 		if(type == TYPE_CHECK_USER_BY_NAME){
 			try{ // Try to get the UUID
-				String stuuid = UUIDFetcher.getUUID(subCmdArgs[0]);
-				try{
-					UUID uuid = UUID.fromString(stuuid);
-					OfflinePlayer ofp = cwp.getServer().getOfflinePlayer(uuid);
-					if(ofp.isWhitelisted()){ // If the player is whitelisted
-						sender.sendMessage('\"' + subCmdArgs[0] + "\" is on the whitelist.");
-					}
-					else{ // Else the player is not whitelisted
-						sender.sendMessage('\"' + subCmdArgs[0] + "\" is not on the whitelist.");
-					}
+				UUID uuid = UUIDFetcher.getUUID(subCmdArgs[0]);
+				OfflinePlayer ofp = cwp.getServer().getOfflinePlayer(uuid);
+				if(ofp.isWhitelisted()){ // If the player is whitelisted
+					sender.sendMessage('\"' + subCmdArgs[0] + "\" is on the whitelist.");
 				}
-				catch(IllegalArgumentException iaex){
-					sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to check a user by name, see the log for details.");
-					cwp.getLogger().warning("There was an exception preprocessing trying to check a user by name: " + subCmdArgs[0]);
-					iaex.printStackTrace();
+				else{ // Else the player is not whitelisted
+					sender.sendMessage('\"' + subCmdArgs[0] + "\" is not on the whitelist.");
 				}
+			}
+			catch(IllegalArgumentException iaex){
+				sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to check a user by name, see the log for details.");
+				cwp.getLogger().warning("There was an exception preprocessing trying to check a user by name: " + subCmdArgs[0]);
+				iaex.printStackTrace();
 			}
 			catch(UUIDNotFoundException unfex){
 				sender.sendMessage(ChatColor.RED.toString() + '\"' + subCmdArgs[0] + "\" was not found and could not be added to the whitelist.");

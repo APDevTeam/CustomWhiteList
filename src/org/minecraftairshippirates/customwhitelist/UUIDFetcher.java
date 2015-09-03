@@ -14,16 +14,16 @@ public class UUIDFetcher{
 	 * Note that due to the nature of downloading data, this method may take
 	 * unpredictable times to return.
 	 * @param	String username		The username of the player
-	 * @return	String UUID			The UUID of the player
+	 * @return	UUID uuid			The UUID of the player
 	 */
-	public static String getUUID(String username) throws UUIDNotFoundException{
-		String UUID = null;
+	public static UUID getUUID(String username) throws UUIDNotFoundException{
+		UUID uuid = null;
 		
 		// The idea here is to try the next method if one runs into an error.
 		
 		// Try searching mcuuid.net
 		try{
-			UUID = fetchFromMCUUIDnet(username);
+			uuid = fetchFromMCUUIDnet(username);
 		}
 		catch(IOException e){
 			// There was probably a connection issue, just skip this source
@@ -39,7 +39,7 @@ public class UUIDFetcher{
 		
 		// Try searching mcuuid.com
 		try{
-			UUID = fetchFromMCUUIDcom(username).toString();
+			uuid = fetchFromMCUUIDcom(username);
 		}
 		catch(IOException e){
 			// There was probably a connection issue, just skip this source
@@ -53,11 +53,11 @@ public class UUIDFetcher{
 			ex.printStackTrace();
 		}
 		
-		if(UUID == null){ // If nothing was found
+		if(uuid == null){ // If nothing was found
 			 throw new UUIDNotFoundException();
 		}
 		
-		return UUID;
+		return uuid;
 	}
 	
 	/**
@@ -65,9 +65,9 @@ public class UUIDFetcher{
 	 * to the nature of downloading data, this method may take unpredictable
 	 * times to return.
 	 * @param	String username		The Username of the player
-	 * @return	String uuid			The UUID of the player
+	 * @return	UUID uuid			The UUID of the player
 	 */
-	private static String fetchFromMCUUIDnet(String username) throws Exception, IOException, UUIDNotFoundException{
+	private static UUID fetchFromMCUUIDnet(String username) throws Exception, IOException, UUIDNotFoundException{
 		
 		// Download the page
 		URL pageurl;
@@ -116,7 +116,13 @@ public class UUIDFetcher{
 		// Trim the page down to the UUID
 		page = page.substring(0, endOfUUID);
 		
-		return page;
+		try{
+			UUID uuid = UUID.fromString(page);
+			return uuid;
+		}
+		catch(IllegalArgumentException iaex){
+			throw new UUIDNotFoundException();
+		}
 	}
 	
 	/**
@@ -124,7 +130,7 @@ public class UUIDFetcher{
 	 * to the nature of downloading data, this method may take unpredictable
 	 * times to return.
 	 * @param	String username		The Username of the player
-	 * @return	String uuid			The UUID of the player
+	 * @return	UUID uuid			The UUID of the player
 	 */
 	private static UUID fetchFromMCUUIDcom(String username) throws Exception, IOException, UUIDNotFoundException{
 		
