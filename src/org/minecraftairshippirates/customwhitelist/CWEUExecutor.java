@@ -37,6 +37,15 @@ public class CWEUExecutor{
 		}
 	}
 	
+	public void waitForFinish(){
+		try{
+			executorThread.join();
+		}
+		catch(InterruptedException iex){
+			// Do nothing
+		}
+	}
+	
 	private class Executor extends Thread{
 		@Override
 		public void run(){
