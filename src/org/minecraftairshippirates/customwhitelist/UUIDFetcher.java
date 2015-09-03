@@ -84,7 +84,7 @@ public class UUIDFetcher{
 			page = Utils.downloadPage(pageurl);
 		}
 		catch(IOException e){
-			// If this happens, there probably was a connection error.
+			// If this happens, there probably was a connection error or timeout.
 			throw new IOException();
 		}
 		
@@ -143,7 +143,7 @@ public class UUIDFetcher{
 			page = Utils.downloadPage(pageurl);
 		}
 		catch(IOException e){
-			// If this happens, there probably was a connection error.
+			// If this happens, there probably was a connection error or timeout.
 			throw new IOException();
 		}
 		
