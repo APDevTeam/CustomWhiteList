@@ -5,14 +5,18 @@ import java.util.NoSuchElementException;
 
 public class CWEUExecutor{
 	private final LinkedList<CWExecutionUnit> cweuQueue;
-	private Thread executorThread = null;
+	private Executor executorThread = null;
 	
 	CWEUExecutor(){
 		cweuQueue = new LinkedList<CWExecutionUnit>();
 	}
 	
 	public synchronized boolean add(CWExecutionUnit newCWEU) throws IllegalStateException{
-		// TODO If the queue executor is not running then start it
+		if((executorThread == null) || !executorThread.isAlive()){ // If the queue executor is not running
+			// Start it
+			executorThread = new Executor();
+			executorThread.start();
+		}
 		return cweuQueue.add(newCWEU);
 	}
 	
@@ -24,5 +28,18 @@ public class CWEUExecutor{
 		return cweuQueue.peek();
 	}
 	
-	
+	private class Executor extends Thread{
+		@Override
+		public void run(){
+			while(true){
+				try{
+					remove().process();
+				}
+				catch(NoSuchElementException nseex){ // If there's nothing more to process
+					break;
+				}
+			}
+			// Thread done
+		}
+	}
 }
