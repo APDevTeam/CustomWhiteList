@@ -46,4 +46,5 @@ Older binaries may not be available
 v0.5-release-beta [Direct download](https://github.com/AP-Programmers/CustomWhitelist/releases/download/v0.5-release-beta/CustomWhitelist_v0.5-RELEASE.jar)  
 v0.6-release-beta [Direct download](https://github.com/AP-Programmers/CustomWhitelist/releases/download/v0.6-release-beta/CustomWhitelist_v0.6-RELEASE.jar)  
 v0.7-release-beta [Direct download](https://github.com/AP-Programmers/CustomWhitelist/releases/download/v0.7-release-beta/CustomWhitelist_v0.7-release-beta.jar)  
-v0.8-release-beta [Direct download](https://dl.dropboxusercontent.com/u/49422983/AirshipPirates/Plugins/CustomWhitelist_v0.8-release-beta.jar)
+v0.8-release-beta [Direct download](https://github.com/AP-Programmers/CustomWhitelist/releases/download/v0.8-release-beta/CustomWhitelist_v0.8-release-beta.jar)  
+**v1.0-release** [Direct download](https://dl.dropboxusercontent.com/u/49422983/AirshipPirates/Plugins/CustomWhitelist_v1.0-release.jar)
