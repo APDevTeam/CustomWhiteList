@@ -1,5 +1,6 @@
 ## CustomWhitelist
-CustomWhitelist allows modification to the whitelist even when Mojang UUID queries are rejected.
+CustomWhitelist allows modification to the whitelist even when Mojang UUID queries are rejected.  
+Username lookups are async so the world will not stop.
 
 ### Commands
 **/customwhitelist** `<add/remove>`  
@@ -49,5 +50,3 @@ v0.8-release-beta [Direct download](https://dl.dropboxusercontent.com/u/49422983
 
 ### Things left to do before v1.0
 * Add more sources for fetching UUIDs/usernames
-* Make commands async
-* Maybe add queue managing commands
