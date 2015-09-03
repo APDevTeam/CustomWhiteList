@@ -5,7 +5,7 @@ import java.util.NoSuchElementException;
 
 public class CWEUExecutor{
 	private final LinkedList<CWExecutionUnit> cweuQueue;
-	private Executor executorThread = null;
+	private volatile Executor executorThread = null;
 	
 	CWEUExecutor(){
 		cweuQueue = new LinkedList<CWExecutionUnit>();
@@ -26,6 +26,15 @@ public class CWEUExecutor{
 	
 	public synchronized CWExecutionUnit element() throws NoSuchElementException{
 		return cweuQueue.peek();
+	}
+	
+	public boolean isRunning(){
+		try{
+			return executorThread.isAlive();
+		}
+		catch(NullPointerException npex){
+			return false;
+		}
 	}
 	
 	private class Executor extends Thread{
