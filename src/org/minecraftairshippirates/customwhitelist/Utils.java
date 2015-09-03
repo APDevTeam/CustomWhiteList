@@ -20,6 +20,9 @@ public class Utils{
 	 */
 	public static String downloadPage(URL source) throws IOException{
 		HttpURLConnection conn = (HttpURLConnection)source.openConnection();
+		// Set timeouts
+		conn.setConnectTimeout(1000);
+		conn.setReadTimeout(2500);
 		
 		// I'll pretend that I'm wget from cygwin!
 		conn.setRequestProperty("User-Agent", "Wget/1.16.2 (cygwin)");
