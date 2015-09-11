@@ -48,4 +48,4 @@ v0.6-release-beta [Direct download](https://github.com/AP-Programmers/CustomWhit
 v0.7-release-beta [Direct download](https://github.com/AP-Programmers/CustomWhitelist/releases/download/v0.7-release-beta/CustomWhitelist_v0.7-release-beta.jar)  
 v0.8-release-beta [Direct download](https://github.com/AP-Programmers/CustomWhitelist/releases/download/v0.8-release-beta/CustomWhitelist_v0.8-release-beta.jar)  
 v1.0-release [Direct download](https://github.com/AP-Programmers/CustomWhitelist/releases/download/v1.0-release/CustomWhitelist_v1.0-release.jar)  
-v1.1-release [Direct download](https://github.com/AP-Programmers/CustomWhitelist/releases/download/v1.1-release/CustomWhitelist_v1.1-release.jar)
+**v1.1-release** [Direct download](https://github.com/AP-Programmers/CustomWhitelist/releases/download/v1.1-release/CustomWhitelist_v1.1-release.jar)
