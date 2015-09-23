@@ -1,6 +1,6 @@
 ## CustomWhiteList
-CustomWhiteList allows modification to the white list even when Mojang UUID queries are rejected.  
-Username lookups are async so the world will not stop.
+CWL allows modification to the white list even when vanilla uuid/username lookups are rejected.  
+All lookups are async so the world will not stop. You may add/remove/check multiple users at a time.
 
 ### Commands
 **/customwhitelist** `<add/remove/check/list/on/off/reload>`  
