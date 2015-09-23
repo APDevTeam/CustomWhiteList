@@ -9,10 +9,10 @@ import java.net.SocketTimeoutException;
 import java.net.URL;
 
 /**
- * This class is for housing utility methods that are publicly accessible
+ * This class is for housing web utility code.
  *
  */
-public class Utils{
+public class WebUtils{
 	/**
 	 * This method is for downloading a page and returning it as a String
 	 * @param	URL source			The URL of the page to be downloaded

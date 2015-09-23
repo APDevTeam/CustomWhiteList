@@ -5,7 +5,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.UUID;
 
-import net.whitewolfdoge.customwhitelist.util.Utils;
+import net.whitewolfdoge.customwhitelist.util.WebUtils;
 
 /**
  * This class is to be the home for all methods relating to fetching UUIDs.
@@ -83,7 +83,7 @@ public class UUIDFetcher{
 		
 		String page = null;
 		try{
-			page = Utils.downloadPage(pageurl);
+			page = WebUtils.downloadPage(pageurl);
 		}
 		catch(IOException e){
 			// If this happens, there probably was a connection error or timeout.
@@ -148,7 +148,7 @@ public class UUIDFetcher{
 		
 		String page = null;
 		try{
-			page = Utils.downloadPage(pageurl);
+			page = WebUtils.downloadPage(pageurl);
 		}
 		catch(IOException e){
 			// If this happens, there probably was a connection error or timeout.
