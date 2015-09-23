@@ -1,11 +1,9 @@
-package net.whitewolfdoge.customwhitelist;
+package net.whitewolfdoge.customwhitelist.util;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.UUID;
-
-import net.whitewolfdoge.customwhitelist.util.WebUtils;
 
 /**
  * This class is to be the home for all methods relating to fetching usernames.

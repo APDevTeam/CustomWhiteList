@@ -2,6 +2,11 @@ package net.whitewolfdoge.customwhitelist;
 
 import java.util.UUID;
 
+import net.whitewolfdoge.customwhitelist.util.UUIDFetcher;
+import net.whitewolfdoge.customwhitelist.util.UUIDNotFoundException;
+import net.whitewolfdoge.customwhitelist.util.UsernameFetcher;
+import net.whitewolfdoge.customwhitelist.util.UsernameNotFoundException;
+
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
