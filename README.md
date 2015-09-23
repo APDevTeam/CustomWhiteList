@@ -3,7 +3,7 @@ CustomWhiteList allows modification to the white list even when Mojang UUID quer
 Username lookups are async so the world will not stop.
 
 ### Commands
-**/customwhitelist** `<add/remove>`  
+**/customwhitelist** `<add/remove/check/list/on/off/reload>`  
 Displays CWL help  
 Aliases: cwl
 
