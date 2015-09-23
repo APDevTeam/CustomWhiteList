@@ -21,20 +21,20 @@ public class CWLCommandExecutor implements TabExecutor{
 					MSG_REMOVE_USAGE = "Usage: /customwhitelist remove <player>",
 					MSG_CHECK_USAGE = "Usage: /customwhitelist check <player> [-r]";
 	
-	private final CustomWhiteListPlugin cwp;
-	private final CWLEUExecutor cweuExecutor;
+	private final CustomWhiteListPlugin cwlp;
+	private final CWLEUExecutor cwleuExecutor;
 	
 	/**
-	 *This constructor is to create a new CWCE.
-	 * @param CustomWhiteListPlugin newCWP	The CW plugin instance
+	 *This constructor is to create a new CWLCE.
+	 * @param CustomWhiteListPlugin newCWLP	The CWL plugin instance
 	 */
-	public CWLCommandExecutor(CustomWhiteListPlugin newCWP, CWLEUExecutor newCWEUExecutor){
-		cwp = newCWP;
-		cweuExecutor = newCWEUExecutor;
+	public CWLCommandExecutor(CustomWhiteListPlugin newCWLP, CWLEUExecutor newCWLEUExecutor){
+		cwlp = newCWLP;
+		cwleuExecutor = newCWLEUExecutor;
 	}
 	
 	/**
-	 * This method is to process the commands sent to this CWCE.
+	 * This method is to process the commands sent to this CWLCE.
 	 */
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
@@ -78,13 +78,13 @@ public class CWLCommandExecutor implements TabExecutor{
 					}
 				}
 				catch(Exception ex){
-					cwp.getLogger().warning("There was an exception executing a CW subcommand: " + subCmd);
+					cwlp.getLogger().warning("There was an exception executing a CW subcommand: " + subCmd);
 					ex.printStackTrace();
 					return true;
 				}
 			}
 			catch(Exception ex){
-				cwp.getLogger().warning("There was an exception preprocessing CW subcommands: ");
+				cwlp.getLogger().warning("There was an exception preprocessing CW subcommands: ");
 				ex.printStackTrace();
 				return true;
 			}
@@ -112,8 +112,8 @@ public class CWLCommandExecutor implements TabExecutor{
 	}
 	
 	/**
-	 * This method is to get the subcommand sent to the CWCE
-	 * @param args				The args sent to the CWCE
+	 * This method is to get the subcommand sent to the CWLCE
+	 * @param args				The args sent to the CWLCE
 	 * @return String subCmd	The subcommand if there is one, else null
 	 */
 	private String getSubCmd(String[] args){
@@ -127,8 +127,8 @@ public class CWLCommandExecutor implements TabExecutor{
 	}
 	
 	/**
-	 * This method is to get the subcommand arguments sent to the CWCE
-	 * @param args					The args sent to the CWCE
+	 * This method is to get the subcommand arguments sent to the CWLCE
+	 * @param args					The args sent to the CWLCE
 	 * @return String[] subCmdArgs	The subcommand arguments 
 	 */
 	private String[] getSubCmdArgs(String[] args){
@@ -165,8 +165,8 @@ public class CWLCommandExecutor implements TabExecutor{
 	}
 	
 	/**
-	 * This method is to get the subcommand options sent to the CWCE
-	 * @param args						The args sent to the CWCE
+	 * This method is to get the subcommand options sent to the CWLCE
+	 * @param args						The args sent to the CWLCE
 	 * @return String[] subCmdOptions	The subcommand options
 	 */
 	private String[] getSubCmdOptions(String[] args){
@@ -222,18 +222,18 @@ public class CWLCommandExecutor implements TabExecutor{
 					}
 					else{ // Else the username is valid
 						try{
-							CWLExecutionUnit cweu = new CWLExecutionUnit(cwp, CWLExecutionUnit.TYPE_ADD_USER_BY_NAME, sender, new String[]{user}, new String[0]);
+							CWLExecutionUnit cwleu = new CWLExecutionUnit(cwlp, CWLExecutionUnit.TYPE_ADD_USER_BY_NAME, sender, new String[]{user}, new String[0]);
 							try{
-								cweuExecutor.add(cweu);
+								cwleuExecutor.add(cwleu);
 							}
 							catch(IllegalStateException isex){
-								cwp.getLogger().warning("The task \"" + cweu.getDescription() + "\" could not be queued because the queue was full.");
+								cwlp.getLogger().warning("The task \"" + cwleu.getDescription() + "\" could not be queued because the queue was full.");
 							}
 						}
-						catch(InvalidCWLEUTypeException icweutex){
+						catch(InvalidCWLEUTypeException iCWLeutex){
 							sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to add a user by name, see the log for details.");
-							cwp.getLogger().warning("There was an exception preprocessing trying to add a user by name: " + user);
-							icweutex.printStackTrace();
+							cwlp.getLogger().warning("There was an exception preprocessing trying to add a user by name: " + user);
+							iCWLeutex.printStackTrace();
 						}
 					}
 				}
@@ -255,13 +255,13 @@ public class CWLCommandExecutor implements TabExecutor{
 						try{
 							UUID uuid = UUID.fromString(stuuid);
 							try{
-								CWLExecutionUnit cweu = new CWLExecutionUnit(cwp, CWLExecutionUnit.TYPE_ADD_USER_BY_UUID, sender, new String[]{uuid.toString()}, new String[0]);
-								cweu.process();
+								CWLExecutionUnit cwleu = new CWLExecutionUnit(cwlp, CWLExecutionUnit.TYPE_ADD_USER_BY_UUID, sender, new String[]{uuid.toString()}, new String[0]);
+								cwleu.process();
 							}
-							catch(InvalidCWLEUTypeException icweutex){
+							catch(InvalidCWLEUTypeException iCWLeutex){
 								sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to add a user by uuid, see the log for details.");
-								cwp.getLogger().warning("There was an exception preprocessing trying to add a user by uuid: " + uuid);
-								icweutex.printStackTrace();
+								cwlp.getLogger().warning("There was an exception preprocessing trying to add a user by uuid: " + uuid);
+								iCWLeutex.printStackTrace();
 							}
 						}
 						catch(IllegalArgumentException iaex){
@@ -301,18 +301,18 @@ public class CWLCommandExecutor implements TabExecutor{
 					}
 					else{ // Else the username is valid
 						try{
-							CWLExecutionUnit cweu = new CWLExecutionUnit(cwp, CWLExecutionUnit.TYPE_REMOVE_USER_BY_NAME, sender, new String[]{user}, new String[0]);
+							CWLExecutionUnit cwleu = new CWLExecutionUnit(cwlp, CWLExecutionUnit.TYPE_REMOVE_USER_BY_NAME, sender, new String[]{user}, new String[0]);
 							try{
-								cweuExecutor.add(cweu);
+								cwleuExecutor.add(cwleu);
 							}
 							catch(IllegalStateException isex){
-								cwp.getLogger().warning("The task \"" + cweu.getDescription() + "\" could not be queued because the queue was full.");
+								cwlp.getLogger().warning("The task \"" + cwleu.getDescription() + "\" could not be queued because the queue was full.");
 							}
 						}
-						catch(InvalidCWLEUTypeException icweutex){
+						catch(InvalidCWLEUTypeException iCWLeutex){
 							sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to remove a user by name, see the log for details.");
-							cwp.getLogger().warning("There was an exception preprocessing trying to remove a user by name: " + user);
-							icweutex.printStackTrace();
+							cwlp.getLogger().warning("There was an exception preprocessing trying to remove a user by name: " + user);
+							iCWLeutex.printStackTrace();
 						}
 					}
 				}
@@ -334,13 +334,13 @@ public class CWLCommandExecutor implements TabExecutor{
 						try{
 							UUID uuid = UUID.fromString(stuuid);
 							try{
-								CWLExecutionUnit cweu = new CWLExecutionUnit(cwp, CWLExecutionUnit.TYPE_REMOVE_USER_BY_UUID, sender, new String[]{uuid.toString()}, new String[0]);
-								cweu.process();
+								CWLExecutionUnit cwleu = new CWLExecutionUnit(cwlp, CWLExecutionUnit.TYPE_REMOVE_USER_BY_UUID, sender, new String[]{uuid.toString()}, new String[0]);
+								cwleu.process();
 							}
-							catch(InvalidCWLEUTypeException icweutex){
+							catch(InvalidCWLEUTypeException iCWLeutex){
 								sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to remove a user by uuid, see the log for details.");
-								cwp.getLogger().warning("There was an exception preprocessing trying to remove a user by uuid: " + uuid);
-								icweutex.printStackTrace();
+								cwlp.getLogger().warning("There was an exception preprocessing trying to remove a user by uuid: " + uuid);
+								iCWLeutex.printStackTrace();
 							}
 						}
 						catch(IllegalArgumentException iaex){
@@ -388,18 +388,18 @@ public class CWLCommandExecutor implements TabExecutor{
 						}
 						else{ // Else the username is valid
 							try{
-								CWLExecutionUnit cweu = new CWLExecutionUnit(cwp, CWLExecutionUnit.TYPE_CHECK_USER_BY_NAME, sender, new String[]{user}, new String[0]);
+								CWLExecutionUnit cwleu = new CWLExecutionUnit(cwlp, CWLExecutionUnit.TYPE_CHECK_USER_BY_NAME, sender, new String[]{user}, new String[0]);
 								try{
-									cweuExecutor.add(cweu);
+									cwleuExecutor.add(cwleu);
 								}
 								catch(IllegalStateException isex){
-									cwp.getLogger().warning("The task \"" + cweu.getDescription() + "\" could not be queued because the queue was full.");
+									cwlp.getLogger().warning("The task \"" + cwleu.getDescription() + "\" could not be queued because the queue was full.");
 								}
 							}
-							catch(InvalidCWLEUTypeException icweutex){
+							catch(InvalidCWLEUTypeException iCWLeutex){
 								sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to check a user by name, see the log for details.");
-								cwp.getLogger().warning("There was an exception preprocessing trying to check a user by name: " + user);
-								icweutex.printStackTrace();
+								cwlp.getLogger().warning("There was an exception preprocessing trying to check a user by name: " + user);
+								iCWLeutex.printStackTrace();
 							}
 						}
 					}
@@ -421,25 +421,25 @@ public class CWLCommandExecutor implements TabExecutor{
 							try{
 								UUID uuid = UUID.fromString(stuuid);
 								try{
-									CWLExecutionUnit cweu;
+									CWLExecutionUnit cwleu;
 									if(!resolve){ // If resolve is off
-										cweu = new CWLExecutionUnit(cwp, CWLExecutionUnit.TYPE_CHECK_USER_BY_UUID, sender, new String[]{uuid.toString()}, new String[0]);
-										cweu.process();
+										cwleu = new CWLExecutionUnit(cwlp, CWLExecutionUnit.TYPE_CHECK_USER_BY_UUID, sender, new String[]{uuid.toString()}, new String[0]);
+										cwleu.process();
 									}
 									else{
-										cweu = new CWLExecutionUnit(cwp, CWLExecutionUnit.TYPE_CHECK_USER_BY_UUID_WITH_RESOLVE, sender, new String[]{uuid.toString()}, new String[]{"-r"});
+										cwleu = new CWLExecutionUnit(cwlp, CWLExecutionUnit.TYPE_CHECK_USER_BY_UUID_WITH_RESOLVE, sender, new String[]{uuid.toString()}, new String[]{"-r"});
 										try{
-											cweuExecutor.add(cweu);
+											cwleuExecutor.add(cwleu);
 										}
 										catch(IllegalStateException isex){
-											cwp.getLogger().warning("The task \"" + cweu.getDescription() + "\" could not be queued because the queue was full.");
+											cwlp.getLogger().warning("The task \"" + cwleu.getDescription() + "\" could not be queued because the queue was full.");
 										}
 									}
 								}
-								catch(InvalidCWLEUTypeException icweutex){
+								catch(InvalidCWLEUTypeException iCWLeutex){
 									sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to check a user by uuid, see the log for details.");
-									cwp.getLogger().warning("There was an exception preprocessing trying to check a user by uuid: " + uuid);
-									icweutex.printStackTrace();
+									cwlp.getLogger().warning("There was an exception preprocessing trying to check a user by uuid: " + uuid);
+									iCWLeutex.printStackTrace();
 								}
 							}
 							catch(IllegalArgumentException iaex){
@@ -478,25 +478,25 @@ public class CWLCommandExecutor implements TabExecutor{
 			}
 			if(subCmdArgs.length == 0){ // There wasn't an argument, list the players
 				try{
-					CWLExecutionUnit cweu;
+					CWLExecutionUnit cwleu;
 					if(!resolve){ // If resolve is off
-						cweu = new CWLExecutionUnit(cwp, CWLExecutionUnit.TYPE_LIST_WITHOUT_RESOLVE, sender, new String[0], new String[0]);
-						cweu.process();
+						cwleu = new CWLExecutionUnit(cwlp, CWLExecutionUnit.TYPE_LIST_WITHOUT_RESOLVE, sender, new String[0], new String[0]);
+						cwleu.process();
 					}
 					else{ // Else resolve is on
-						cweu = new CWLExecutionUnit(cwp, CWLExecutionUnit.TYPE_LIST_WITH_RESOLVE, sender, new String[0], new String[]{"-r"});
+						cwleu = new CWLExecutionUnit(cwlp, CWLExecutionUnit.TYPE_LIST_WITH_RESOLVE, sender, new String[0], new String[]{"-r"});
 						try{
-							cweuExecutor.add(cweu);
+							cwleuExecutor.add(cwleu);
 						}
 						catch(IllegalStateException isex){
-							cwp.getLogger().warning("The task \"" + cweu.getDescription() + "\" could not be queued because the queue was full.");
+							cwlp.getLogger().warning("The task \"" + cwleu.getDescription() + "\" could not be queued because the queue was full.");
 						}
 					}
 				}
-				catch(InvalidCWLEUTypeException icweutex){
+				catch(InvalidCWLEUTypeException iCWLeutex){
 					sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to list users, see the log for details.");
-					cwp.getLogger().warning("There was an exception preprocessing trying to list users:");
-					icweutex.printStackTrace();
+					cwlp.getLogger().warning("There was an exception preprocessing trying to list users:");
+					iCWLeutex.printStackTrace();
 				}
 				
 				return true;
@@ -522,8 +522,8 @@ public class CWLCommandExecutor implements TabExecutor{
 			return false;
 		}
 		else if(subCmdArgs.length == 0){ // There wasn't an argumet, turn on the whitelist
-			if(!cwp.getServer().hasWhitelist()){ // If the server does not have a whitelist
-				cwp.getServer().setWhitelist(true);
+			if(!cwlp.getServer().hasWhitelist()){ // If the server does not have a whitelist
+				cwlp.getServer().setWhitelist(true);
 				sender.sendMessage("Whitelisting was turned on.");
 			}
 			else{ // It's already on
@@ -552,8 +552,8 @@ public class CWLCommandExecutor implements TabExecutor{
 			return false;
 		}
 		else if(subCmdArgs.length == 0){ // There wasn't an argument, turn off the whitelist
-			if(cwp.getServer().hasWhitelist()){ // If the server has a whitelist
-				cwp.getServer().setWhitelist(false);
+			if(cwlp.getServer().hasWhitelist()){ // If the server has a whitelist
+				cwlp.getServer().setWhitelist(false);
 				sender.sendMessage("Whitelisting was turned off.");
 			}
 			else{ // It's already off
@@ -582,7 +582,7 @@ public class CWLCommandExecutor implements TabExecutor{
 			return false;
 		}
 		else if(subCmdArgs.length == 0){ // There wasn't an argument, reload the whitelist
-			cwp.getServer().reloadWhitelist();
+			cwlp.getServer().reloadWhitelist();
 			sender.sendMessage("The whitelist has been reloaded");
 			return true;
 		}
