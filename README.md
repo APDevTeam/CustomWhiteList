@@ -1,6 +1,6 @@
 ## CustomWhiteList
 CWL allows modification to the white list even when vanilla uuid/username lookups are rejected.  
-All lookups are async so the world will not stop. You may add/remove/check multiple users at a time.
+All lookups are async so the world will not stop. You may add/remove/check one or more users at a time.
 
 ### Commands
 **/customwhitelist** `<add/remove/check/list/on/off/reload>`  
@@ -8,15 +8,19 @@ Displays CWL help
 Aliases: cwl
 
 **/customwhitelist add** `<username/uuid ...>`  
-Adds `<username/uuid ...>` to the white list, you may specify multiple usernames or UUIDs or a mix  
+Adds users to the white list  
+You may specify one or more usernames and/or UUIDs  
 Permission: `customwhitelist.add`
 
 **/customwhitelist remove** `<username/uuid ...>`  
-Removes `<username/uuid ...>` from the white list, you may specify multiple usernames or UUIDs or a mix  
+Removes users from the white list  
+You may specify one or more usernames and/or UUIDs  
 Permission: `customwhitelist.remove`
 
 **/customwhitelist check** `<username/uuid ...>` [-r]  
-Checks if `<username/uuid ...>` is on the white list, you may specify multiple usernames or UUIDs or a mix, you may choose option -r to resolve UUIDs to usernames   
+Checks if users are on the white list  
+You may specify one or more usernames and/or UUIDs  
+You may use option -r to resolve UUIDs to usernames   
 Permission: `customwhitelist.check`
 
 **/customwhitelist list** [-r]  
