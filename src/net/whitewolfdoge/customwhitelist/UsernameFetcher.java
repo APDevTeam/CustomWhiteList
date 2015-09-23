@@ -5,6 +5,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.UUID;
 
+import net.whitewolfdoge.customwhitelist.util.Utils;
+
 /**
  * This class is to be the home for all methods relating to fetching usernames.
  */

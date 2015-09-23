@@ -1,4 +1,4 @@
-package net.whitewolfdoge.customwhitelist;
+package net.whitewolfdoge.customwhitelist.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
