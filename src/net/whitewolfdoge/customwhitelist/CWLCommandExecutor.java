@@ -38,7 +38,7 @@ public class CWLCommandExecutor implements TabExecutor{
 	 */
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
-		if(cmd.getName().equalsIgnoreCase("customwhitelist") || cmd.getName().equalsIgnoreCase("cw")){ // If the command was "customwhitelist" or "cw"
+		if(cmd.getName().equalsIgnoreCase("customwhitelist")){ // If the command was "customwhitelist" or one of its aliases
 			
 			// Process information
 			try{ // Try preprocessing the command
