@@ -1,17 +1,17 @@
-package org.minecraftairshippirates.customwhitelist;
+package net.whitewolfdoge.customwhitelist;
 
 import java.util.NoSuchElementException;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class CustomWhitelistPlugin extends JavaPlugin{
-	private CWCommandExecutor cwce;
-	private CWEUExecutor cweuExecutor;
+public final class CustomWhiteListPlugin extends JavaPlugin{
+	private CWLCommandExecutor cwce;
+	private CWLEUExecutor cweuExecutor;
 	
 	@Override
 	public void onEnable(){
-		cweuExecutor = new CWEUExecutor();
-		cwce = new CWCommandExecutor(this, cweuExecutor);
+		cweuExecutor = new CWLEUExecutor();
+		cwce = new CWLCommandExecutor(this, cweuExecutor);
 		try{
 			getCommand("customwhitelist").setExecutor(cwce);
 			getCommand("cw").setExecutor(cwce);

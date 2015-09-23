@@ -1,4 +1,4 @@
-package org.minecraftairshippirates.customwhitelist;
+package net.whitewolfdoge.customwhitelist;
 
 import java.util.UUID;
 
@@ -13,7 +13,7 @@ import org.bukkit.command.CommandSender;
  * @author white
  *
  */
-public class CWExecutionUnit{
+public class CWLExecutionUnit{
 	public static final int TYPE_ADD_USER_BY_NAME = 0,
 		TYPE_ADD_USER_BY_UUID = 1,
 		
@@ -29,12 +29,12 @@ public class CWExecutionUnit{
 	
 	private static final int[] VALID_TYPES = {0, 1, 2, 3, 4, 5, 6, 7, 8};
 	
-	private final CustomWhitelistPlugin cwp;
+	private final CustomWhiteListPlugin cwp;
 	private final int type;
 	private final CommandSender sender;
 	private final String[] subCmdArgs, subCmdOpts;
 	
-	CWExecutionUnit(CustomWhitelistPlugin newCWP, int newType, CommandSender newSender, String[] newSubCmdArgs, String[] newSubCmdOpts) throws InvalidCWEUTypeException{
+	CWLExecutionUnit(CustomWhiteListPlugin newCWP, int newType, CommandSender newSender, String[] newSubCmdArgs, String[] newSubCmdOpts) throws InvalidCWLEUTypeException{
 		boolean typeIsValid = false;
 		for(int i : VALID_TYPES){ // For every element in VALID_TYPES
 			if(i == newType){ // If the current element matches newType
@@ -43,7 +43,7 @@ public class CWExecutionUnit{
 			}
 		}
 		if(!typeIsValid){ // If the type is not valid
-			throw new InvalidCWEUTypeException();
+			throw new InvalidCWLEUTypeException();
 		}
 		cwp = newCWP;
 		type = newType;

@@ -1,4 +1,4 @@
-package org.minecraftairshippirates.customwhitelist;
+package net.whitewolfdoge.customwhitelist;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import org.bukkit.command.TabExecutor;
  * This class is to handle the commands sent to the plugin.
  *
  */
-public class CWCommandExecutor implements TabExecutor{
+public class CWLCommandExecutor implements TabExecutor{
 	private final String MSG_TOO_MANY_ARGS = "Too many arguments!",
 					MSG_INVALID_OPTION = "That option is not valid for this command!",
 					MSG_INSUFFICIENT_PERMS = "You don't have permission to do that!",
@@ -21,14 +21,14 @@ public class CWCommandExecutor implements TabExecutor{
 					MSG_REMOVE_USAGE = "Usage: /customwhitelist remove <player>",
 					MSG_CHECK_USAGE = "Usage: /customwhitelist check <player> [-r]";
 	
-	private final CustomWhitelistPlugin cwp;
-	private final CWEUExecutor cweuExecutor;
+	private final CustomWhiteListPlugin cwp;
+	private final CWLEUExecutor cweuExecutor;
 	
 	/**
 	 *This constructor is to create a new CWCE.
-	 * @param CustomWhitelistPlugin newCWP	The CW plugin instance
+	 * @param CustomWhiteListPlugin newCWP	The CW plugin instance
 	 */
-	public CWCommandExecutor(CustomWhitelistPlugin newCWP, CWEUExecutor newCWEUExecutor){
+	public CWLCommandExecutor(CustomWhiteListPlugin newCWP, CWLEUExecutor newCWEUExecutor){
 		cwp = newCWP;
 		cweuExecutor = newCWEUExecutor;
 	}
@@ -222,7 +222,7 @@ public class CWCommandExecutor implements TabExecutor{
 					}
 					else{ // Else the username is valid
 						try{
-							CWExecutionUnit cweu = new CWExecutionUnit(cwp, CWExecutionUnit.TYPE_ADD_USER_BY_NAME, sender, new String[]{user}, new String[0]);
+							CWLExecutionUnit cweu = new CWLExecutionUnit(cwp, CWLExecutionUnit.TYPE_ADD_USER_BY_NAME, sender, new String[]{user}, new String[0]);
 							try{
 								cweuExecutor.add(cweu);
 							}
@@ -230,7 +230,7 @@ public class CWCommandExecutor implements TabExecutor{
 								cwp.getLogger().warning("The task \"" + cweu.getDescription() + "\" could not be queued because the queue was full.");
 							}
 						}
-						catch(InvalidCWEUTypeException icweutex){
+						catch(InvalidCWLEUTypeException icweutex){
 							sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to add a user by name, see the log for details.");
 							cwp.getLogger().warning("There was an exception preprocessing trying to add a user by name: " + user);
 							icweutex.printStackTrace();
@@ -255,10 +255,10 @@ public class CWCommandExecutor implements TabExecutor{
 						try{
 							UUID uuid = UUID.fromString(stuuid);
 							try{
-								CWExecutionUnit cweu = new CWExecutionUnit(cwp, CWExecutionUnit.TYPE_ADD_USER_BY_UUID, sender, new String[]{uuid.toString()}, new String[0]);
+								CWLExecutionUnit cweu = new CWLExecutionUnit(cwp, CWLExecutionUnit.TYPE_ADD_USER_BY_UUID, sender, new String[]{uuid.toString()}, new String[0]);
 								cweu.process();
 							}
-							catch(InvalidCWEUTypeException icweutex){
+							catch(InvalidCWLEUTypeException icweutex){
 								sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to add a user by uuid, see the log for details.");
 								cwp.getLogger().warning("There was an exception preprocessing trying to add a user by uuid: " + uuid);
 								icweutex.printStackTrace();
@@ -301,7 +301,7 @@ public class CWCommandExecutor implements TabExecutor{
 					}
 					else{ // Else the username is valid
 						try{
-							CWExecutionUnit cweu = new CWExecutionUnit(cwp, CWExecutionUnit.TYPE_REMOVE_USER_BY_NAME, sender, new String[]{user}, new String[0]);
+							CWLExecutionUnit cweu = new CWLExecutionUnit(cwp, CWLExecutionUnit.TYPE_REMOVE_USER_BY_NAME, sender, new String[]{user}, new String[0]);
 							try{
 								cweuExecutor.add(cweu);
 							}
@@ -309,7 +309,7 @@ public class CWCommandExecutor implements TabExecutor{
 								cwp.getLogger().warning("The task \"" + cweu.getDescription() + "\" could not be queued because the queue was full.");
 							}
 						}
-						catch(InvalidCWEUTypeException icweutex){
+						catch(InvalidCWLEUTypeException icweutex){
 							sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to remove a user by name, see the log for details.");
 							cwp.getLogger().warning("There was an exception preprocessing trying to remove a user by name: " + user);
 							icweutex.printStackTrace();
@@ -334,10 +334,10 @@ public class CWCommandExecutor implements TabExecutor{
 						try{
 							UUID uuid = UUID.fromString(stuuid);
 							try{
-								CWExecutionUnit cweu = new CWExecutionUnit(cwp, CWExecutionUnit.TYPE_REMOVE_USER_BY_UUID, sender, new String[]{uuid.toString()}, new String[0]);
+								CWLExecutionUnit cweu = new CWLExecutionUnit(cwp, CWLExecutionUnit.TYPE_REMOVE_USER_BY_UUID, sender, new String[]{uuid.toString()}, new String[0]);
 								cweu.process();
 							}
-							catch(InvalidCWEUTypeException icweutex){
+							catch(InvalidCWLEUTypeException icweutex){
 								sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to remove a user by uuid, see the log for details.");
 								cwp.getLogger().warning("There was an exception preprocessing trying to remove a user by uuid: " + uuid);
 								icweutex.printStackTrace();
@@ -388,7 +388,7 @@ public class CWCommandExecutor implements TabExecutor{
 						}
 						else{ // Else the username is valid
 							try{
-								CWExecutionUnit cweu = new CWExecutionUnit(cwp, CWExecutionUnit.TYPE_CHECK_USER_BY_NAME, sender, new String[]{user}, new String[0]);
+								CWLExecutionUnit cweu = new CWLExecutionUnit(cwp, CWLExecutionUnit.TYPE_CHECK_USER_BY_NAME, sender, new String[]{user}, new String[0]);
 								try{
 									cweuExecutor.add(cweu);
 								}
@@ -396,7 +396,7 @@ public class CWCommandExecutor implements TabExecutor{
 									cwp.getLogger().warning("The task \"" + cweu.getDescription() + "\" could not be queued because the queue was full.");
 								}
 							}
-							catch(InvalidCWEUTypeException icweutex){
+							catch(InvalidCWLEUTypeException icweutex){
 								sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to check a user by name, see the log for details.");
 								cwp.getLogger().warning("There was an exception preprocessing trying to check a user by name: " + user);
 								icweutex.printStackTrace();
@@ -421,13 +421,13 @@ public class CWCommandExecutor implements TabExecutor{
 							try{
 								UUID uuid = UUID.fromString(stuuid);
 								try{
-									CWExecutionUnit cweu;
+									CWLExecutionUnit cweu;
 									if(!resolve){ // If resolve is off
-										cweu = new CWExecutionUnit(cwp, CWExecutionUnit.TYPE_CHECK_USER_BY_UUID, sender, new String[]{uuid.toString()}, new String[0]);
+										cweu = new CWLExecutionUnit(cwp, CWLExecutionUnit.TYPE_CHECK_USER_BY_UUID, sender, new String[]{uuid.toString()}, new String[0]);
 										cweu.process();
 									}
 									else{
-										cweu = new CWExecutionUnit(cwp, CWExecutionUnit.TYPE_CHECK_USER_BY_UUID_WITH_RESOLVE, sender, new String[]{uuid.toString()}, new String[]{"-r"});
+										cweu = new CWLExecutionUnit(cwp, CWLExecutionUnit.TYPE_CHECK_USER_BY_UUID_WITH_RESOLVE, sender, new String[]{uuid.toString()}, new String[]{"-r"});
 										try{
 											cweuExecutor.add(cweu);
 										}
@@ -436,7 +436,7 @@ public class CWCommandExecutor implements TabExecutor{
 										}
 									}
 								}
-								catch(InvalidCWEUTypeException icweutex){
+								catch(InvalidCWLEUTypeException icweutex){
 									sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to check a user by uuid, see the log for details.");
 									cwp.getLogger().warning("There was an exception preprocessing trying to check a user by uuid: " + uuid);
 									icweutex.printStackTrace();
@@ -478,13 +478,13 @@ public class CWCommandExecutor implements TabExecutor{
 			}
 			if(subCmdArgs.length == 0){ // There wasn't an argument, list the players
 				try{
-					CWExecutionUnit cweu;
+					CWLExecutionUnit cweu;
 					if(!resolve){ // If resolve is off
-						cweu = new CWExecutionUnit(cwp, CWExecutionUnit.TYPE_LIST_WITHOUT_RESOLVE, sender, new String[0], new String[0]);
+						cweu = new CWLExecutionUnit(cwp, CWLExecutionUnit.TYPE_LIST_WITHOUT_RESOLVE, sender, new String[0], new String[0]);
 						cweu.process();
 					}
 					else{ // Else resolve is on
-						cweu = new CWExecutionUnit(cwp, CWExecutionUnit.TYPE_LIST_WITH_RESOLVE, sender, new String[0], new String[]{"-r"});
+						cweu = new CWLExecutionUnit(cwp, CWLExecutionUnit.TYPE_LIST_WITH_RESOLVE, sender, new String[0], new String[]{"-r"});
 						try{
 							cweuExecutor.add(cweu);
 						}
@@ -493,7 +493,7 @@ public class CWCommandExecutor implements TabExecutor{
 						}
 					}
 				}
-				catch(InvalidCWEUTypeException icweutex){
+				catch(InvalidCWLEUTypeException icweutex){
 					sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to list users, see the log for details.");
 					cwp.getLogger().warning("There was an exception preprocessing trying to list users:");
 					icweutex.printStackTrace();

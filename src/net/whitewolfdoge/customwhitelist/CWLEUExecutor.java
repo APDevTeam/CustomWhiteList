@@ -1,17 +1,17 @@
-package org.minecraftairshippirates.customwhitelist;
+package net.whitewolfdoge.customwhitelist;
 
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
-public class CWEUExecutor{
-	private final LinkedList<CWExecutionUnit> cweuQueue;
+public class CWLEUExecutor{
+	private final LinkedList<CWLExecutionUnit> cweuQueue;
 	private volatile Executor executorThread = null;
 	
-	CWEUExecutor(){
-		cweuQueue = new LinkedList<CWExecutionUnit>();
+	CWLEUExecutor(){
+		cweuQueue = new LinkedList<CWLExecutionUnit>();
 	}
 	
-	public synchronized boolean add(CWExecutionUnit newCWEU) throws IllegalStateException{
+	public synchronized boolean add(CWLExecutionUnit newCWEU) throws IllegalStateException{
 		if((executorThread == null) || !executorThread.isAlive()){ // If the queue executor is not running
 			// Start it
 			executorThread = new Executor();
@@ -20,11 +20,11 @@ public class CWEUExecutor{
 		return cweuQueue.add(newCWEU);
 	}
 	
-	public synchronized CWExecutionUnit remove() throws NoSuchElementException{
+	public synchronized CWLExecutionUnit remove() throws NoSuchElementException{
 		return cweuQueue.remove();
 	}
 	
-	public synchronized CWExecutionUnit element() throws NoSuchElementException{
+	public synchronized CWLExecutionUnit element() throws NoSuchElementException{
 		return cweuQueue.peek();
 	}
 	

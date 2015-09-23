@@ -1,4 +1,4 @@
-package org.minecraftairshippirates.customwhitelist;
+package net.whitewolfdoge.customwhitelist;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
