@@ -1,4 +1,4 @@
-package org.minecraftairshippirates.customwhitelist;
+package net.whitewolfdoge.customwhitelist.util;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -80,7 +80,7 @@ public class UsernameFetcher{
 		
 		String page = null;
 		try{
-			page = Utils.downloadPage(pageurl);
+			page = WebUtils.downloadPage(pageurl);
 		}
 		catch(IOException ioex){
 			// If this happens, there probably was a connection error or timeout.
@@ -121,7 +121,7 @@ public class UsernameFetcher{
 		
 		String page = null;
 		try{
-			page = Utils.downloadPage(pageurl);
+			page = WebUtils.downloadPage(pageurl);
 		}
 		catch(IOException ioex){
 			// If this happens, there probably was a connection error or timeout.

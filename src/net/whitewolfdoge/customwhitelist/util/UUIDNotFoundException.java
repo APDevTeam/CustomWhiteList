@@ -1,4 +1,4 @@
-package org.minecraftairshippirates.customwhitelist;
+package net.whitewolfdoge.customwhitelist.util;
 
 @SuppressWarnings("serial")
 public class UUIDNotFoundException extends Exception{

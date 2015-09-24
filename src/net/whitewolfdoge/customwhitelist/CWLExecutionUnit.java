@@ -1,19 +1,24 @@
-package org.minecraftairshippirates.customwhitelist;
+package net.whitewolfdoge.customwhitelist;
 
 import java.util.UUID;
+
+import net.whitewolfdoge.customwhitelist.util.UUIDFetcher;
+import net.whitewolfdoge.customwhitelist.util.UUIDNotFoundException;
+import net.whitewolfdoge.customwhitelist.util.UsernameFetcher;
+import net.whitewolfdoge.customwhitelist.util.UsernameNotFoundException;
 
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 
 /**
- * This class is to house all necessary components for executing a CW function
+ * This class is to house all necessary components for executing a CWL function
  */
 /**
  * @author white
  *
  */
-public class CWExecutionUnit{
+public class CWLExecutionUnit{
 	public static final int TYPE_ADD_USER_BY_NAME = 0,
 		TYPE_ADD_USER_BY_UUID = 1,
 		
@@ -29,12 +34,12 @@ public class CWExecutionUnit{
 	
 	private static final int[] VALID_TYPES = {0, 1, 2, 3, 4, 5, 6, 7, 8};
 	
-	private final CustomWhitelistPlugin cwp;
+	private final CustomWhiteListPlugin cwlp;
 	private final int type;
 	private final CommandSender sender;
 	private final String[] subCmdArgs, subCmdOpts;
 	
-	CWExecutionUnit(CustomWhitelistPlugin newCWP, int newType, CommandSender newSender, String[] newSubCmdArgs, String[] newSubCmdOpts) throws InvalidCWEUTypeException{
+	CWLExecutionUnit(CustomWhiteListPlugin newCWLp, int newType, CommandSender newSender, String[] newSubCmdArgs, String[] newSubCmdOpts) throws InvalidCWLEUTypeException{
 		boolean typeIsValid = false;
 		for(int i : VALID_TYPES){ // For every element in VALID_TYPES
 			if(i == newType){ // If the current element matches newType
@@ -43,9 +48,9 @@ public class CWExecutionUnit{
 			}
 		}
 		if(!typeIsValid){ // If the type is not valid
-			throw new InvalidCWEUTypeException();
+			throw new InvalidCWLEUTypeException();
 		}
-		cwp = newCWP;
+		cwlp = newCWLp;
 		type = newType;
 		sender = newSender;
 		subCmdArgs = newSubCmdArgs;
@@ -53,7 +58,7 @@ public class CWExecutionUnit{
 	}
 	
 	/**
-	 * This method is to be called to process the CWEU
+	 * This method is to be called to process the CWLEU
 	 */
 	public void process(){
 		if((type == TYPE_ADD_USER_BY_NAME) || (type == TYPE_ADD_USER_BY_UUID)){ // If add type
@@ -86,7 +91,7 @@ public class CWExecutionUnit{
 	}
 	
 	/**
-	 * This method is to get a simple description of the CWEU's task
+	 * This method is to get a simple description of the CWLEU's task
 	 */
 	public String getDescription(){
 		if(type == TYPE_ADD_USER_BY_NAME){
@@ -122,13 +127,13 @@ public class CWExecutionUnit{
 	}
 	
 	/**
-	 * This method is to handle processing add type CWEUs
+	 * This method is to handle processing add type CWLEUs
 	 */
 	private void processAdd(){
 		if(type == TYPE_ADD_USER_BY_NAME){
 			try{ // Try to get the UUID
 				UUID uuid = UUIDFetcher.getUUID(subCmdArgs[0]);
-				OfflinePlayer ofp = cwp.getServer().getOfflinePlayer(uuid);
+				OfflinePlayer ofp = cwlp.getServer().getOfflinePlayer(uuid);
 				if(ofp.isWhitelisted()){ // If the player is already on the whitelist
 					sender.sendMessage('\"' + subCmdArgs[0] + "\" is already on the whitelist.");
 				}
@@ -139,7 +144,7 @@ public class CWExecutionUnit{
 			}
 			catch(IllegalArgumentException iaex){
 				sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to add a user by name, see the log for details.");
-				cwp.getLogger().warning("There was an exception preprocessing trying to add a user by name: " + subCmdArgs[0]);
+				cwlp.getLogger().warning("There was an exception preprocessing trying to add a user by name: " + subCmdArgs[0]);
 				iaex.printStackTrace();
 			}
 			catch(UUIDNotFoundException unfex){
@@ -149,7 +154,7 @@ public class CWExecutionUnit{
 		else if(type == TYPE_ADD_USER_BY_UUID){
 			try{
 				UUID uuid = UUID.fromString(subCmdArgs[0]);
-				OfflinePlayer ofp = cwp.getServer().getOfflinePlayer(uuid);
+				OfflinePlayer ofp = cwlp.getServer().getOfflinePlayer(uuid);
 				if(ofp.isWhitelisted()){ // If the player is already on the whitelist
 					sender.sendMessage('\"' + subCmdArgs[0] + "\" is already on the whitelist.");
 				}
@@ -160,7 +165,7 @@ public class CWExecutionUnit{
 			}
 			catch(IllegalArgumentException iaex){
 				sender.sendMessage(ChatColor.RED + "There was an exception addding a user by UUID, see the log for details.");
-				cwp.getLogger().warning("There was an exception addding a user by UUID: " + subCmdArgs[0]);
+				cwlp.getLogger().warning("There was an exception addding a user by UUID: " + subCmdArgs[0]);
 				iaex.printStackTrace();
 			}
 		}
@@ -168,13 +173,13 @@ public class CWExecutionUnit{
 	}
 	
 	/**
-	 * This method is to handle processing remove type CWEUs
+	 * This method is to handle processing remove type CWLEUs
 	 */
 	private void processRemove(){
 		if(type == TYPE_REMOVE_USER_BY_NAME){
 			try{ // Try to get the UUID
 				UUID uuid = UUIDFetcher.getUUID(subCmdArgs[0]);
-				OfflinePlayer ofp = cwp.getServer().getOfflinePlayer(uuid);
+				OfflinePlayer ofp = cwlp.getServer().getOfflinePlayer(uuid);
 				if(!ofp.isWhitelisted()){ // If the player is not on the whitelist
 					sender.sendMessage('\"' + subCmdArgs[0] + "\" is not on the whitelist.");
 				}
@@ -185,7 +190,7 @@ public class CWExecutionUnit{
 			}
 			catch(IllegalArgumentException iaex){
 				sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to remove a user by name, see the log for details.");
-				cwp.getLogger().warning("There was an exception preprocessing trying to remove a user by name: " + subCmdArgs[0]);
+				cwlp.getLogger().warning("There was an exception preprocessing trying to remove a user by name: " + subCmdArgs[0]);
 				iaex.printStackTrace();
 			}
 			catch(UUIDNotFoundException unfe){
@@ -195,7 +200,7 @@ public class CWExecutionUnit{
 		else if(type == TYPE_REMOVE_USER_BY_UUID){
 			try{
 				UUID uuid = UUID.fromString(subCmdArgs[0]);
-				OfflinePlayer ofp = cwp.getServer().getOfflinePlayer(uuid);
+				OfflinePlayer ofp = cwlp.getServer().getOfflinePlayer(uuid);
 				if(!ofp.isWhitelisted()){ // If the player is not on the whitelist
 					sender.sendMessage('\"' + subCmdArgs[0] + "\" is not on the whitelist.");
 				}
@@ -206,20 +211,20 @@ public class CWExecutionUnit{
 			}
 			catch(IllegalArgumentException iaex){
 					sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to remove a user by UUID, see the log for details.");
-					cwp.getLogger().warning("There was an exception preprocessing trying to remove a user by UUID: " + subCmdArgs[0]);
+					cwlp.getLogger().warning("There was an exception preprocessing trying to remove a user by UUID: " + subCmdArgs[0]);
 					iaex.printStackTrace();
 			}
 		}
 	}
 	
 	/**
-	 * This method is to handle processing check type CWEUs
+	 * This method is to handle processing check type CWLEUs
 	 */
 	private void processCheck() throws Exception{
 		if(type == TYPE_CHECK_USER_BY_NAME){
 			try{ // Try to get the UUID
 				UUID uuid = UUIDFetcher.getUUID(subCmdArgs[0]);
-				OfflinePlayer ofp = cwp.getServer().getOfflinePlayer(uuid);
+				OfflinePlayer ofp = cwlp.getServer().getOfflinePlayer(uuid);
 				if(ofp.isWhitelisted()){ // If the player is whitelisted
 					sender.sendMessage('\"' + subCmdArgs[0] + "\" is on the whitelist.");
 				}
@@ -229,7 +234,7 @@ public class CWExecutionUnit{
 			}
 			catch(IllegalArgumentException iaex){
 				sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to check a user by name, see the log for details.");
-				cwp.getLogger().warning("There was an exception preprocessing trying to check a user by name: " + subCmdArgs[0]);
+				cwlp.getLogger().warning("There was an exception preprocessing trying to check a user by name: " + subCmdArgs[0]);
 				iaex.printStackTrace();
 			}
 			catch(UUIDNotFoundException unfex){
@@ -239,7 +244,7 @@ public class CWExecutionUnit{
 		else if(type == TYPE_CHECK_USER_BY_UUID){
 			try{
 				UUID uuid = UUID.fromString(subCmdArgs[0]);
-				OfflinePlayer ofp = cwp.getServer().getOfflinePlayer(uuid);
+				OfflinePlayer ofp = cwlp.getServer().getOfflinePlayer(uuid);
 				if(ofp.isWhitelisted()){ // If the player is whitelisted
 					sender.sendMessage('\"' + subCmdArgs[0] + "\" is on the whitelist.");
 				}
@@ -249,7 +254,7 @@ public class CWExecutionUnit{
 			}
 			catch(IllegalArgumentException iaex){
 				sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to check a user by name, see the log for details.");
-				cwp.getLogger().warning("There was an exception preprocessing trying to check a user by name: " + subCmdArgs[0]);
+				cwlp.getLogger().warning("There was an exception preprocessing trying to check a user by name: " + subCmdArgs[0]);
 				iaex.printStackTrace();
 			}
 		}
@@ -265,7 +270,7 @@ public class CWExecutionUnit{
 			}
 			try{
 				UUID uuid = UUID.fromString(subCmdArgs[0]);
-				OfflinePlayer ofp = cwp.getServer().getOfflinePlayer(uuid);
+				OfflinePlayer ofp = cwlp.getServer().getOfflinePlayer(uuid);
 				try{ // Try to resolve the username
 					String username = UsernameFetcher.getUsername(uuid);
 					if(ofp.isWhitelisted()){ // If the player is whitelisted
@@ -286,7 +291,7 @@ public class CWExecutionUnit{
 			}
 			catch(IllegalArgumentException iaex){
 				sender.sendMessage(ChatColor.RED + "There was an exception preprocessing trying to check a user by name, see the log for details.");
-				cwp.getLogger().warning("There was an exception preprocessing trying to check a user by name: " + subCmdArgs[0]);
+				cwlp.getLogger().warning("There was an exception preprocessing trying to check a user by name: " + subCmdArgs[0]);
 				iaex.printStackTrace();
 			}
 		}
@@ -294,11 +299,11 @@ public class CWExecutionUnit{
 	}
 	
 	/**
-	 * This method is to handle processing list type CWEUs
+	 * This method is to handle processing list type CWLEUs
 	 * @throws Exception When resolve was requested by the plugin but not the sender
 	 */
 	private void processList() throws Exception{
-		OfflinePlayer[] wlofps = cwp.getServer().getWhitelistedPlayers().toArray(new OfflinePlayer[cwp.getServer().getWhitelistedPlayers().size()]);
+		OfflinePlayer[] wlofps = cwlp.getServer().getWhitelistedPlayers().toArray(new OfflinePlayer[cwlp.getServer().getWhitelistedPlayers().size()]);
 		StringBuilder sb = new StringBuilder();
 		sb.append("There are " + wlofps.length + " whitelisted players:");
 		if(type == TYPE_LIST_WITHOUT_RESOLVE){
