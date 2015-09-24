@@ -583,6 +583,7 @@ public class CWLCommandExecutor implements TabExecutor{
 		}
 		else if(subCmdArgs.length == 0){ // There wasn't an argument, reload the whitelist
 			cwlp.getServer().reloadWhitelist();
+			cwlp.patchWhiteList();
 			sender.sendMessage("The whitelist has been reloaded");
 			return true;
 		}
