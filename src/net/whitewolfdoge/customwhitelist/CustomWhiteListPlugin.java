@@ -27,8 +27,8 @@ public final class CustomWhiteListPlugin extends JavaPlugin{
 		
 		MSG_WL_LISTED =								MSG_PREFIX + '\"' + "$0" + "\" is on the white list.",
 		MSG_WL_UNLISTED =							MSG_PREFIX + '\"' + "$0" + "\" is not on the white list.",
-		MSG_WL_ADDED =								MSG_PREFIX + '\"' + "$0" + "\" is already on the white list.",
-		MSG_WL_ADDED_ALREADY =						MSG_PREFIX + '\"' + "$0" + "\" was added to the white list.",
+		MSG_WL_ADDED =								MSG_PREFIX + '\"' + "$0" + "\" was added to the white list.",
+		MSG_WL_ADDED_ALREADY =						MSG_PREFIX + '\"' + "$0" + "\" is already on the white list.",
 		MSG_WL_REMOVED = 							MSG_PREFIX + '\"' + "$0" + "\" was removed from the white list.",
 		MSG_WL_REMOVED_ALREADY =					MSG_PREFIX + '\"' + "$0" + "\" is not on the white list.",
 		MSG_WL_ENABLED =							MSG_PREFIX + "White listing was turned on.",
