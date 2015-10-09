@@ -22,11 +22,11 @@ public final class CustomWhiteListPlugin extends JavaPlugin{
 		MSG_ERR_INVALID_USERNAME =					MSG_ERR_PREFIX + '\"' + "$0" + "\" is not a valid username.",
 		MSG_ERR_INVALID_UUID =						MSG_ERR_PREFIX + '\"' + "$0" + "\" is not a valid UUID.",
 		
-		MSG_WL_ENABLED =							"Whitelisting was turned on.",
-		MSG_WL_ENABLED_ALREADY =					"Whitelisting is already on.",
-		MSG_WL_DISABLED =							"Whitelisting was turned off.",
-		MSG_WL_DISABLED_ALREADY =					"Whitelisting is already off.",
-		MSG_WL_RELOADED = 							"The whitelist has been reloaded";
+		MSG_WL_ENABLED =							MSG_PREFIX + "White listing was turned on.",
+		MSG_WL_ENABLED_ALREADY =					MSG_PREFIX + "White listing is already on.",
+		MSG_WL_DISABLED =							MSG_PREFIX + "White listing was turned off.",
+		MSG_WL_DISABLED_ALREADY =					MSG_PREFIX + "White listing is already off.",
+		MSG_WL_RELOADED = 							MSG_PREFIX + "The white list has been reloaded";
 	
 	private CWLCommandExecutor cwlce;
 	private CWLEUExecutor cwleuExecutor;
