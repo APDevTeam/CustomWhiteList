@@ -140,6 +140,7 @@ public class CWLExecutionUnit{
 				else{ // They're to be added
 					ofp.setWhitelisted(true);
 					sender.sendMessage(cwlp.MSG_WL_ADDED.replace("$0", subCmdArgs[0]));
+					cwlp.getLogger().info(cwlp.LOG_WL_ADDED.replace("$0", subCmdArgs[0]));
 				}
 			}
 			catch(IllegalArgumentException iaex){
@@ -161,6 +162,7 @@ public class CWLExecutionUnit{
 				else{ // They're to be added
 					ofp.setWhitelisted(true);
 					sender.sendMessage(cwlp.MSG_WL_ADDED.replace("$0", subCmdArgs[0]));
+					cwlp.getLogger().info(cwlp.LOG_WL_ADDED.replace("$0", subCmdArgs[0]));
 				}
 			}
 			catch(IllegalArgumentException iaex){
@@ -186,6 +188,7 @@ public class CWLExecutionUnit{
 				else{ // They're to be removed
 					ofp.setWhitelisted(false);
 					sender.sendMessage(cwlp.MSG_WL_REMOVED.replace("$0", subCmdArgs[0]));
+					cwlp.getLogger().info(cwlp.LOG_WL_REMOVED.replace("$0", subCmdArgs[0]));
 				}
 			}
 			catch(IllegalArgumentException iaex){
@@ -207,6 +210,7 @@ public class CWLExecutionUnit{
 				else{ // They're to be removed
 					ofp.setWhitelisted(false);
 					sender.sendMessage(cwlp.MSG_WL_REMOVED.replace("$0", subCmdArgs[0]));
+					cwlp.getLogger().info(cwlp.LOG_WL_REMOVED.replace("$0", subCmdArgs[0]));
 				}
 			}
 			catch(IllegalArgumentException iaex){

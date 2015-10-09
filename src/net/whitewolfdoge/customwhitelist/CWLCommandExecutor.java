@@ -514,10 +514,11 @@ public class CWLCommandExecutor implements TabExecutor{
 			sender.sendMessage(cwlp.MSG_ERR_INVALID_OPTION);
 			return false;
 		}
-		else if(subCmdArgs.length == 0){ // There wasn't an argumet, turn on the whitelist
+		else if(subCmdArgs.length == 0){ // There wasn't an argument, turn on the white list
 			if(!cwlp.getServer().hasWhitelist()){ // If the server does not have a whitelist
 				cwlp.getServer().setWhitelist(true);
 				sender.sendMessage(cwlp.MSG_WL_ENABLED);
+				cwlp.getLogger().info(cwlp.LOG_WL_ENABLED);
 			}
 			else{ // It's already on
 				sender.sendMessage(cwlp.MSG_WL_ENABLED_ALREADY);
@@ -544,10 +545,11 @@ public class CWLCommandExecutor implements TabExecutor{
 			sender.sendMessage(cwlp.MSG_ERR_INVALID_OPTION);
 			return false;
 		}
-		else if(subCmdArgs.length == 0){ // There wasn't an argument, turn off the whitelist
-			if(cwlp.getServer().hasWhitelist()){ // If the server has a whitelist
+		else if(subCmdArgs.length == 0){ // There wasn't an argument, turn off the white list
+			if(cwlp.getServer().hasWhitelist()){ // If the server has a white list
 				cwlp.getServer().setWhitelist(false);
 				sender.sendMessage(cwlp.MSG_WL_DISABLED);
+				cwlp.getLogger().info(cwlp.LOG_WL_DISABLED);
 			}
 			else{ // It's already off
 				sender.sendMessage(cwlp.MSG_WL_DISABLED_ALREADY);
@@ -574,10 +576,11 @@ public class CWLCommandExecutor implements TabExecutor{
 			sender.sendMessage(cwlp.MSG_ERR_INVALID_OPTION);
 			return false;
 		}
-		else if(subCmdArgs.length == 0){ // There wasn't an argument, reload the whitelist
+		else if(subCmdArgs.length == 0){ // There wasn't an argument, reload the white list
 			cwlp.getServer().reloadWhitelist();
 			cwlp.patchWhiteList();
 			sender.sendMessage(cwlp.MSG_WL_RELOADED);
+			cwlp.getLogger().info(cwlp.LOG_WL_RELOADED);
 			return true;
 		}
 		else{ // Else there was an argument

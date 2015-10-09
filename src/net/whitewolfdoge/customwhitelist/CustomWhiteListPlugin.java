@@ -35,7 +35,13 @@ public final class CustomWhiteListPlugin extends JavaPlugin{
 		MSG_WL_ENABLED_ALREADY =					MSG_PREFIX + "White listing is already on.",
 		MSG_WL_DISABLED =							MSG_PREFIX + "White listing was turned off.",
 		MSG_WL_DISABLED_ALREADY =					MSG_PREFIX + "White listing is already off.",
-		MSG_WL_RELOADED = 							MSG_PREFIX + "The white list has been reloaded";
+		MSG_WL_RELOADED = 							MSG_PREFIX + "The white list has been reloaded",
+		
+		LOG_WL_ADDED =								'\"' + "$0" + "\" was added to the white list.",
+		LOG_WL_REMOVED =							'\"' + "$0" + "\" was removed from the white list.",
+		LOG_WL_ENABLED =							"White listing was turned on.",
+		LOG_WL_DISABLED =							"White listing was turned off.",
+		LOG_WL_RELOADED =							"The white list has been reloaded";
 	
 	private CWLCommandExecutor cwlce;
 	private CWLEUExecutor cwleuExecutor;
