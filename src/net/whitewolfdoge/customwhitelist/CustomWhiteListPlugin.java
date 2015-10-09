@@ -11,14 +11,14 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class CustomWhiteListPlugin extends JavaPlugin{
-	private final String CWLCHATPREFIX =		ChatColor.DARK_PURPLE + "CWL: ",
-		MSGERRPREFIX =							CWLCHATPREFIX + ChatColor.RED + "Error: ";
-	protected final String MSG_TOO_MANY_ARGS =	MSGERRPREFIX + "Too many arguments!",
-		MSG_INVALID_OPTION =					MSGERRPREFIX + "That option is not valid for this command!",
-		MSG_INSUFFICIENT_PERMS =				MSGERRPREFIX + "You don't have permission to do that!",
-		MSG_ADD_USAGE =							MSGERRPREFIX + "Usage: /customwhitelist add <player>",
-		MSG_REMOVE_USAGE =						MSGERRPREFIX + "Usage: /customwhitelist remove <player>",
-		MSG_CHECK_USAGE = 						MSGERRPREFIX + "Usage: /customwhitelist check <player> [-r]";
+	private final String MSG_PREFIX =		ChatColor.DARK_PURPLE + "CWL: ",
+		MSG_ERR_PREFIX =							MSG_PREFIX + ChatColor.RED + "Error: ";
+	protected final String MSG_ERR_TOO_MANY_ARGS =	MSG_ERR_PREFIX + "Too many arguments!",
+		MSG_ERR_INVALID_OPTION =					MSG_ERR_PREFIX + "That option is not valid for this command!",
+		MSG_ERR_INSUFFICIENT_PERMS =				MSG_ERR_PREFIX + "You don't have permission to do that!",
+		MSG_ERR_ADD_USAGE =							MSG_ERR_PREFIX + "Usage: /customwhitelist add <player>",
+		MSG_ERR_REMOVE_USAGE =						MSG_ERR_PREFIX + "Usage: /customwhitelist remove <player>",
+		MSG_ERR_CHECK_USAGE = 						MSG_ERR_PREFIX + "Usage: /customwhitelist check <player> [-r]";
 	
 	private CWLCommandExecutor cwlce;
 	private CWLEUExecutor cwleuExecutor;
