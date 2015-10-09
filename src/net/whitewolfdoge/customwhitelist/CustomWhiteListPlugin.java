@@ -6,10 +6,19 @@ import java.util.NoSuchElementException;
 import net.whitewolfdoge.customwhitelist.util.WhiteListFetcher;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class CustomWhiteListPlugin extends JavaPlugin{
+	private final ChatColor msgErrColor = ChatColor.RED;
+	protected final String MSG_TOO_MANY_ARGS =	msgErrColor + "Too many arguments!",
+					MSG_INVALID_OPTION =		msgErrColor + "That option is not valid for this command!",
+					MSG_INSUFFICIENT_PERMS =	msgErrColor + "You don't have permission to do that!",
+					MSG_ADD_USAGE =				msgErrColor + "Usage: /customwhitelist add <player>",
+					MSG_REMOVE_USAGE =			msgErrColor + "Usage: /customwhitelist remove <player>",
+					MSG_CHECK_USAGE = 			msgErrColor + "Usage: /customwhitelist check <player> [-r]";
+	
 	private CWLCommandExecutor cwlce;
 	private CWLEUExecutor cwleuExecutor;
 	

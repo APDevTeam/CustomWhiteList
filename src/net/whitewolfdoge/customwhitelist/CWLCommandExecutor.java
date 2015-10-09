@@ -14,13 +14,6 @@ import org.bukkit.command.TabExecutor;
  *
  */
 public class CWLCommandExecutor implements TabExecutor{
-	private final String MSG_TOO_MANY_ARGS = "Too many arguments!",
-					MSG_INVALID_OPTION = "That option is not valid for this command!",
-					MSG_INSUFFICIENT_PERMS = "You don't have permission to do that!",
-					MSG_ADD_USAGE = "Usage: /customwhitelist add <player>",
-					MSG_REMOVE_USAGE = "Usage: /customwhitelist remove <player>",
-					MSG_CHECK_USAGE = "Usage: /customwhitelist check <player> [-r]";
-	
 	private final CustomWhiteListPlugin cwlp;
 	private final CWLEUExecutor cwleuExecutor;
 	
@@ -202,16 +195,16 @@ public class CWLCommandExecutor implements TabExecutor{
 	 */
 	private boolean add(CommandSender sender, String[] subCmdArgs, String[] subCmdOptions){
 		if(!sender.hasPermission("customwhitelist.add")){ // If the sender doesn't have the permission for the "add" subcommand
-			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
+			sender.sendMessage(cwlp.MSG_INSUFFICIENT_PERMS);
 			return true;
 		}
 		else if(subCmdOptions.length != 0){ // If there is an option
-			sender.sendMessage(ChatColor.RED + MSG_INVALID_OPTION);
-			sender.sendMessage(ChatColor.RED + MSG_ADD_USAGE);
+			sender.sendMessage(cwlp.MSG_INVALID_OPTION);
+			sender.sendMessage(cwlp.MSG_ADD_USAGE);
 			return true;
 		}
 		else if(subCmdArgs.length == 0){ // Else if there are no users listed
-			sender.sendMessage(ChatColor.RED + MSG_ADD_USAGE);
+			sender.sendMessage(cwlp.MSG_ADD_USAGE);
 			return true;
 		}
 		else{ // Else there is one or more players to be added
@@ -281,16 +274,16 @@ public class CWLCommandExecutor implements TabExecutor{
 	 */
 	private boolean remove(CommandSender sender, String[] subCmdArgs, String[] subCmdOptions){
 		if(!sender.hasPermission("customwhitelist.remove")){ // If the sender doesn't have the permission for the "remove" subcommand
-			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
+			sender.sendMessage(cwlp.MSG_INSUFFICIENT_PERMS);
 			return true;
 		}
 		else if(subCmdOptions.length != 0){ // If there is an option
-			sender.sendMessage(ChatColor.RED + MSG_INVALID_OPTION);
-			sender.sendMessage(ChatColor.RED + MSG_REMOVE_USAGE);
+			sender.sendMessage(cwlp.MSG_INVALID_OPTION);
+			sender.sendMessage(cwlp.MSG_REMOVE_USAGE);
 			return true;
 		}
 		else if(subCmdArgs.length == 0){ // Else if there are no users listed
-			sender.sendMessage(ChatColor.RED + MSG_REMOVE_USAGE);
+			sender.sendMessage(cwlp.MSG_REMOVE_USAGE);
 			return true;
 		}
 		else{ // Else there was one or more players to be added
@@ -361,7 +354,7 @@ public class CWLCommandExecutor implements TabExecutor{
 	private boolean check(CommandSender sender, String[] subCmdArgs, String[] subCmdOptions){
 		boolean resolve = false;
 		if(!sender.hasPermission("customwhitelist.check")){ // If the sender doesn't have the permission for the "check" subcommand
-			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
+			sender.sendMessage(cwlp.MSG_INSUFFICIENT_PERMS);
 			return true;
 		}
 		else{
@@ -371,13 +364,13 @@ public class CWLCommandExecutor implements TabExecutor{
 						resolve = true;
 					}
 					else{ // Else it was not a valid option
-						sender.sendMessage(ChatColor.RED + MSG_INVALID_OPTION);
+						sender.sendMessage(cwlp.MSG_INVALID_OPTION);
 						return false;
 					}
 				}
 			}
 			if(subCmdArgs.length == 0){ // Else if there are no users listed
-				sender.sendMessage(ChatColor.RED + MSG_CHECK_USAGE);
+				sender.sendMessage(cwlp.MSG_CHECK_USAGE);
 				return true;
 			}
 			else{ // Else there is one or more players to be checked
@@ -461,7 +454,7 @@ public class CWLCommandExecutor implements TabExecutor{
 	private boolean list(CommandSender sender, String[] subCmdArgs, String[] subCmdOptions){
 		boolean resolve = false;
 		if(!sender.hasPermission("customwhitelist.list")){ // If the sender doesn't have the permission for the "list" subcommand
-			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
+			sender.sendMessage(cwlp.MSG_INSUFFICIENT_PERMS);
 			return true;
 		}
 		else{
@@ -471,7 +464,7 @@ public class CWLCommandExecutor implements TabExecutor{
 						resolve = true;
 					}
 					else{ // Else it was not a valid option
-						sender.sendMessage(ChatColor.RED + MSG_INVALID_OPTION);
+						sender.sendMessage(cwlp.MSG_INVALID_OPTION);
 						return false;
 					}
 				}
@@ -502,7 +495,7 @@ public class CWLCommandExecutor implements TabExecutor{
 				return true;
 			}
 			else{ // Else there was an argument
-				sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
+				sender.sendMessage(cwlp.MSG_TOO_MANY_ARGS);
 				return false;
 			}
 		}
@@ -514,11 +507,11 @@ public class CWLCommandExecutor implements TabExecutor{
 	 */
 	private boolean on(CommandSender sender, String[] subCmdArgs, String[] subCmdOptions){
 		if(!sender.hasPermission("customwhitelist.on")){ // If the sender doesn't have the permission for the "on" subcommand
-			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
+			sender.sendMessage(cwlp.MSG_INSUFFICIENT_PERMS);
 			return true;
 		}
 		else if(subCmdOptions.length != 0){ // If there is an option
-			sender.sendMessage(ChatColor.RED + MSG_INVALID_OPTION);
+			sender.sendMessage(cwlp.MSG_INVALID_OPTION);
 			return false;
 		}
 		else if(subCmdArgs.length == 0){ // There wasn't an argumet, turn on the whitelist
@@ -533,7 +526,7 @@ public class CWLCommandExecutor implements TabExecutor{
 			return true;
 		}
 		else{ // Else there was an argument
-			sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
+			sender.sendMessage(cwlp.MSG_TOO_MANY_ARGS);
 			return false;
 		}
 	}
@@ -544,11 +537,11 @@ public class CWLCommandExecutor implements TabExecutor{
 	 */
 	private boolean off(CommandSender sender, String[] subCmdArgs, String[] subCmdOptions){
 		if(!sender.hasPermission("customwhitelist.off")){ // If the sender doesn't have the permission for the "off" subcommand
-			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
+			sender.sendMessage(cwlp.MSG_INSUFFICIENT_PERMS);
 			return true;
 		}
 		else if(subCmdOptions.length != 0){ // If there is an option
-			sender.sendMessage(ChatColor.RED + MSG_INVALID_OPTION);
+			sender.sendMessage(cwlp.MSG_INVALID_OPTION);
 			return false;
 		}
 		else if(subCmdArgs.length == 0){ // There wasn't an argument, turn off the whitelist
@@ -563,7 +556,7 @@ public class CWLCommandExecutor implements TabExecutor{
 			return true;
 		}
 		else{ // Else there was an argument
-			sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
+			sender.sendMessage(cwlp.MSG_TOO_MANY_ARGS);
 			return false;
 		}
 	}
@@ -574,11 +567,11 @@ public class CWLCommandExecutor implements TabExecutor{
 	 */
 	private boolean reload(CommandSender sender, String[] subCmdArgs, String[] subCmdOptions){
 		if(!sender.hasPermission("customwhitelist.reload")){ // If the sender doesn't have the permission for the "reload" subcommand
-			sender.sendMessage(ChatColor.RED + MSG_INSUFFICIENT_PERMS);
+			sender.sendMessage(cwlp.MSG_INSUFFICIENT_PERMS);
 			return true;
 		}
 		else if(subCmdOptions.length != 0){ // If there is an option
-			sender.sendMessage(ChatColor.RED + MSG_INVALID_OPTION);
+			sender.sendMessage(cwlp.MSG_INVALID_OPTION);
 			return false;
 		}
 		else if(subCmdArgs.length == 0){ // There wasn't an argument, reload the whitelist
@@ -588,7 +581,7 @@ public class CWLCommandExecutor implements TabExecutor{
 			return true;
 		}
 		else{ // Else there was an argument
-			sender.sendMessage(ChatColor.RED + MSG_TOO_MANY_ARGS);
+			sender.sendMessage(cwlp.MSG_TOO_MANY_ARGS);
 			return false;
 		}
 	}
