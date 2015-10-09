@@ -195,23 +195,23 @@ public class CWLCommandExecutor implements TabExecutor{
 	 */
 	private boolean add(CommandSender sender, String[] subCmdArgs, String[] subCmdOptions){
 		if(!sender.hasPermission("customwhitelist.add")){ // If the sender doesn't have the permission for the "add" subcommand
-			sender.sendMessage(cwlp.MSG_INSUFFICIENT_PERMS);
+			sender.sendMessage(cwlp.MSG_ERR_INSUFFICIENT_PERMS);
 			return true;
 		}
 		else if(subCmdOptions.length != 0){ // If there is an option
-			sender.sendMessage(cwlp.MSG_INVALID_OPTION);
-			sender.sendMessage(cwlp.MSG_ADD_USAGE);
+			sender.sendMessage(cwlp.MSG_ERR_INVALID_OPTION);
+			sender.sendMessage(cwlp.MSG_ERR_ADD_USAGE);
 			return true;
 		}
 		else if(subCmdArgs.length == 0){ // Else if there are no users listed
-			sender.sendMessage(cwlp.MSG_ADD_USAGE);
+			sender.sendMessage(cwlp.MSG_ERR_ADD_USAGE);
 			return true;
 		}
 		else{ // Else there is one or more players to be added
 			for(String user : subCmdArgs){
 				if(!(user.length() > 24)){ // If user is not longer than 24 characters, we assume the sender means a username
 					if(user.length() > 16){ // If the username is longer than 16 characters, it is invalid
-						sender.sendMessage(ChatColor.RED.toString() + '\"' + user + "\" is not a valid username.");
+						sender.sendMessage(cwlp.MSG_ERR_INVALID_USERNAME.replace("$0", user));
 					}
 					else{ // Else the username is valid
 						try{
@@ -236,7 +236,7 @@ public class CWLCommandExecutor implements TabExecutor{
 					
 					// Verify length
 					if(stuuid.length() != 32){ // If stuuid is not the proper length
-						sender.sendMessage(ChatColor.RED.toString() + '\"' + user + "\" is not a valid UUID.");
+						sender.sendMessage(cwlp.MSG_ERR_INVALID_UUID.replace("$0", user));
 					}
 					else{ // Else we assume it's a valid UUID
 						// Add hyphens in their proper locations
@@ -274,23 +274,23 @@ public class CWLCommandExecutor implements TabExecutor{
 	 */
 	private boolean remove(CommandSender sender, String[] subCmdArgs, String[] subCmdOptions){
 		if(!sender.hasPermission("customwhitelist.remove")){ // If the sender doesn't have the permission for the "remove" subcommand
-			sender.sendMessage(cwlp.MSG_INSUFFICIENT_PERMS);
+			sender.sendMessage(cwlp.MSG_ERR_INSUFFICIENT_PERMS);
 			return true;
 		}
 		else if(subCmdOptions.length != 0){ // If there is an option
-			sender.sendMessage(cwlp.MSG_INVALID_OPTION);
-			sender.sendMessage(cwlp.MSG_REMOVE_USAGE);
+			sender.sendMessage(cwlp.MSG_ERR_INVALID_OPTION);
+			sender.sendMessage(cwlp.MSG_ERR_REMOVE_USAGE);
 			return true;
 		}
 		else if(subCmdArgs.length == 0){ // Else if there are no users listed
-			sender.sendMessage(cwlp.MSG_REMOVE_USAGE);
+			sender.sendMessage(cwlp.MSG_ERR_REMOVE_USAGE);
 			return true;
 		}
 		else{ // Else there was one or more players to be added
 			for(String user : subCmdArgs){
 				if(!(user.length() > 24)){ // If user is not longer than 24 characters, we assume the sender means a username
 					if(user.length() > 16){ // If the username is longer than 16 characters, it is invalid
-						sender.sendMessage(ChatColor.RED.toString() + '\"' + user + "\" is not a valid username.");
+						sender.sendMessage(cwlp.MSG_ERR_INVALID_USERNAME.replace("$0", user));
 					}
 					else{ // Else the username is valid
 						try{
@@ -315,7 +315,7 @@ public class CWLCommandExecutor implements TabExecutor{
 					
 					// Verify length
 					if(stuuid.length() != 32){ // If stuuid is not the proper length
-						sender.sendMessage(ChatColor.RED.toString() + '\"' + user + "\" is not a valid UUID.");
+						sender.sendMessage(cwlp.MSG_ERR_INVALID_UUID.replace("$0", user));
 					}
 					else{ // Else we assume it's a valid UUID
 						// Add hyphens in their proper locations
@@ -354,7 +354,7 @@ public class CWLCommandExecutor implements TabExecutor{
 	private boolean check(CommandSender sender, String[] subCmdArgs, String[] subCmdOptions){
 		boolean resolve = false;
 		if(!sender.hasPermission("customwhitelist.check")){ // If the sender doesn't have the permission for the "check" subcommand
-			sender.sendMessage(cwlp.MSG_INSUFFICIENT_PERMS);
+			sender.sendMessage(cwlp.MSG_ERR_INSUFFICIENT_PERMS);
 			return true;
 		}
 		else{
@@ -364,20 +364,20 @@ public class CWLCommandExecutor implements TabExecutor{
 						resolve = true;
 					}
 					else{ // Else it was not a valid option
-						sender.sendMessage(cwlp.MSG_INVALID_OPTION);
+						sender.sendMessage(cwlp.MSG_ERR_INVALID_OPTION);
 						return false;
 					}
 				}
 			}
 			if(subCmdArgs.length == 0){ // Else if there are no users listed
-				sender.sendMessage(cwlp.MSG_CHECK_USAGE);
+				sender.sendMessage(cwlp.MSG_ERR_CHECK_USAGE);
 				return true;
 			}
 			else{ // Else there is one or more players to be checked
 				for(String user : subCmdArgs){
 					if(!(user.length() > 24)){ // If user is not longer than 24 characters, we assume the sender means a username
 						if(user.length() > 16){ // If the username is longer than 16 characters, it is invalid
-							sender.sendMessage(ChatColor.RED.toString() + '\"' + user + "\" is not a valid username.");
+							sender.sendMessage(cwlp.MSG_ERR_INVALID_USERNAME.replace("$0", user));
 						}
 						else{ // Else the username is valid
 							try{
@@ -402,7 +402,7 @@ public class CWLCommandExecutor implements TabExecutor{
 						
 						// Verify length
 						if(stuuid.length() != 32){ // If stuuid is not the proper length
-							sender.sendMessage(ChatColor.RED.toString() + '\"' + user + "\" is not a valid UUID.");
+							sender.sendMessage(cwlp.MSG_ERR_INVALID_UUID.replace("$0", user));
 						}
 						else{ // Else we assume it's a valid UUID
 							// Add hyphens in their proper locations
@@ -436,7 +436,7 @@ public class CWLCommandExecutor implements TabExecutor{
 								}
 							}
 							catch(IllegalArgumentException iaex){
-								sender.sendMessage(ChatColor.RED.toString() + '\"' + user + "\" is not a valid UUID ");
+								sender.sendMessage(cwlp.MSG_ERR_INVALID_UUID.replace("$0", user));
 							}
 						}
 					}
@@ -454,7 +454,7 @@ public class CWLCommandExecutor implements TabExecutor{
 	private boolean list(CommandSender sender, String[] subCmdArgs, String[] subCmdOptions){
 		boolean resolve = false;
 		if(!sender.hasPermission("customwhitelist.list")){ // If the sender doesn't have the permission for the "list" subcommand
-			sender.sendMessage(cwlp.MSG_INSUFFICIENT_PERMS);
+			sender.sendMessage(cwlp.MSG_ERR_INSUFFICIENT_PERMS);
 			return true;
 		}
 		else{
@@ -464,7 +464,7 @@ public class CWLCommandExecutor implements TabExecutor{
 						resolve = true;
 					}
 					else{ // Else it was not a valid option
-						sender.sendMessage(cwlp.MSG_INVALID_OPTION);
+						sender.sendMessage(cwlp.MSG_ERR_INVALID_OPTION);
 						return false;
 					}
 				}
@@ -495,7 +495,7 @@ public class CWLCommandExecutor implements TabExecutor{
 				return true;
 			}
 			else{ // Else there was an argument
-				sender.sendMessage(cwlp.MSG_TOO_MANY_ARGS);
+				sender.sendMessage(cwlp.MSG_ERR_TOO_MANY_ARGS);
 				return false;
 			}
 		}
@@ -507,26 +507,26 @@ public class CWLCommandExecutor implements TabExecutor{
 	 */
 	private boolean on(CommandSender sender, String[] subCmdArgs, String[] subCmdOptions){
 		if(!sender.hasPermission("customwhitelist.on")){ // If the sender doesn't have the permission for the "on" subcommand
-			sender.sendMessage(cwlp.MSG_INSUFFICIENT_PERMS);
+			sender.sendMessage(cwlp.MSG_ERR_INSUFFICIENT_PERMS);
 			return true;
 		}
 		else if(subCmdOptions.length != 0){ // If there is an option
-			sender.sendMessage(cwlp.MSG_INVALID_OPTION);
+			sender.sendMessage(cwlp.MSG_ERR_INVALID_OPTION);
 			return false;
 		}
 		else if(subCmdArgs.length == 0){ // There wasn't an argumet, turn on the whitelist
 			if(!cwlp.getServer().hasWhitelist()){ // If the server does not have a whitelist
 				cwlp.getServer().setWhitelist(true);
-				sender.sendMessage("Whitelisting was turned on.");
+				sender.sendMessage(cwlp.MSG_WL_ENABLED);
 			}
 			else{ // It's already on
-				sender.sendMessage("Whitelisting is already on.");
+				sender.sendMessage(cwlp.MSG_WL_ENABLED_ALREADY);
 			}
 			
 			return true;
 		}
 		else{ // Else there was an argument
-			sender.sendMessage(cwlp.MSG_TOO_MANY_ARGS);
+			sender.sendMessage(cwlp.MSG_ERR_TOO_MANY_ARGS);
 			return false;
 		}
 	}
@@ -537,26 +537,26 @@ public class CWLCommandExecutor implements TabExecutor{
 	 */
 	private boolean off(CommandSender sender, String[] subCmdArgs, String[] subCmdOptions){
 		if(!sender.hasPermission("customwhitelist.off")){ // If the sender doesn't have the permission for the "off" subcommand
-			sender.sendMessage(cwlp.MSG_INSUFFICIENT_PERMS);
+			sender.sendMessage(cwlp.MSG_ERR_INSUFFICIENT_PERMS);
 			return true;
 		}
 		else if(subCmdOptions.length != 0){ // If there is an option
-			sender.sendMessage(cwlp.MSG_INVALID_OPTION);
+			sender.sendMessage(cwlp.MSG_ERR_INVALID_OPTION);
 			return false;
 		}
 		else if(subCmdArgs.length == 0){ // There wasn't an argument, turn off the whitelist
 			if(cwlp.getServer().hasWhitelist()){ // If the server has a whitelist
 				cwlp.getServer().setWhitelist(false);
-				sender.sendMessage("Whitelisting was turned off.");
+				sender.sendMessage(cwlp.MSG_WL_DISABLED);
 			}
 			else{ // It's already off
-				sender.sendMessage("Whitelisting is already off.");
+				sender.sendMessage(cwlp.MSG_WL_DISABLED_ALREADY);
 			}
 			
 			return true;
 		}
 		else{ // Else there was an argument
-			sender.sendMessage(cwlp.MSG_TOO_MANY_ARGS);
+			sender.sendMessage(cwlp.MSG_ERR_TOO_MANY_ARGS);
 			return false;
 		}
 	}
@@ -567,21 +567,21 @@ public class CWLCommandExecutor implements TabExecutor{
 	 */
 	private boolean reload(CommandSender sender, String[] subCmdArgs, String[] subCmdOptions){
 		if(!sender.hasPermission("customwhitelist.reload")){ // If the sender doesn't have the permission for the "reload" subcommand
-			sender.sendMessage(cwlp.MSG_INSUFFICIENT_PERMS);
+			sender.sendMessage(cwlp.MSG_ERR_INSUFFICIENT_PERMS);
 			return true;
 		}
 		else if(subCmdOptions.length != 0){ // If there is an option
-			sender.sendMessage(cwlp.MSG_INVALID_OPTION);
+			sender.sendMessage(cwlp.MSG_ERR_INVALID_OPTION);
 			return false;
 		}
 		else if(subCmdArgs.length == 0){ // There wasn't an argument, reload the whitelist
 			cwlp.getServer().reloadWhitelist();
 			cwlp.patchWhiteList();
-			sender.sendMessage("The whitelist has been reloaded");
+			sender.sendMessage(cwlp.MSG_WL_RELOADED);
 			return true;
 		}
 		else{ // Else there was an argument
-			sender.sendMessage(cwlp.MSG_TOO_MANY_ARGS);
+			sender.sendMessage(cwlp.MSG_ERR_TOO_MANY_ARGS);
 			return false;
 		}
 	}

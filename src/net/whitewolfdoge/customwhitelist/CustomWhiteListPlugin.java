@@ -18,7 +18,15 @@ public final class CustomWhiteListPlugin extends JavaPlugin{
 		MSG_ERR_INSUFFICIENT_PERMS =				MSG_ERR_PREFIX + "You don't have permission to do that!",
 		MSG_ERR_ADD_USAGE =							MSG_ERR_PREFIX + "Usage: /customwhitelist add <player>",
 		MSG_ERR_REMOVE_USAGE =						MSG_ERR_PREFIX + "Usage: /customwhitelist remove <player>",
-		MSG_ERR_CHECK_USAGE = 						MSG_ERR_PREFIX + "Usage: /customwhitelist check <player> [-r]";
+		MSG_ERR_CHECK_USAGE = 						MSG_ERR_PREFIX + "Usage: /customwhitelist check <player> [-r]",
+		MSG_ERR_INVALID_USERNAME =					MSG_ERR_PREFIX + '\"' + "$0" + "\" is not a valid username.",
+		MSG_ERR_INVALID_UUID =						MSG_ERR_PREFIX + '\"' + "$0" + "\" is not a valid UUID.",
+		
+		MSG_WL_ENABLED =							"Whitelisting was turned on.",
+		MSG_WL_ENABLED_ALREADY =					"Whitelisting is already on.",
+		MSG_WL_DISABLED =							"Whitelisting was turned off.",
+		MSG_WL_DISABLED_ALREADY =					"Whitelisting is already off.",
+		MSG_WL_RELOADED = 							"The whitelist has been reloaded";
 	
 	private CWLCommandExecutor cwlce;
 	private CWLEUExecutor cwleuExecutor;
