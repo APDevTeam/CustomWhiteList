@@ -135,11 +135,11 @@ public class CWLExecutionUnit{
 				UUID uuid = UUIDFetcher.getUUID(subCmdArgs[0]);
 				OfflinePlayer ofp = cwlp.getServer().getOfflinePlayer(uuid);
 				if(ofp.isWhitelisted()){ // If the player is already on the whitelist
-					sender.sendMessage('\"' + subCmdArgs[0] + "\" is already on the whitelist.");
+					sender.sendMessage(cwlp.MSG_WL_ADDED_ALREADY.replace("$0", subCmdArgs[0]));
 				}
 				else{ // They're to be added
 					ofp.setWhitelisted(true);
-					sender.sendMessage('\"' + subCmdArgs[0] + "\" was added to the whitelist.");
+					sender.sendMessage(cwlp.MSG_WL_ADDED.replace("$0", subCmdArgs[0]));
 				}
 			}
 			catch(IllegalArgumentException iaex){
@@ -148,7 +148,7 @@ public class CWLExecutionUnit{
 				iaex.printStackTrace();
 			}
 			catch(UUIDNotFoundException unfex){
-				sender.sendMessage(ChatColor.RED.toString() + '\"' + subCmdArgs[0] + "\" was not found and could not be added to the whitelist.");
+				sender.sendMessage(cwlp.MSG_ERR_USER_NOT_FOUND_ADD.replace("$0", subCmdArgs[0]));
 			}
 		}
 		else if(type == TYPE_ADD_USER_BY_UUID){
@@ -156,11 +156,11 @@ public class CWLExecutionUnit{
 				UUID uuid = UUID.fromString(subCmdArgs[0]);
 				OfflinePlayer ofp = cwlp.getServer().getOfflinePlayer(uuid);
 				if(ofp.isWhitelisted()){ // If the player is already on the whitelist
-					sender.sendMessage('\"' + subCmdArgs[0] + "\" is already on the whitelist.");
+					sender.sendMessage(cwlp.MSG_WL_ADDED_ALREADY.replace("$0", subCmdArgs[0]));
 				}
 				else{ // They're to be added
 					ofp.setWhitelisted(true);
-					sender.sendMessage('\"' + subCmdArgs[0] + "\" was added to the whitelist.");
+					sender.sendMessage(cwlp.MSG_WL_ADDED.replace("$0", subCmdArgs[0]));
 				}
 			}
 			catch(IllegalArgumentException iaex){
@@ -181,11 +181,11 @@ public class CWLExecutionUnit{
 				UUID uuid = UUIDFetcher.getUUID(subCmdArgs[0]);
 				OfflinePlayer ofp = cwlp.getServer().getOfflinePlayer(uuid);
 				if(!ofp.isWhitelisted()){ // If the player is not on the whitelist
-					sender.sendMessage('\"' + subCmdArgs[0] + "\" is not on the whitelist.");
+					sender.sendMessage(cwlp.MSG_WL_REMOVED_ALREADY.replace("$0", subCmdArgs[0]));
 				}
 				else{ // They're to be removed
 					ofp.setWhitelisted(false);
-					sender.sendMessage('\"' + subCmdArgs[0] + "\" was removed from the whitelist.");
+					sender.sendMessage(cwlp.MSG_WL_REMOVED.replace("$0", subCmdArgs[0]));
 				}
 			}
 			catch(IllegalArgumentException iaex){
@@ -194,7 +194,7 @@ public class CWLExecutionUnit{
 				iaex.printStackTrace();
 			}
 			catch(UUIDNotFoundException unfe){
-				sender.sendMessage(ChatColor.RED.toString() + '\"' + subCmdArgs[0] + "\" was not found and could not be removed from the whitelist.");
+				sender.sendMessage(cwlp.MSG_ERR_USER_NOT_FOUND_REMOVE.replace("$0", subCmdArgs[0]));
 			}
 		}
 		else if(type == TYPE_REMOVE_USER_BY_UUID){
@@ -202,11 +202,11 @@ public class CWLExecutionUnit{
 				UUID uuid = UUID.fromString(subCmdArgs[0]);
 				OfflinePlayer ofp = cwlp.getServer().getOfflinePlayer(uuid);
 				if(!ofp.isWhitelisted()){ // If the player is not on the whitelist
-					sender.sendMessage('\"' + subCmdArgs[0] + "\" is not on the whitelist.");
+					sender.sendMessage(cwlp.MSG_WL_REMOVED_ALREADY.replace("$0", subCmdArgs[0]));
 				}
 				else{ // They're to be removed
 					ofp.setWhitelisted(false);
-					sender.sendMessage('\"' + subCmdArgs[0] + "\" was removed from the whitelist.");
+					sender.sendMessage(cwlp.MSG_WL_REMOVED.replace("$0", subCmdArgs[0]));
 				}
 			}
 			catch(IllegalArgumentException iaex){
@@ -226,10 +226,10 @@ public class CWLExecutionUnit{
 				UUID uuid = UUIDFetcher.getUUID(subCmdArgs[0]);
 				OfflinePlayer ofp = cwlp.getServer().getOfflinePlayer(uuid);
 				if(ofp.isWhitelisted()){ // If the player is whitelisted
-					sender.sendMessage('\"' + subCmdArgs[0] + "\" is on the whitelist.");
+					sender.sendMessage(cwlp.MSG_WL_LISTED.replace("$0", subCmdArgs[0]));
 				}
 				else{ // Else the player is not whitelisted
-					sender.sendMessage('\"' + subCmdArgs[0] + "\" is not on the whitelist.");
+					sender.sendMessage(cwlp.MSG_WL_UNLISTED.replace("$0", subCmdArgs[0]));
 				}
 			}
 			catch(IllegalArgumentException iaex){
@@ -238,7 +238,7 @@ public class CWLExecutionUnit{
 				iaex.printStackTrace();
 			}
 			catch(UUIDNotFoundException unfex){
-				sender.sendMessage(ChatColor.RED.toString() + '\"' + subCmdArgs[0] + "\" was not found and could not be added to the whitelist.");
+				sender.sendMessage(cwlp.MSG_ERR_USER_NOT_FOUND.replace("$0", subCmdArgs[0]));
 			}
 		}
 		else if(type == TYPE_CHECK_USER_BY_UUID){
@@ -246,10 +246,10 @@ public class CWLExecutionUnit{
 				UUID uuid = UUID.fromString(subCmdArgs[0]);
 				OfflinePlayer ofp = cwlp.getServer().getOfflinePlayer(uuid);
 				if(ofp.isWhitelisted()){ // If the player is whitelisted
-					sender.sendMessage('\"' + subCmdArgs[0] + "\" is on the whitelist.");
+					sender.sendMessage(cwlp.MSG_WL_LISTED.replace("$0", subCmdArgs[0]));
 				}
 				else{ // Else the player is not whitelisted
-					sender.sendMessage('\"' + subCmdArgs[0] + "\" is not on the whitelist.");
+					sender.sendMessage(cwlp.MSG_WL_UNLISTED.replace("$0", subCmdArgs[0]));
 				}
 			}
 			catch(IllegalArgumentException iaex){
@@ -274,18 +274,18 @@ public class CWLExecutionUnit{
 				try{ // Try to resolve the username
 					String username = UsernameFetcher.getUsername(uuid);
 					if(ofp.isWhitelisted()){ // If the player is whitelisted
-						sender.sendMessage('\"' + username + "\" is on the whitelist.");
+						sender.sendMessage(cwlp.MSG_WL_LISTED.replace("$0", username));
 					}
 					else{ // Else the player is not whitelisted
-						sender.sendMessage('\"' + username + "\" is not on the whitelist.");
+						sender.sendMessage(cwlp.MSG_WL_UNLISTED.replace("$0", username));
 					}
 				}
 				catch(UsernameNotFoundException unnfex){
 					if(ofp.isWhitelisted()){ // If the player is whitelisted
-						sender.sendMessage('\"' + subCmdArgs[0] + "\" is on the whitelist.");
+						sender.sendMessage(cwlp.MSG_WL_LISTED.replace("$0", subCmdArgs[0]));
 					}
 					else{ // Else the player is not whitelisted
-						sender.sendMessage('\"' + subCmdArgs[0] + "\" is not on the whitelist.");
+						sender.sendMessage(cwlp.MSG_WL_UNLISTED.replace("$0", subCmdArgs[0]));
 					}
 				}
 			}
