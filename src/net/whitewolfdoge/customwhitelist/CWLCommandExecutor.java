@@ -41,7 +41,8 @@ public class CWLCommandExecutor implements TabExecutor{
 				
 				try{ // Try processing the command
 					if(subCmd == null){ // A subcommand was not found
-						return false;
+						sender.sendMessage(cwlp.MSG_ERR_USAGE);
+						return true;
 					}
 					
 					// Run a subcommand if there is one
@@ -67,7 +68,8 @@ public class CWLCommandExecutor implements TabExecutor{
 						return reload(sender, subCmdArgs, subCmdOptions);
 					}
 					else{ // Subcommand not recognized
-						return false;
+						sender.sendMessage(cwlp.MSG_ERR_USAGE);
+						return true;
 					}
 				}
 				catch(Exception ex){
@@ -83,7 +85,8 @@ public class CWLCommandExecutor implements TabExecutor{
 			}
 		}
 		else{ // Command not recognized by this plugin
-			return false;
+			sender.sendMessage(cwlp.MSG_ERR_USAGE);
+			return true;
 		}
 	}
 	
