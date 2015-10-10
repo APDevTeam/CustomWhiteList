@@ -309,11 +309,11 @@ public class CWLExecutionUnit{
 	private void processList() throws Exception{
 		OfflinePlayer[] wlofps = cwlp.getServer().getWhitelistedPlayers().toArray(new OfflinePlayer[cwlp.getServer().getWhitelistedPlayers().size()]);
 		StringBuilder sb = new StringBuilder();
-		sb.append("There are " + wlofps.length + " whitelisted players:");
+		sb.append(cwlp.MSG_PREFIX + "There are " + wlofps.length + " whitelisted players:");
 		if(type == TYPE_LIST_WITHOUT_RESOLVE){
 			for(OfflinePlayer ofp : wlofps){ // For every element in the array
 				UUID uuid = ofp.getUniqueId();
-				sb.append('\n' + uuid.toString());
+				sb.append('\n' + cwlp.MSG_PREFIX + uuid.toString());
 			}
 			sender.sendMessage(sb.toString());
 		}
