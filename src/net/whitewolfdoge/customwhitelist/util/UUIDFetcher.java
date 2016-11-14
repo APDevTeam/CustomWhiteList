@@ -201,6 +201,7 @@ public class UUIDFetcher{
 	}
 	
 	/**
+	 * The following method is to get a UUID from mcuuid.com's JSON API. Note that due
 	 * to the nature of downloading data, this method may take unpredictable
 	 * times to return.
 	 * @param	String username		The Username of the player
