@@ -5,6 +5,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.UUID;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonParser;
+
 /**
  * This class is to be the home for all methods relating to fetching UUIDs.
  */
@@ -21,9 +25,9 @@ public class UUIDFetcher{
 		
 		// The idea here is to try the next method if one runs into an error.
 		
-		// Try searching mcuuid.net
+		// Try searching mcuuid.com's JSON API
 		try{
-			uuid = fetchFromMCUUIDnet(username);
+			uuid = fetchFromMCUUIDcomAPI(username);
 		}
 		catch(IOException e){
 			// There was probably a connection issue, just skip this source
@@ -33,7 +37,7 @@ public class UUIDFetcher{
 		}
 		catch(Exception ex){
 			// There was some other issue
-			System.err.println("There was an error trying to get a UUID from mcuuid.net:");
+			System.err.println("There was an error trying to get a UUID from mcuuid.com API:");
 			ex.printStackTrace();
 		}
 		
@@ -50,6 +54,22 @@ public class UUIDFetcher{
 		catch(Exception ex){
 			// There was some other issue
 			System.err.println("There was an error trying to get a UUID from mcuuid.com:");
+			ex.printStackTrace();
+		}
+		
+		// Try searching mcuuid.net
+		try{
+			uuid = fetchFromMCUUIDnet(username);
+		}
+		catch(IOException e){
+			// There was probably a connection issue, just skip this source
+		}
+		catch(UUIDNotFoundException unfex){
+			throw unfex;
+		}
+		catch(Exception ex){
+			// There was some other issue
+			System.err.println("There was an error trying to get a UUID from mcuuid.net:");
 			ex.printStackTrace();
 		}
 		
@@ -177,6 +197,58 @@ public class UUIDFetcher{
 		}
 		catch(IllegalArgumentException iaex){
 			throw new UUIDNotFoundException();
+		}
+	}
+	
+	/**
+	 * to the nature of downloading data, this method may take unpredictable
+	 * times to return.
+	 * @param	String username		The Username of the player
+	 * @return	UUID uuid			The UUID of the player
+	 */
+	private static UUID fetchFromMCUUIDcomAPI(String username) throws Exception, IOException, UUIDNotFoundException{
+		
+		// Download the page
+		URL pageurl;
+		try{
+			pageurl = new URL("https://api.mcuuid.com/json/uuid/" + username);
+		}
+		catch(MalformedURLException mue){
+			// This exception really should not happen!
+			throw new Exception();
+		}
+		
+		String page = null;
+		try{
+			page = WebUtils.downloadPage(pageurl);
+		}
+		catch(IOException e){
+			// If this happens, there probably was a connection error or timeout.
+			throw new IOException();
+		}
+		
+		JsonObject jso = null;
+		try{
+			JsonParser jsp = new JsonParser();
+			jso = (JsonObject)jsp.parse(page);
+			
+			try{
+				if(jso.get("success").getAsBoolean()){
+					return UUID.fromString(jso.get("uuid").getAsString());
+				}
+				else{ // There was no found UUID
+					throw new UUIDNotFoundException();
+				}
+			}
+			catch(ClassCastException ccex){
+				// If this happens, the API is not working as expected.
+				throw new IOException();
+			}
+			
+		}
+		catch(JsonParseException jspex){
+			// If this happens, the API is not working as expected.
+			throw new IOException();
 		}
 	}
 }
