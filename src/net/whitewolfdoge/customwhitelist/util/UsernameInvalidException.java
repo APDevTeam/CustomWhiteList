@@ -1,7 +1,7 @@
 package net.whitewolfdoge.customwhitelist.util;
 
 /**
- * An UsernameInvalidException is thrown when a username has got dem issues.
+ * An UsernameInvalidException is thrown when a username has an invalid format.
  */
 @SuppressWarnings("serial")
 public class UsernameInvalidException extends Exception{
