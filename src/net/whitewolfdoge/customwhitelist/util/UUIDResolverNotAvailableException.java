@@ -1,5 +1,8 @@
 package net.whitewolfdoge.customwhitelist.util;
 
+/**
+ * A UUIDResolverNotAvailableException is thrown when a UUIDResolver is not available at this time.
+ */
 @SuppressWarnings("serial")
 public class UUIDResolverNotAvailableException extends Exception{
 
