@@ -2,14 +2,16 @@ package net.whitewolfdoge.customwhitelist;
 
 import java.util.UUID;
 
-import net.whitewolfdoge.customwhitelist.util.UUIDFetcher;
-import net.whitewolfdoge.customwhitelist.util.UUIDNotFoundException;
-import net.whitewolfdoge.customwhitelist.util.UsernameFetcher;
-import net.whitewolfdoge.customwhitelist.util.UsernameNotFoundException;
-
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
+
+import net.whitewolfdoge.customwhitelist.util.UUIDFetcher;
+import net.whitewolfdoge.customwhitelist.util.UUIDNotFoundException;
+import net.whitewolfdoge.customwhitelist.util.UUIDResolverNotAvailableException;
+import net.whitewolfdoge.customwhitelist.util.UsernameFetcher;
+import net.whitewolfdoge.customwhitelist.util.UsernameInvalidException;
+import net.whitewolfdoge.customwhitelist.util.UsernameNotFoundException;
 
 /**
  * This class is to house all necessary components for executing a CWL function
@@ -148,8 +150,14 @@ public class CWLExecutionUnit{
 				cwlp.getLogger().warning("There was an exception preprocessing trying to add a user by name: " + subCmdArgs[0]);
 				iaex.printStackTrace();
 			}
+			catch(UUIDResolverNotAvailableException urnaex){
+				sender.sendMessage(cwlp.MSG_ERR_UUIDRESOLVER_UNAVAIABLE.replace("$0", subCmdArgs[0]));
+			}
 			catch(UUIDNotFoundException unfex){
 				sender.sendMessage(cwlp.MSG_ERR_USER_NOT_FOUND_ADD.replace("$0", subCmdArgs[0]));
+			}
+			catch(UsernameInvalidException uniex){
+				sender.sendMessage(cwlp.MSG_ERR_INVALID_USERNAME.replace("$0", subCmdArgs[0]));
 			}
 		}
 		else if(type == TYPE_ADD_USER_BY_UUID){
@@ -196,8 +204,14 @@ public class CWLExecutionUnit{
 				cwlp.getLogger().warning("There was an exception preprocessing trying to remove a user by name: " + subCmdArgs[0]);
 				iaex.printStackTrace();
 			}
-			catch(UUIDNotFoundException unfe){
+			catch(UUIDResolverNotAvailableException urnaex){
+				sender.sendMessage(cwlp.MSG_ERR_UUIDRESOLVER_UNAVAIABLE.replace("$0", subCmdArgs[0]));
+			}
+			catch(UUIDNotFoundException unfex){
 				sender.sendMessage(cwlp.MSG_ERR_USER_NOT_FOUND_REMOVE.replace("$0", subCmdArgs[0]));
+			}
+			catch(UsernameInvalidException uniex){
+				sender.sendMessage(cwlp.MSG_ERR_INVALID_USERNAME.replace("$0", subCmdArgs[0]));
 			}
 		}
 		else if(type == TYPE_REMOVE_USER_BY_UUID){
@@ -241,8 +255,14 @@ public class CWLExecutionUnit{
 				cwlp.getLogger().warning("There was an exception preprocessing trying to check a user by name: " + subCmdArgs[0]);
 				iaex.printStackTrace();
 			}
+			catch(UUIDResolverNotAvailableException urnaex){
+				sender.sendMessage(cwlp.MSG_ERR_UUIDRESOLVER_UNAVAIABLE.replace("$0", subCmdArgs[0]));
+			}
 			catch(UUIDNotFoundException unfex){
 				sender.sendMessage(cwlp.MSG_ERR_USER_NOT_FOUND.replace("$0", subCmdArgs[0]));
+			}
+			catch(UsernameInvalidException uniex){
+				sender.sendMessage(cwlp.MSG_ERR_INVALID_USERNAME.replace("$0", subCmdArgs[0]));
 			}
 		}
 		else if(type == TYPE_CHECK_USER_BY_UUID){

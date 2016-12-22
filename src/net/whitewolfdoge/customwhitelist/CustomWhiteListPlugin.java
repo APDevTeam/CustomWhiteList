@@ -3,15 +3,16 @@ package net.whitewolfdoge.customwhitelist;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
-import net.whitewolfdoge.customwhitelist.util.WhiteListFetcher;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import net.whitewolfdoge.customwhitelist.util.WhiteListFetcher;
+
 public final class CustomWhiteListPlugin extends JavaPlugin{
-	public final String MSG_PREFIX =		ChatColor.DARK_PURPLE + "CWL: ",
+	// @formatter:off
+	public final String MSG_PREFIX =				ChatColor.DARK_PURPLE + "CWL: ",
 		MSG_ERR_PREFIX =							MSG_PREFIX + ChatColor.RED + "Error: ";
 	protected final String MSG_ERR_TOO_MANY_ARGS =	MSG_ERR_PREFIX + "Too many arguments!",
 		MSG_ERR_INVALID_OPTION =					MSG_ERR_PREFIX + "That option is not valid for this command!",
@@ -25,6 +26,7 @@ public final class CustomWhiteListPlugin extends JavaPlugin{
 		MSG_ERR_USER_NOT_FOUND =					MSG_ERR_PREFIX + "\"$0\" was not found.",
 		MSG_ERR_USER_NOT_FOUND_ADD =				MSG_ERR_PREFIX + "\"$0\" was not found and could not be added to the white list.",
 		MSG_ERR_USER_NOT_FOUND_REMOVE =				MSG_ERR_PREFIX + "\"$0\" was not found and could not be removed from the white list.",
+		MSG_ERR_UUIDRESOLVER_UNAVAIABLE =			MSG_ERR_PREFIX + "\"No UUIDResolver was available to service the request to resolve UUID for \"$0\"",
 		
 		MSG_WL_LISTED =								MSG_PREFIX + "\"$0\" is on the white list.",
 		MSG_WL_UNLISTED =							MSG_PREFIX + "\"$0\" is not on the white list.",
@@ -43,7 +45,7 @@ public final class CustomWhiteListPlugin extends JavaPlugin{
 		LOG_WL_ENABLED =							"White listing was turned on.",
 		LOG_WL_DISABLED =							"White listing was turned off.",
 		LOG_WL_RELOADED =							"The white list has been reloaded";
-	
+	// @formatter:on
 	private CWLCommandExecutor cwlce;
 	private CWLEUExecutor cwleuExecutor;
 	
