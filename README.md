@@ -1,4 +1,5 @@
 ## CustomWhiteList
+![CustomWhitelist](https://github.com/APDevTeam/CustomWhitelist/actions/workflows/maven.yml/badge.svg)
 CWL allows modification to the white list even when vanilla uuid/username lookups are rejected.  
 All lookups are async so the world will not stop. You may add/remove/check one or more users at a time.
 
