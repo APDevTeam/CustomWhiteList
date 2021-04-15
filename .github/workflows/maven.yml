@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout CWL
+    - name: Checkout CustomWhiteList
       uses: actions/checkout@v1
     - name: Set up JDK 8
       uses: actions/setup-java@v1
@@ -36,7 +36,7 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: Stage jar
-      run: mkdir staging && cp CustomWhiteList/target/CustomWhiteList.jar staging
+      run: mkdir staging && cp CustomWhiteList/target/CustomWhiteList*.jar staging
     - name: Rename jar
       run: mv staging/CustomWhiteList*.jar staging/CustomWhiteList_$GITHUB_SHA.jar
     - name: Upload jar
