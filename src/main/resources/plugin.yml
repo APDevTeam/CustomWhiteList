@@ -1,0 +1,45 @@
+name: CustomWhiteList
+version: 1.5-dev
+description: Allows modification to the white list even when Mojang UUID queries are rejected
+author: WhiteWolfdoge
+main: net.whitewolfdoge.customwhitelist.CustomWhiteListPlugin
+database: false
+commands:
+    customwhitelist:
+        description: Displays CWL help
+        usage: "nondescript"
+        aliases:
+          - cwl
+        
+permissions:
+    customwhitelist.*:
+        description: Gives access to all CWL commands
+        children:
+            customwhitelist.add: true
+            customwhitelist.remove: true
+            customwhitelist.check: true
+            customwhitelist.list: true
+            customwhitelist.on: true
+            customwhitelist.off: true
+            customwhitelist.reload: true
+    customwhitelist.add:
+        description: Allows a player to be added to the white list
+        default: op
+    customwhitelist.remove:
+        description: Allows a player to be removed from the white list
+        default: op
+    customwhitelist.check:
+        description: Allows you to check if a player is on the white list
+        default: op
+    customwhitelist.list:
+        description: Allows you to list all players on the white list
+        default: op
+    customwhitelist.on:
+        description: Allows you to turn on the white list
+        default: op
+    customwhitelist.off:
+        description: Allows you to turn off the white list
+        default: op
+    customwhitelist.reload:
+        description: Allows you to reload the white list
+        default: op
