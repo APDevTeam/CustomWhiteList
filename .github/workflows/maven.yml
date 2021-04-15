@@ -36,7 +36,7 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: Stage jar
-      run: mkdir staging && cp /home/runner/work/CustonWhiteList/CustomWhiteList/target/CustomWhiteList*.jar staging
+      run: mkdir staging && cp target/CustomWhiteList*.jar staging
     - name: Rename jar
       run: mv staging/CustomWhiteList*.jar staging/CustomWhiteList_$GITHUB_SHA.jar
     - name: Upload jar
