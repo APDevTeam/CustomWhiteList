@@ -5,9 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.whitewolfdoge</groupId>
-    <artifactId>CustomWhitelist</artifactId>
+    <artifactId>CustomWhiteList</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+    <name>CustomWhitelist</name>
     <build>
+        <finalName>CustomWhiteList</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
