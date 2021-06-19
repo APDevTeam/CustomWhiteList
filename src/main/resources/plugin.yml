@@ -1,5 +1,6 @@
 name: CustomWhiteList
-version: 1.5-dev
+version: ${project.version}
+api-version: 1.14
 description: Allows modification to the white list even when Mojang UUID queries are rejected
 author: WhiteWolfdoge
 main: net.whitewolfdoge.customwhitelist.CustomWhiteListPlugin
