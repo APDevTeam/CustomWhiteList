@@ -8,14 +8,15 @@ jobs:
 
     steps:
     - name: Checkout CustomWhiteList
-      uses: actions/checkout@v1
-    - name: Set up JDK 8
-      uses: actions/setup-java@v1
+      uses: actions/checkout@v3
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
       with:
-        java-version: 1.8
+        distribution: 'temurin'
+        java-version: '17'
     - name: Cache Maven packages
       id: cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: ~/.m2
         key: ${{ runner.os }}-m2
@@ -30,7 +31,7 @@ jobs:
     - name: Rename jar
       run: mv staging/CustomWhiteList*.jar staging/CustomWhiteList_$GITHUB_SHA.jar
     - name: Upload jar
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: CustomWhiteList_Dev-Build
         path: staging/CustomWhiteList_*.jar
