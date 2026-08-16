@@ -1,4 +1,4 @@
-package net.whitewolfdoge.customwhitelist.util;
+package io.apdevteam.customwhitelist.util;
 
 /**
  * A UUIDResolverNotAvailableException is thrown when a UUIDResolver is not available at this time.

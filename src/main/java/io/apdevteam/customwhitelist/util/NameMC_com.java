@@ -1,4 +1,4 @@
-package net.whitewolfdoge.customwhitelist.util;
+package io.apdevteam.customwhitelist.util;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -6,7 +6,7 @@ import java.net.URL;
 import java.util.UUID;
 
 
-class NameMC_com implements UUIDResolver{
+public class NameMC_com implements UUIDResolver{
 	
 	/**
 	 * The following method gets a UUID from a username by using the NameMC.com web service

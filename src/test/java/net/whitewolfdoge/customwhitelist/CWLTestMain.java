@@ -3,10 +3,10 @@ package net.whitewolfdoge.customwhitelist;
 import java.util.Scanner;
 import java.util.UUID;
 
-import net.whitewolfdoge.customwhitelist.util.UUIDFetcher;
-import net.whitewolfdoge.customwhitelist.util.UUIDNotFoundException;
-import net.whitewolfdoge.customwhitelist.util.UUIDResolverNotAvailableException;
-import net.whitewolfdoge.customwhitelist.util.UsernameInvalidException;
+import io.apdevteam.customwhitelist.util.UUIDFetcher;
+import io.apdevteam.customwhitelist.util.UUIDNotFoundException;
+import io.apdevteam.customwhitelist.util.UUIDResolverNotAvailableException;
+import io.apdevteam.customwhitelist.util.UsernameInvalidException;
 
 public class CWLTestMain{
 	private static Scanner sc;

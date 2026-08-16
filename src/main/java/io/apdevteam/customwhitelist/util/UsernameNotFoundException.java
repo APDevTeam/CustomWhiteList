@@ -1,4 +1,4 @@
-package net.whitewolfdoge.customwhitelist.util;
+package io.apdevteam.customwhitelist.util;
 
 @SuppressWarnings("serial")
 public class UsernameNotFoundException extends Exception{

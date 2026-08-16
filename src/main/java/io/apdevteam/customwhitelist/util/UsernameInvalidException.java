@@ -1,4 +1,4 @@
-package net.whitewolfdoge.customwhitelist.util;
+package io.apdevteam.customwhitelist.util;
 
 /**
  * An UsernameInvalidException is thrown when a username has an invalid format.

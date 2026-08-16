@@ -1,4 +1,4 @@
-package net.whitewolfdoge.customwhitelist;
+package io.apdevteam.customwhitelist;
 
 import java.util.UUID;
 
@@ -6,12 +6,12 @@ import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 
-import net.whitewolfdoge.customwhitelist.util.UUIDFetcher;
-import net.whitewolfdoge.customwhitelist.util.UUIDNotFoundException;
-import net.whitewolfdoge.customwhitelist.util.UUIDResolverNotAvailableException;
-import net.whitewolfdoge.customwhitelist.util.UsernameFetcher;
-import net.whitewolfdoge.customwhitelist.util.UsernameInvalidException;
-import net.whitewolfdoge.customwhitelist.util.UsernameNotFoundException;
+import io.apdevteam.customwhitelist.util.UUIDFetcher;
+import io.apdevteam.customwhitelist.util.UUIDNotFoundException;
+import io.apdevteam.customwhitelist.util.UUIDResolverNotAvailableException;
+import io.apdevteam.customwhitelist.util.UsernameFetcher;
+import io.apdevteam.customwhitelist.util.UsernameInvalidException;
+import io.apdevteam.customwhitelist.util.UsernameNotFoundException;
 
 /**
  * This class is to house all necessary components for executing a CWL function

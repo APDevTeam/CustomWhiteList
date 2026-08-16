@@ -1,4 +1,4 @@
-package net.whitewolfdoge.customwhitelist;
+package io.apdevteam.customwhitelist;
 
 import java.util.ArrayList;
 import java.util.List;

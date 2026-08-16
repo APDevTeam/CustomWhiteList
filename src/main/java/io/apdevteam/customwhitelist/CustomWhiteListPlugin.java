@@ -1,4 +1,4 @@
-package net.whitewolfdoge.customwhitelist;
+package io.apdevteam.customwhitelist;
 
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
@@ -8,7 +8,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import net.whitewolfdoge.customwhitelist.util.WhiteListFetcher;
+import io.apdevteam.customwhitelist.util.WhiteListFetcher;
 
 public final class CustomWhiteListPlugin extends JavaPlugin{
 	// @formatter:off

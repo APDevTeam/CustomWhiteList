@@ -1,4 +1,4 @@
-package net.whitewolfdoge.customwhitelist;
+package io.apdevteam.customwhitelist;
 
 @SuppressWarnings("serial")
 public class InvalidCWLEUTypeException extends Exception{
