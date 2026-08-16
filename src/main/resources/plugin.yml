@@ -3,7 +3,7 @@ version: ${projectVersion}
 api-version: 1.20
 description: Allows modification to the white list even when Mojang UUID queries are rejected
 author: WhiteWolfdoge
-main: io.github.apdevteam.customwhitelist.CustomWhiteListPlugin
+main: io.apdevteam.customwhitelist.CustomWhiteListPlugin
 database: false
 commands:
     customwhitelist:
